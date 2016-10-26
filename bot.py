@@ -1,17 +1,20 @@
 import vk
 import telebot
 import time
+import threading
 from telebot import types
 
 
-bot = telebot.TeleBot('237770898:AAEcM0wXgHK49izN4K3HhW99q5j0vfSoYJA')
+bot = telebot.TeleBot('TOKEN')
 
 session = vk.Session()
-api = vk.API(session)
+vk_api = vk.API(session)
 
 vk_arr = []
 group_arr = []
 group_id_arr = []
+vk_id_sub = ''
+vk_id = '9793010'
 
 markup = types.ReplyKeyboardMarkup()
 markup1 = types.ReplyKeyboardMarkup()
@@ -20,11 +23,12 @@ markup.row('HSE Official VK Group')
 markup.row('The Вышка')
 markup.row('Ok!')
 markup1.row('5 последних постов')
+markup1.row('Подписаться на обновления')
 markup1.row('Назад')
 
-# print(api.users.get(user_ids="ballahuginn"))
-# print(api.groups.getById(group_id="hse_university"))
-# print(api.wall.get(domain="hse_university", count=2, filter="owner"))
+# print(vk_api.users.get(user_ids="ballahuginn"))
+# print(vk_api.groups.getById(group_id="hse_university"))
+# print(vk_api.wall.get(domain="hse_university", count=2, filter="owner"))
 
 
 @bot.message_handler(commands=['start'])
@@ -60,17 +64,20 @@ def news_source(message):
                 bot.send_message(message.chat.id, _i)
         else:
             bot.send_message(message.chat.id, 'Вы не выбрали группу.')
+    if message.text == 'Подписаться на обновления':
+        vk_id_sub = vk_sub(vk_id)
+        bot.send_message(message.chat.id, vk_id_sub)
     elif message.text == 'Назад':
         bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"', reply_markup=markup)
         group_id_arr = []
 
 
-def vkfunction(vk_id_arr=[]):
+def vkfunction(vk_id_arr):
     arr_link = []
     vk_json_arr = []
     link_count = 0
     for _j in vk_id_arr:
-        group = api.wall.get(owner_id='-' + _j, count=6, filter='owner')
+        group = vk_api.wall.get(owner_id='-' + _j, count=6, filter='owner')
         post_count = 0
         for _k in group:
             if type(_k) != int:
@@ -89,7 +96,33 @@ def vkfunction(vk_id_arr=[]):
                     arr_link.append(link)
                     link_count += 1
                     print(link)
-    return (arr_link)
+    return arr_link
+
+
+def vk_sub(id_vk):
+    group = vk_api.wall.get(domain='ballahuginn', count=2, filter='owner')
+    post_count = 0
+    for _p in group:
+        if type(_p) != int:
+            if 'is_pinned' not in _p and post_count < 1:
+                last_post = _p['date']
+                post_count += 1
+                link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
+                print(link)
+
+    while True:
+        group = vk_api.wall.get(domain='ballahuginn', count=1, filter='owner')
+        for _p in group:
+            if type(_p) != int:
+                if 'is_pinned' not in _p:
+                    if _p['date'] > last_post:
+                        link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
+                        print(link)
+                        last_post = _p['date']
+                        return link
+                    else:
+                        print('NULL')
+        time.sleep(30)
 
 
 if __name__ == '__main__':
