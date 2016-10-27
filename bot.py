@@ -65,8 +65,10 @@ def news_source(message):
         else:
             bot.send_message(message.chat.id, 'Вы не выбрали группу.')
     if message.text == 'Подписаться на обновления':
-        vk_id_sub = vk_sub(vk_id)
-        bot.send_message(message.chat.id, vk_id_sub)
+        #vk_sub(vk_id)
+        with open('test.txt', 'r') as f:
+            link = f.readlines()
+        bot.send_message(message.chat.id, link[1])
     elif message.text == 'Назад':
         bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"', reply_markup=markup)
         group_id_arr = []
@@ -99,6 +101,62 @@ def vkfunction(vk_id_arr):
     return arr_link
 
 
+# def vk_sub(id_vk):
+#     group = vk_api.wall.get(domain='ballahuginn', count=2, filter='owner')
+#     post_count = 0
+#     for _p in group:
+#         if type(_p) != int:
+#             if 'is_pinned' not in _p and post_count < 1:
+#                 last_post = _p['date']
+#                 post_count += 1
+#                 link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
+#                 print(link)
+#
+#     while True:
+#         group = vk_api.wall.get(domain='ballahuginn', count=1, filter='owner')
+#         for _p in group:
+#             if type(_p) != int:
+#                 if 'is_pinned' not in _p:
+#                     if _p['date'] > last_post:
+#                         link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
+#                         print(link)
+#                         last_post = _p['date']
+#                     else:
+#                         print('NULL')
+#         time.sleep(30)
+
+# abc = 1
+# def hello():
+#     global abc
+#     if abc == 1:
+#         s = 1
+#         abc += 1
+#     else:
+#         s = 2
+#         abc -= 1
+#     print(s, abc)
+# t = threading.Timer(1, hello)
+# t.start()
+# hello()
+
+def test():
+    s = '123'
+    # with open('test.txt', 'w') as f:
+    #     f.write(s)
+    with open('test.txt', 'r+') as f:
+        l = f.readlines()
+        print(l[2])
+
+
+    # t = threading.Timer(1, test)
+    # t.start()
+    # return s
+
+# t = threading.Timer(1, test)
+# t.start()
+
+test()
+
 def vk_sub(id_vk):
     group = vk_api.wall.get(domain='ballahuginn', count=2, filter='owner')
     post_count = 0
@@ -119,7 +177,6 @@ def vk_sub(id_vk):
                         link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
                         print(link)
                         last_post = _p['date']
-                        return link
                     else:
                         print('NULL')
         time.sleep(30)
