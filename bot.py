@@ -2,13 +2,14 @@ import vk
 import telebot
 import time
 import threading
+import os
 from telebot import types
 
 
-bot = telebot.TeleBot('TOKEN')
+bot = telebot.TeleBot('237770898:AAGWJabjYZcPa7hN3mnfT1Gh3UPkaRVVCiQ')
 
 session = vk.Session()
-vk_api = vk.API(session)
+vk_api = vk.API(session, v='5.59')
 
 vk_arr = []
 group_arr = []
@@ -40,6 +41,21 @@ def send_welcome(message):
 def news_source(message):
     global vk_arr, group_id_arr
 
+    def print_vk_sub(msg):
+        vk_sub(vk_id)
+        if os.stat('vk_sub_new.txt').st_size != 0:
+            with open('vk_sub.txt', 'r') as old_file, open('vk_sub_new.txt', 'r') as new_file:
+                old_line = old_file.readlines()
+                new_line = new_file.readlines()
+            if new_line[0] != old_line[0]:
+                bot.send_message(msg.chat.id, new_line[1])
+                with open('vk_sub.txt', 'w') as old_file, open('vk_sub_new.txt', 'r') as new_file:
+                    new_line = new_file.read()
+                    old_file.write(new_line)
+
+        t = threading.Timer(5, print_vk_sub, [msg])
+        t.start()
+
     if message.text == 'HSE Official VK Group':
         if '25205856' not in group_id_arr:
             # group_arr.append('hse_university')
@@ -65,10 +81,11 @@ def news_source(message):
         else:
             bot.send_message(message.chat.id, 'Вы не выбрали группу.')
     if message.text == 'Подписаться на обновления':
-        #vk_sub(vk_id)
-        with open('test.txt', 'r') as f:
+        vk_start_sub(vk_id)
+        with open('vk_sub.txt', 'r') as f:
             link = f.readlines()
         bot.send_message(message.chat.id, link[1])
+        print_vk_sub(message)
     elif message.text == 'Назад':
         bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"', reply_markup=markup)
         group_id_arr = []
@@ -81,7 +98,8 @@ def vkfunction(vk_id_arr):
     for _j in vk_id_arr:
         group = vk_api.wall.get(owner_id='-' + _j, count=6, filter='owner')
         post_count = 0
-        for _k in group:
+        for _k in group['items']:
+            print(_k)
             if type(_k) != int:
                 if 'id' in _k:
                     if 'is_pinned' not in _k and post_count < 5:
@@ -92,7 +110,7 @@ def vkfunction(vk_id_arr):
 
     for _n in vk_sorted_arr:
         for _j in vk_id_arr:
-            if '-' + _j == str(_n['to_id']):
+            if '-' + _j == str(_n['owner_id']):
                 link = 'https://vk.com/wall-' + _j + '_' + str(_n['id'])
                 if link_count < 5:
                     arr_link.append(link)
@@ -139,13 +157,13 @@ def vkfunction(vk_id_arr):
 # t.start()
 # hello()
 
-def test():
-    s = '123'
+# def test():
+#     s = '123'
     # with open('test.txt', 'w') as f:
     #     f.write(s)
-    with open('test.txt', 'r+') as f:
-        l = f.readlines()
-        print(l[2])
+    # with open('test.txt', 'r+') as f:
+    #     l = f.readlines()
+    #     print(l[2])
 
 
     # t = threading.Timer(1, test)
@@ -155,31 +173,45 @@ def test():
 # t = threading.Timer(1, test)
 # t.start()
 
-test()
+# test()
 
-def vk_sub(id_vk):
+
+def vk_start_sub(id_vk):
     group = vk_api.wall.get(domain='ballahuginn', count=2, filter='owner')
     post_count = 0
-    for _p in group:
+    for _p in group['items']:
         if type(_p) != int:
             if 'is_pinned' not in _p and post_count < 1:
-                last_post = _p['date']
+                with open('vk_sub.txt', 'w') as f:
+                    f.write(str(_p['date']))
+                    f.write('\n')
+                # last_post = _p['date']
                 post_count += 1
                 link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
                 print(link)
+                with open('vk_sub.txt', 'a') as f:
+                    f.write(link)
+                    f.write('\n')
 
-    while True:
-        group = vk_api.wall.get(domain='ballahuginn', count=1, filter='owner')
-        for _p in group:
-            if type(_p) != int:
-                if 'is_pinned' not in _p:
-                    if _p['date'] > last_post:
-                        link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
-                        print(link)
-                        last_post = _p['date']
-                    else:
-                        print('NULL')
-        time.sleep(30)
+
+def vk_sub(id_vk):
+    group = vk_api.wall.get(domain='ballahuginn', count=1, filter='owner')
+    for _p in group['items']:
+        if type(_p) != int:
+            if 'is_pinned' not in _p:
+                with open('vk_sub.txt', 'r') as f:
+                    l = f.readlines()
+                if _p['date'] > int(l[0]):
+                    link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
+                    print(link)
+                    with open('vk_sub_new.txt', 'w') as f:
+                        f.write(str(_p['date']))
+                        f.write('\n')
+                        f.write(link)
+                        f.write('\n')
+                else:
+                    open('vk_sub_new.txt', 'w').close()
+                    print('NULL')
 
 
 if __name__ == '__main__':
