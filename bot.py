@@ -2,7 +2,6 @@ import vk
 import telebot
 import time
 import threading
-import os
 from telebot import types
 
 
@@ -14,7 +13,6 @@ vk_api = vk.API(session, v='5.59')
 vk_arr = []
 group_arr = []
 group_id_arr = []
-vk_id_sub = ''
 vk_id = '9793010'
 
 markup = types.ReplyKeyboardMarkup()
@@ -41,20 +39,15 @@ def send_welcome(message):
 def news_source(message):
     global vk_arr, group_id_arr
 
-    def print_vk_sub(msg):
-        vk_sub(vk_id)
-        if os.stat('vk_sub_new.txt').st_size != 0:
-            with open('vk_sub.txt', 'r') as old_file, open('vk_sub_new.txt', 'r') as new_file:
-                old_line = old_file.readlines()
-                new_line = new_file.readlines()
-            for i in range(0, 10, 2):
-                if int(new_line[i]) > int(old_line[0]):
-                    bot.send_message(msg.chat.id, new_line[i+1])
-            with open('vk_sub.txt', 'w') as old_file, open('vk_sub_new.txt', 'r') as new_file:
-                new_line = new_file.readlines()
-                old_file.write(new_line[0])
+    def print_vk_sub(msg, last_post_date):
+        five_last_posts = vk_sub(vk_id)
 
-        t = threading.Timer(15, print_vk_sub, [msg])
+        for i in range(0, 10, 2):
+            if int(five_last_posts[i]) > int(last_post_date):
+                bot.send_message(msg.chat.id, five_last_posts[i+1])
+        vk_last_post = five_last_posts[0]
+
+        t = threading.Timer(15, print_vk_sub, [msg, vk_last_post])
         t.start()
 
     if message.text == 'HSE Official VK Group':
@@ -80,13 +73,11 @@ def news_source(message):
             for _i in vk_arr:
                 bot.send_message(message.chat.id, _i)
         else:
-            bot.send_message(message.chat.id, 'Вы не выбрали группу.')
+            bot.send_message(message.chat.id, 'Ты не выбрал группу')
     if message.text == 'Подписаться на обновления':
-        vk_start_sub()
-        with open('vk_sub.txt', 'r') as f:
-            link = f.readlines()
-        bot.send_message(message.chat.id, link[1])
-        print_vk_sub(message)
+        last_post = vk_start_sub()
+        bot.send_message(message.chat.id, 'Ты подписался на уведомления!')
+        print_vk_sub(message, last_post)
     elif message.text == 'Назад':
         bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"', reply_markup=markup)
         group_id_arr = []
@@ -96,6 +87,7 @@ def vkfunction(vk_id_arr):
     arr_link = []
     vk_json_arr = []
     link_count = 0
+
     for _j in vk_id_arr:
         group = vk_api.wall.get(owner_id='-' + _j, count=6, filter='owner')
         post_count = 0
@@ -122,35 +114,31 @@ def vkfunction(vk_id_arr):
 def vk_start_sub():
     group = vk_api.wall.get(domain='ballahuginn', count=2, filter='owner')
     post_count = 0
+
     for _p in group['items']:
         if type(_p) != int:
             if 'is_pinned' not in _p and post_count < 1:
-                with open('vk_sub.txt', 'w') as f:
-                    f.write(str(_p['date']))
-                    f.write('\n')
+                _post = _p['date']
                 post_count += 1
-                # link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
-                # print(link)
-                # with open('vk_sub.txt', 'a') as f:
-                #     f.write(link)
-                #     f.write('\n')
+
+    return _post
 
 
 def vk_sub(id_vk):
-    open('vk_sub_new.txt', 'w').close()
     group = vk_api.wall.get(domain='ballahuginn', count=6, filter='owner')
     post_count = 0
+    five_last_posts = []
+
     for _p in group['items']:
         if type(_p) != int:
             if 'is_pinned' not in _p and post_count < 5:
                 post_count += 1
+                five_last_posts.append(str(_p['date']))
                 link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
                 print(link)
-                with open('vk_sub_new.txt', 'a') as f:
-                    f.write(str(_p['date']))
-                    f.write('\n')
-                    f.write(link)
-                    f.write('\n')
+                five_last_posts.append(link)
+
+    return five_last_posts
 
 
 if __name__ == '__main__':
