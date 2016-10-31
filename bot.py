@@ -89,7 +89,7 @@ def news_source(message):
         else:
             bot.send_message(message.chat.id, 'Ты не выбрал группу')
     if message.text == 'Подписаться на обновления':
-        if vk_id:
+        if group_id_arr:
             last_post = vk_start_sub(group_id_arr)
             bot.send_message(message.chat.id, 'Ты подписался на уведомления!')
             print_vk_sub(message, last_post)
@@ -131,7 +131,7 @@ def vkfunction(vk_id_arr):
 def vk_start_sub(id_vk):
     last_post = []
     for _j in id_vk:
-        group = vk_api.wall.get(owner_id=_j, count=6, filter='owner')
+        group = vk_api.wall.get(owner_id='-' + _j, count=6, filter='owner')
         post_count = 0
         for _p in group['items']:
             if type(_p) != int:
@@ -146,7 +146,7 @@ def vk_sub(id_vk, last_post_date):
     main_list = []
     _pd = 0
     for _j in id_vk:
-        group = vk_api.wall.get(owner_id=_j, count=6, filter='owner')
+        group = vk_api.wall.get(owner_id='-' + _j, count=6, filter='owner')
         post_count = 0
         last_posts = []
         for _p in group['items']:
