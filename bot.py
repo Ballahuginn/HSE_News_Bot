@@ -40,13 +40,28 @@ def news_source(message):
     global vk_arr, group_id_arr
 
     def print_vk_sub(msg, last_post_date):
-        last_posts = vk_sub(vk_id, last_post_date)
+        last_posts = vk_sub(group_id_arr, last_post_date)
+        last_dates = []
+        ret_dates = []
+        for j in last_posts:
+            if j:
+                last_dates.append(j[0])
+                print(last_posts)
+                for i in range(1, len(j), 2):
+                    bot.send_message(msg.chat.id, j[i])
+            elif not j:
+                last_dates.append(None)
 
-        for i in range(1, len(last_posts), 2):
-            bot.send_message(msg.chat.id, last_posts[i])
-        # vk_last_post = five_last_posts[0]
+        for k in range(0, len(last_post_date)):
+            if last_dates[k] is not None:
+                print(last_dates[k])
+                ret_dates.append(last_dates[k])
+            else:
+                print(last_post_date[k])
+                ret_dates.append(last_post_date[k])
 
-        t = threading.Timer(15, print_vk_sub, [msg, last_post_date])
+        print(ret_dates)
+        t = threading.Timer(60, print_vk_sub, [msg, ret_dates])
         t.start()
 
     if message.text == 'HSE Official VK Group':
@@ -74,12 +89,15 @@ def news_source(message):
         else:
             bot.send_message(message.chat.id, 'Ты не выбрал группу')
     if message.text == 'Подписаться на обновления':
-        last_post = vk_start_sub(vk_id)
-        bot.send_message(message.chat.id, 'Ты подписался на уведомления!')
-        print_vk_sub(message, last_post)
+        if vk_id:
+            last_post = vk_start_sub(group_id_arr)
+            bot.send_message(message.chat.id, 'Ты подписался на уведомления!')
+            print_vk_sub(message, last_post)
+        else:
+            bot.send_message(message.chat.id, 'Ты не выбрал группу')
     elif message.text == 'Назад':
         bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"', reply_markup=markup)
-        group_id_arr = []
+        # group_id_arr = []
 
 
 def vkfunction(vk_id_arr):
@@ -125,23 +143,26 @@ def vk_start_sub(id_vk):
 
 
 def vk_sub(id_vk, last_post_date):
-    last_posts = []
+    main_list = []
     _pd = 0
     for _j in id_vk:
         group = vk_api.wall.get(owner_id=_j, count=6, filter='owner')
         post_count = 0
+        last_posts = []
         for _p in group['items']:
             if type(_p) != int:
-                if 'is_pinned' not in _p and post_count < 5:
+                if 'is_pinned' not in _p and post_count < 5 and last_post_date[_pd]:
                     post_count += 1
                     if int(_p['date']) > int(last_post_date[_pd]):
                         last_posts.append(str(_p['date']))
-                        link = 'https://vk.com/wall' + _j + '_' + str(_p['id'])
+                        link = 'https://vk.com/wall-' + _j + '_' + str(_p['id'])
                         print(link)
                         last_posts.append(link)
-        _pd += 1
 
-    return last_posts
+        main_list.append(last_posts)
+        _pd += 1
+    print(main_list)
+    return main_list
 
 
 if __name__ == '__main__':
