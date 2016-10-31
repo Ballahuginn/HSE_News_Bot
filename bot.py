@@ -13,7 +13,7 @@ vk_api = vk.API(session, v='5.59')
 vk_arr = []
 group_arr = []
 group_id_arr = []
-vk_id = '9793010'
+vk_id = ['9793010', '20707740']
 
 markup = types.ReplyKeyboardMarkup()
 markup1 = types.ReplyKeyboardMarkup()
@@ -40,14 +40,13 @@ def news_source(message):
     global vk_arr, group_id_arr
 
     def print_vk_sub(msg, last_post_date):
-        five_last_posts = vk_sub(vk_id)
+        last_posts = vk_sub(vk_id, last_post_date)
 
-        for i in range(0, 10, 2):
-            if int(five_last_posts[i]) > int(last_post_date):
-                bot.send_message(msg.chat.id, five_last_posts[i+1])
-        vk_last_post = five_last_posts[0]
+        for i in range(1, len(last_posts), 2):
+            bot.send_message(msg.chat.id, last_posts[i])
+        # vk_last_post = five_last_posts[0]
 
-        t = threading.Timer(15, print_vk_sub, [msg, vk_last_post])
+        t = threading.Timer(15, print_vk_sub, [msg, last_post_date])
         t.start()
 
     if message.text == 'HSE Official VK Group':
@@ -75,7 +74,7 @@ def news_source(message):
         else:
             bot.send_message(message.chat.id, 'Ты не выбрал группу')
     if message.text == 'Подписаться на обновления':
-        last_post = vk_start_sub()
+        last_post = vk_start_sub(vk_id)
         bot.send_message(message.chat.id, 'Ты подписался на уведомления!')
         print_vk_sub(message, last_post)
     elif message.text == 'Назад':
@@ -111,34 +110,38 @@ def vkfunction(vk_id_arr):
     return arr_link
 
 
-def vk_start_sub():
-    group = vk_api.wall.get(domain='ballahuginn', count=2, filter='owner')
-    post_count = 0
+def vk_start_sub(id_vk):
+    last_post = []
+    for _j in id_vk:
+        group = vk_api.wall.get(owner_id=_j, count=6, filter='owner')
+        post_count = 0
+        for _p in group['items']:
+            if type(_p) != int:
+                if 'is_pinned' not in _p and post_count < 1:
+                    last_post.append(_p['date'])
+                    post_count += 1
 
-    for _p in group['items']:
-        if type(_p) != int:
-            if 'is_pinned' not in _p and post_count < 1:
-                _post = _p['date']
-                post_count += 1
-
-    return _post
+    return last_post
 
 
-def vk_sub(id_vk):
-    group = vk_api.wall.get(domain='ballahuginn', count=6, filter='owner')
-    post_count = 0
-    five_last_posts = []
+def vk_sub(id_vk, last_post_date):
+    last_posts = []
+    _pd = 0
+    for _j in id_vk:
+        group = vk_api.wall.get(owner_id=_j, count=6, filter='owner')
+        post_count = 0
+        for _p in group['items']:
+            if type(_p) != int:
+                if 'is_pinned' not in _p and post_count < 5:
+                    post_count += 1
+                    if int(_p['date']) > int(last_post_date[_pd]):
+                        last_posts.append(str(_p['date']))
+                        link = 'https://vk.com/wall' + _j + '_' + str(_p['id'])
+                        print(link)
+                        last_posts.append(link)
+        _pd += 1
 
-    for _p in group['items']:
-        if type(_p) != int:
-            if 'is_pinned' not in _p and post_count < 5:
-                post_count += 1
-                five_last_posts.append(str(_p['date']))
-                link = 'https://vk.com/wall' + id_vk + '_' + str(_p['id'])
-                print(link)
-                five_last_posts.append(link)
-
-    return five_last_posts
+    return last_posts
 
 
 if __name__ == '__main__':
