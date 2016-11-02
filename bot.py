@@ -13,7 +13,7 @@ vk_api = vk.API(session, v='5.59')
 vk_arr = []
 group_arr = []
 group_id_arr = []
-vk_id = ['9793010', '20707740']
+vk_id = ['9793010', '20707740', '261222034']
 
 markup = types.ReplyKeyboardMarkup()
 markup1 = types.ReplyKeyboardMarkup()
@@ -131,7 +131,7 @@ def vkfunction(vk_id_arr):
 def vk_start_sub(id_vk):
     last_post = []
     for _j in id_vk:
-        group = vk_api.wall.get(owner_id='-' + _j, count=6, filter='owner')
+        group = vk_api.wall.get(owner_id='-' + _j, count=2, filter='owner')
         post_count = 0
         for _p in group['items']:
             if type(_p) != int:
