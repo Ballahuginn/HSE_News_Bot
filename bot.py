@@ -5,18 +5,28 @@ import threading
 from telebot import types
 
 
-bot = telebot.TeleBot("281761912:AAErjD0U7krOu6-8-j96rzpIC1xDLjF8dLs")
+bot = telebot.TeleBot('TOKEN')
 
 session = vk.Session()
 vk_api = vk.API(session, v='5.59')
 
 vk_arr = []
-group_arr = []
 group_id_arr = []
 vk_id = ['9793010', '20707740', '261222034']
+sub_is_active = False
 
+markup_start = types.ReplyKeyboardMarkup()
+markup_settings = types.ReplyKeyboardMarkup()
 markup = types.ReplyKeyboardMarkup()
 markup1 = types.ReplyKeyboardMarkup()
+
+
+markup_start.row('Выбрать группы')
+markup_start.row('Настройки')
+
+markup_settings.row('Сбросить группы')
+markup_settings.row('Остановить подписку')
+markup_settings.row('Главное меню')
 
 markup.row('HSE Official VK Group')
 markup.row('The Вышка')
@@ -25,19 +35,19 @@ markup.row('HSE Press')
 markup.row('Ингруп СтС НИУ ВШЭ')
 markup.row('ТелеВышка')
 markup.row('Ok')
+markup.row('Главное меню')
+
 markup1.row('5 последних постов')
 markup1.row('Подписаться на обновления')
-markup1.row('Выбрать интересующие категории')
+# markup1.row('Выбрать интересующие категории')
 markup1.row('Назад')
-
-# print(vk_api.users.get(user_ids="ballahuginn"))
-# print(vk_api.groups.getById(group_id="hse_university"))
-# print(vk_api.wall.get(domain="hse_university", count=2, filter="owner"))
 
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.send_message(message.chat.id, 'Привет! Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"', reply_markup=markup)
+    bot.send_message(message.chat.id,
+                     'Привет! Я бот, который поможет тебе следить за всеми новостями твоего любимого вуза!',
+                     reply_markup=markup_start)
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
@@ -66,48 +76,65 @@ def news_source(message):
                 ret_dates.append(last_post_date[k])
 
         print(ret_dates)
-        t = threading.Timer(60, print_vk_sub, [msg, ret_dates])
+        t = threading.Timer(3, print_vk_sub, [msg, ret_dates])
         t.start()
+        if not sub_is_active:
+            t.cancel()
+
+    if message.text == 'Выбрать группы':
+        bot.send_message(message.chat.id, 'Выбери группы, откуда ты хочешь получать новости, а затем нажми "Ок"',
+                         reply_markup=markup)
+    if message.text == 'Настройки':
+        bot.send_message(message.chat.id, 'Выбери, что ты хочешь изменить', reply_markup=markup_settings)
+
+    if message.text == 'Сбросить группы':
+        group_id_arr = []
+        bot.send_message(message.chat.id, 'Группы были сброшены', reply_markup=markup_settings)
+    if message.text == 'Остановить подписку':
+        global sub_is_active
+        sub_is_active = False
+        bot.send_message(message.chat.id, 'Ты отписался от получения новостей', reply_markup=markup_settings)
+
+    if message.text == 'Главное меню':
+        bot.send_message(message.chat.id, 'Добро пожаловать в главное меню!', reply_markup=markup_start)
 
     if message.text == 'HSE Official VK Group':
         if '25205856' not in group_id_arr:
-            # group_arr.append('hse_university')
             group_id_arr.append('25205856')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'The Вышка':
         if '66036248' not in group_id_arr:
-            # group_arr.append('thevyshka')
             group_id_arr.append('66036248')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'THE WALL':
-        if '66036248' not in group_id_arr:
+        if '88139611' not in group_id_arr:
             group_id_arr.append('88139611')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'HSE Press':
-        if '66036248' not in group_id_arr:
+        if '42501618' not in group_id_arr:
             group_id_arr.append('42501618')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'Ингруп СтС НИУ ВШЭ':
-        if '66036248' not in group_id_arr:
+        if '15922668' not in group_id_arr:
             group_id_arr.append('15922668')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'ТелеВышка':
-        if '66036248' not in group_id_arr:
+        if '35385290' not in group_id_arr:
             group_id_arr.append('35385290')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
-    if message.text == 'Ok!':
+    if message.text == 'Ok':
         bot.send_message(message.chat.id, 'Что ты хочешь получить?', reply_markup=markup1)
 
     if message.text == '5 последних постов':
@@ -121,12 +148,12 @@ def news_source(message):
         if group_id_arr:
             last_post = vk_start_sub(group_id_arr)
             bot.send_message(message.chat.id, 'Ты подписался на уведомления!')
+            sub_is_active = True
             print_vk_sub(message, last_post)
         else:
             bot.send_message(message.chat.id, 'Ты не выбрал группу')
     elif message.text == 'Назад':
         bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"', reply_markup=markup)
-        # group_id_arr = []
 
 
 def vkfunction(vk_id_arr):
