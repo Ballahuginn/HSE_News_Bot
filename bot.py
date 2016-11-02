@@ -5,7 +5,7 @@ import threading
 from telebot import types
 
 
-bot = telebot.TeleBot('TOKEN')
+bot = telebot.TeleBot("281761912:AAErjD0U7krOu6-8-j96rzpIC1xDLjF8dLs")
 
 session = vk.Session()
 vk_api = vk.API(session, v='5.59')
@@ -20,9 +20,14 @@ markup1 = types.ReplyKeyboardMarkup()
 
 markup.row('HSE Official VK Group')
 markup.row('The Вышка')
-markup.row('Ok!')
+markup.row('THE WALL')
+markup.row('HSE Press')
+markup.row('Ингруп СтС НИУ ВШЭ')
+markup.row('ТелеВышка')
+markup.row('Ok')
 markup1.row('5 последних постов')
 markup1.row('Подписаться на обновления')
+markup1.row('Выбрать интересующие категории')
 markup1.row('Назад')
 
 # print(vk_api.users.get(user_ids="ballahuginn"))
@@ -75,6 +80,30 @@ def news_source(message):
         if '66036248' not in group_id_arr:
             # group_arr.append('thevyshka')
             group_id_arr.append('66036248')
+            bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
+        else:
+            bot.send_message(message.chat.id, message.text + ' уже была выбрана')
+    if message.text == 'THE WALL':
+        if '66036248' not in group_id_arr:
+            group_id_arr.append('88139611')
+            bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
+        else:
+            bot.send_message(message.chat.id, message.text + ' уже была выбрана')
+    if message.text == 'HSE Press':
+        if '66036248' not in group_id_arr:
+            group_id_arr.append('42501618')
+            bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
+        else:
+            bot.send_message(message.chat.id, message.text + ' уже была выбрана')
+    if message.text == 'Ингруп СтС НИУ ВШЭ':
+        if '66036248' not in group_id_arr:
+            group_id_arr.append('15922668')
+            bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
+        else:
+            bot.send_message(message.chat.id, message.text + ' уже была выбрана')
+    if message.text == 'ТелеВышка':
+        if '66036248' not in group_id_arr:
+            group_id_arr.append('35385290')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
