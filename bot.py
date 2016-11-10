@@ -1,9 +1,14 @@
 import vk
 import telebot
+import sqlite3
 import time
 import threading
 from telebot import types
 
+
+# database = sqlite3.connect('HSE_BOT_DB.sqlite')
+#
+# db = database.cursor()
 
 bot = telebot.TeleBot('TOKEN')
 
@@ -45,13 +50,27 @@ markup1.row('Назад')
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
+
+    database = sqlite3.connect('HSE_BOT_DB.sqlite')
+    db = database.cursor()
+
+    db.execute("SELECT id FROM Users WHERE id = ?", (message.chat.id,))
+    check_user = db.fetchall()
+    if not check_user:
+        db.execute("INSERT INTO Users (id) VALUES (?)", (message.chat.id,))
+        database.commit()
+        database.close()
+
     bot.send_message(message.chat.id,
-                     'Привет! Я бот, который поможет тебе следить за всеми новостями твоего любимого вуза!',
+                     'Привет! Я бот, который поможет тебе следить за всеми новостями твоего любимого ВУЗа!',
                      reply_markup=markup_start)
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def news_source(message):
+    database = sqlite3.connect('HSE_BOT_DB.sqlite')
+    db = database.cursor()
+
     global vk_arr, group_id_arr
 
     def print_vk_sub(msg, last_post_date):
@@ -89,6 +108,9 @@ def news_source(message):
 
     if message.text == 'Сбросить группы':
         group_id_arr = []
+        db.execute("UPDATE Users SET group_1 = 0, group_2 = 0, group_3 = 0, group_4 = 0, group_5 = 0, group_6 = 0 "
+                   " WHERE id = ?", (message.chat.id,))
+        database.commit()
         bot.send_message(message.chat.id, 'Группы были сброшены', reply_markup=markup_settings)
     if message.text == 'Остановить подписку':
         global sub_is_active
@@ -99,37 +121,67 @@ def news_source(message):
         bot.send_message(message.chat.id, 'Добро пожаловать в главное меню!', reply_markup=markup_start)
 
     if message.text == 'HSE Official VK Group':
-        if '25205856' not in group_id_arr:
+        db.execute("SELECT id FROM Users WHERE group_1 = 1")
+        check_group = db.fetchall()
+        # if '25205856' not in group_id_arr:
+        if not check_group:
+            db.execute("UPDATE Users SET group_1 = 1 WHERE id = ?", (message.chat.id,))
+            database.commit()
             group_id_arr.append('25205856')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'The Вышка':
-        if '66036248' not in group_id_arr:
+        db.execute("SELECT id FROM Users WHERE group_2 = 1")
+        check_group = db.fetchall()
+        # if '66036248' not in group_id_arr:
+        if not check_group:
+            db.execute("UPDATE Users SET group_2 = 1 WHERE id = ?", (message.chat.id,))
+            database.commit()
             group_id_arr.append('66036248')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'THE WALL':
-        if '88139611' not in group_id_arr:
+        db.execute("SELECT id FROM Users WHERE group_3 = 1")
+        check_group = db.fetchall()
+        # if '88139611' not in group_id_arr:
+        if not check_group:
+            db.execute("UPDATE Users SET group_3 = 1 WHERE id = ?", (message.chat.id,))
+            database.commit()
             group_id_arr.append('88139611')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'HSE Press':
-        if '42501618' not in group_id_arr:
+        db.execute("SELECT id FROM Users WHERE group_4 = 1")
+        check_group = db.fetchall()
+        # if '42501618' not in group_id_arr:
+        if not check_group:
+            db.execute("UPDATE Users SET group_4 = 1 WHERE id = ?", (message.chat.id,))
+            database.commit()
             group_id_arr.append('42501618')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'Ингруп СтС НИУ ВШЭ':
-        if '15922668' not in group_id_arr:
+        db.execute("SELECT id FROM Users WHERE group_5 = 1")
+        check_group = db.fetchall()
+        # if '15922668' not in group_id_arr:
+        if not check_group:
+            db.execute("UPDATE Users SET group_5 = 1 WHERE id = ?", (message.chat.id,))
+            database.commit()
             group_id_arr.append('15922668')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
             bot.send_message(message.chat.id, message.text + ' уже была выбрана')
     if message.text == 'ТелеВышка':
-        if '35385290' not in group_id_arr:
+        db.execute("SELECT id FROM Users WHERE group_5 = 1")
+        check_group = db.fetchall()
+        # if '35385290' not in group_id_arr:
+        if not check_group:
+            db.execute("UPDATE Users SET group_6 = 1 WHERE id = ?", (message.chat.id,))
+            database.commit()
             group_id_arr.append('35385290')
             bot.send_message(message.chat.id, 'Ты выбрал ' + message.text, reply_markup=markup)
         else:
@@ -153,7 +205,8 @@ def news_source(message):
         else:
             bot.send_message(message.chat.id, 'Ты не выбрал группу')
     elif message.text == 'Назад':
-        bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"',
+                         reply_markup=markup)
 
 
 def vkfunction(vk_id_arr):
