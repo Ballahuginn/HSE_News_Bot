@@ -46,6 +46,26 @@ def get_post():
     database = sqlite3.connect('HSE_BOT_DB.sqlite')
     db = database.cursor()
 
+    for i in groups:
+        print(i[1])
+        db.execute("SELECT MAX(p_date) FROM Posts WHERE gid = ?", (str(i[0]),))
+        last_post = db.fetchall()
+        for j in last_post:
+            print(j)
+        db.execute("SELECT u.id FROM Users as u, UsersGroups as ug WHERE u.id = ug.uid AND u.is_sub = 1 AND ug.gid = ?",
+                   (str(i[0]),))
+        sub_users = db.fetchall()
+        print(sub_users)
+        posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
+        for p in posts['items']:
+            if type(p) != int:
+                if 'id' in p:
+                    if int(p['date']) > int(last_post[0][0]):
+                        print('new post')
+                        link = 'https://vk.com/wall-' + i[0] + '_' + str(p['id'])
+                        for u in sub_users:
+                            bot.send_message(u[0], link)
+
     db.execute("DELETE FROM Posts")
 
     for i in groups:
@@ -53,17 +73,11 @@ def get_post():
         for _k in posts['items']:
             if type(_k) != int:
                 if 'id' in _k:
-                    db.execute("INSERT INTO Posts (id, gid, date) VALUES (?, ?, ?)",
+                    db.execute("INSERT INTO Posts (id, gid, p_date) VALUES (?, ?, ?)",
                                (str(i[0]) + '_' + str(_k['id']), str(i[0]), str(_k['date'])))
-                    # db.execute("SELECT * FROM Posts WHERE id = ?", (str(i[0])+'_'+str(_k['id']),))
-                    # post_in_table = db.fetchall()
-                    # if not post_in_table:
-                    #     db.execute("INSERT INTO Posts (id, gid, date) VALUES (?, ?, ?)",
-                    #                (str(i[0]) + '_' + str(_k['id']), str(i[0]), str(_k['date'])))
-                    #     database.commit()
+
     database.commit()
     database.close()
-    print('test')
     t = threading.Timer(60, get_post)
     t.start()
 
@@ -88,7 +102,7 @@ def send_welcome(message):
     db.execute("SELECT id FROM Users WHERE id = ?", (message.chat.id,))
     check_user = db.fetchall()
     if not check_user:
-        db.execute("INSERT INTO Users (id) VALUES (?)", (message.chat.id,))
+        db.execute("INSERT INTO Users (id, reg_date) VALUES (?, datetime('now', 'localtime'))", (message.chat.id,))
         database.commit()
         database.close()
     print(bot.get_chat(message.chat.id))
@@ -117,9 +131,14 @@ def news_source(message):
         database.commit()
         bot.send_message(message.chat.id, 'Группы были сброшены', reply_markup=markup_settings)
     if message.text == 'Остановить подписку':
-        global sub_is_active
-        sub_is_active = False
-        bot.send_message(message.chat.id, 'Ты отписался от получения новостей', reply_markup=markup_settings)
+        db.execute("SELECT id FROM Users WHERE id = ? AND is_sub = 1", (message.chat.id,))
+        subsc = db.fetchall()
+        if subsc:
+            db.execute("UPDATE Users SET is_sub = 0 WHERE id = ?", (message.chat.id,))
+            database.commit()
+            bot.send_message(message.chat.id, 'Ты отписался от обновлений')
+        else:
+            bot.send_message(message.chat.id, 'А ты и не был подписан на обновления :)')
 
     if message.text == 'Главное меню':
         bot.send_message(message.chat.id, 'Добро пожаловать в главное меню!', reply_markup=markup_start)
@@ -139,13 +158,14 @@ def news_source(message):
         else:
             bot.send_message(message.chat.id, 'Ты не выбрал группу')
     if message.text == 'Подписаться на обновления':
-        if group_id_arr:
-            last_post = vk_start_sub(group_id_arr)
-            bot.send_message(message.chat.id, 'Ты подписался на уведомления!')
-            sub_is_active = True
-            print_vk_sub(message, last_post)
+        db.execute("SELECT id FROM Users WHERE id = ? AND is_sub = 0", (message.chat.id,))
+        subsc = db.fetchall()
+        if subsc:
+            db.execute("UPDATE Users SET is_sub = 1 WHERE id = ?", (message.chat.id,))
+            database.commit()
+            bot.send_message(message.chat.id, 'Ты подписался на обновления')
         else:
-            bot.send_message(message.chat.id, 'Ты не выбрал группу')
+            bot.send_message(message.chat.id, 'Ты уже подписан на обновления')
     elif message.text == 'Назад':
         bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"',
                          reply_markup=markup)
@@ -177,7 +197,7 @@ def five_last_posts(msg):
     dtbs_c = dtbs.cursor()
 
     dtbs_c.execute("SELECT p.id FROM Posts as p, UsersGroups as ug WHERE ug.uid = ? AND ug.gid = p .gid "
-                   "ORDER BY p.date DESC ", (msg.chat.id,))
+                   "ORDER BY p.p_date DESC ", (msg.chat.id,))
     flp = dtbs_c.fetchall()
     for i in flp:
         link = 'https://vk.com/wall-' + str(i[0])
@@ -188,71 +208,6 @@ def five_last_posts(msg):
 
     dtbs.close()
     return arr_link
-
-
-def vk_start_sub(id_vk):
-    last_post = []
-    for _j in id_vk:
-        group = vk_api.wall.get(owner_id='-' + _j, count=2, filter='owner')
-        post_count = 0
-        for _p in group['items']:
-            if type(_p) != int:
-                if 'is_pinned' not in _p and post_count < 1:
-                    last_post.append(_p['date'])
-                    post_count += 1
-
-    return last_post
-
-
-def vk_sub(id_vk, last_post_date):
-    main_list = []
-    _pd = 0
-    for _j in id_vk:
-        group = vk_api.wall.get(owner_id='-' + _j, count=6, filter='owner')
-        post_count = 0
-        last_posts = []
-        for _p in group['items']:
-            if type(_p) != int:
-                if 'is_pinned' not in _p and post_count < 5 and last_post_date[_pd]:
-                    post_count += 1
-                    if int(_p['date']) > int(last_post_date[_pd]):
-                        last_posts.append(str(_p['date']))
-                        link = 'https://vk.com/wall-' + _j + '_' + str(_p['id'])
-                        print(link)
-                        last_posts.append(link)
-
-        main_list.append(last_posts)
-        _pd += 1
-    print(main_list)
-    return main_list
-
-
-def print_vk_sub(msg, last_post_date):
-    last_posts = vk_sub(group_id_arr, last_post_date)
-    last_dates = []
-    ret_dates = []
-    for j in last_posts:
-        if j:
-            last_dates.append(j[0])
-            print(last_posts)
-            for i in range(1, len(j), 2):
-                bot.send_message(msg.chat.id, j[i])
-        elif not j:
-            last_dates.append(None)
-
-    for k in range(0, len(last_post_date)):
-        if last_dates[k] is not None:
-            print(last_dates[k])
-            ret_dates.append(last_dates[k])
-        else:
-            print(last_post_date[k])
-            ret_dates.append(last_post_date[k])
-
-    print(ret_dates)
-    t = threading.Timer(3, print_vk_sub, [msg, ret_dates])
-    t.start()
-    if not sub_is_active:
-        t.cancel()
 
 
 if __name__ == '__main__':
