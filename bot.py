@@ -15,11 +15,6 @@ bot = telebot.TeleBot('TOKEN')
 session = vk.Session()
 vk_api = vk.API(session, v='5.59')
 
-vk_arr = []
-group_id_arr = []
-vk_id = ['9793010', '20707740', '261222034']
-sub_is_active = False
-
 
 markup_start = types.ReplyKeyboardMarkup()
 markup_settings = types.ReplyKeyboardMarkup()
@@ -42,6 +37,25 @@ for i in groups:
     markup.row(i[1])
 
 
+def post_texts(vk_post):
+    if 'text' in vk_post:
+        psttxt = []
+        mas = vk_post['text']
+        mas1 = mas.split(' ')
+        if len(mas1) < 5:
+            for r in mas1:
+                psttxt.append(r)
+        else:
+            v = mas1[4]
+            if v[-1] == ',' or v[-1] == ':' or v[-1] == ';' or v[-1] == '-':
+                psttxt.extend((mas1[0], ' ', mas1[1], ' ', mas1[2], ' ', mas1[3], ' ', v[:-1], '...'))
+            elif v[-1] == '!' or v[-1] == '?' or v[-1] == '.':
+                psttxt.extend((mas1[0], ' ', mas1[1], ' ', mas1[2], ' ', mas1[3], ' ', mas1[4]))
+            else:
+                psttxt.extend((mas1[0], ' ', mas1[1], ' ', mas1[2], ' ', mas1[3], ' ', mas1[4], '...'))
+    return ''.join(psttxt)
+
+
 def get_post():
     database = sqlite3.connect('HSE_BOT_DB.sqlite')
     db = database.cursor()
@@ -61,8 +75,9 @@ def get_post():
             if type(p) != int:
                 if 'id' in p:
                     if int(p['date']) > int(last_post[0][0]):
+                        txt = post_texts(p)
                         print('new post')
-                        link = 'https://vk.com/wall-' + i[0] + '_' + str(p['id'])
+                        link = str(i[1]) + '\n' + txt + '\n' + 'https://vk.com/wall-' + i[0] + '_' + str(p['id'])
                         for u in sub_users:
                             bot.send_message(u[0], link)
 
@@ -73,8 +88,9 @@ def get_post():
         for _k in posts['items']:
             if type(_k) != int:
                 if 'id' in _k:
-                    db.execute("INSERT INTO Posts (id, gid, p_date) VALUES (?, ?, ?)",
-                               (str(i[0]) + '_' + str(_k['id']), str(i[0]), str(_k['date'])))
+                    txt = post_texts(_k)
+                    db.execute("INSERT INTO Posts (id, gid, p_date, p_text) VALUES (?, ?, ?, ?)",
+                               (str(i[0]) + '_' + str(_k['id']), str(i[0]), str(_k['date']), str(txt)))
 
     database.commit()
     database.close()
@@ -116,8 +132,6 @@ def news_source(message):
     database = sqlite3.connect('HSE_BOT_DB.sqlite')
     db = database.cursor()
 
-    global vk_arr, group_id_arr
-
     if message.text == 'Выбрать группы':
         bot.send_message(message.chat.id, 'Выбери группы, откуда ты хочешь получать новости, а затем нажми "Ок"',
                          reply_markup=markup)
@@ -126,7 +140,6 @@ def news_source(message):
         bot.send_message(message.chat.id, 'Выбери, что ты хочешь изменить', reply_markup=markup_settings)
 
     if message.text == 'Сбросить группы':
-        group_id_arr = []
         db.execute("DELETE FROM UsersGroups WHERE uid = ?", (message.chat.id,))
         database.commit()
         bot.send_message(message.chat.id, 'Группы были сброшены', reply_markup=markup_settings)
@@ -182,7 +195,6 @@ def group_selection(msg, grp_id):
         print(msg.chat.id)
         dtbs_c.execute("INSERT INTO UsersGroups VALUES(?, ?)", (msg.chat.id, grp_id,))
         dtbs.commit()
-        group_id_arr.append(grp_id)
         bot.send_message(msg.chat.id, 'Ты выбрал ' + msg.text)
     else:
         bot.send_message(msg.chat.id, msg.text + ' уже была выбрана')
@@ -196,11 +208,13 @@ def five_last_posts(msg):
     dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
     dtbs_c = dtbs.cursor()
 
-    dtbs_c.execute("SELECT p.id FROM Posts as p, UsersGroups as ug WHERE ug.uid = ? AND ug.gid = p .gid "
+    dtbs_c.execute("SELECT p.id, g.name, p.p_text FROM Posts as p, UsersGroups as ug, Groups as g "
+                   "WHERE ug.uid = ? AND ug.gid = p.gid AND ug.gid = g.id "
                    "ORDER BY p.p_date DESC ", (msg.chat.id,))
     flp = dtbs_c.fetchall()
     for i in flp:
-        link = 'https://vk.com/wall-' + str(i[0])
+        print(i)
+        link = str(i[1]) + '\n' + i[2] + '\n' + 'https://vk.com/wall-' + str(i[0])
         if link_count < 5:
             arr_link.append(link)
             link_count += 1
