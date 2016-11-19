@@ -1,19 +1,21 @@
 import vk
+import feedparser
 import telebot
 import sqlite3
 import time
+import datetime
 import threading
 from telebot import types
+import bot_modules
 
 
-databasem = sqlite3.connect('HSE_BOT_DB.sqlite')
-
-dbm = databasem.cursor()
-
-bot = telebot.TeleBot('TOKEN')
+bot = telebot.TeleBot('237770898:AAGX-2hK_05G9y9ehzUBhJy1dB8MzsRB3fc')
 
 session = vk.Session()
 vk_api = vk.API(session, v='5.59')
+
+databasem = sqlite3.connect('HSE_BOT_DB.sqlite')
+dbm = databasem.cursor()
 
 
 markup_start = types.ReplyKeyboardMarkup()
@@ -36,75 +38,16 @@ groups = dbm.fetchall()
 for i in groups:
     markup.row(i[1])
 
-
-def post_texts(vk_post):
-    if 'text' in vk_post:
-        psttxt = []
-        mas = vk_post['text']
-        mas1 = mas.split(' ')
-        if len(mas1) < 5:
-            for r in mas1:
-                psttxt.append(r)
-        else:
-            v = mas1[4]
-            if v[-1] == ',' or v[-1] == ':' or v[-1] == ';' or v[-1] == '-':
-                psttxt.extend((mas1[0], ' ', mas1[1], ' ', mas1[2], ' ', mas1[3], ' ', v[:-1], '...'))
-            elif v[-1] == '!' or v[-1] == '?' or v[-1] == '.':
-                psttxt.extend((mas1[0], ' ', mas1[1], ' ', mas1[2], ' ', mas1[3], ' ', mas1[4]))
-            else:
-                psttxt.extend((mas1[0], ' ', mas1[1], ' ', mas1[2], ' ', mas1[3], ' ', mas1[4], '...'))
-    return ''.join(psttxt)
-
-
-def get_post():
-    database = sqlite3.connect('HSE_BOT_DB.sqlite')
-    db = database.cursor()
-
-    for i in groups:
-        print(i[1])
-        db.execute("SELECT MAX(p_date) FROM Posts WHERE gid = ?", (str(i[0]),))
-        last_post = db.fetchall()
-        for j in last_post:
-            print(j)
-        db.execute("SELECT u.id FROM Users as u, UsersGroups as ug WHERE u.id = ug.uid AND u.is_sub = 1 AND ug.gid = ?",
-                   (str(i[0]),))
-        sub_users = db.fetchall()
-        print(sub_users)
-        posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
-        for p in posts['items']:
-            if type(p) != int:
-                if 'id' in p:
-                    if int(p['date']) > int(last_post[0][0]):
-                        txt = post_texts(p)
-                        print('new post')
-                        link = str(i[1]) + '\n' + txt + '\n' + 'https://vk.com/wall-' + i[0] + '_' + str(p['id'])
-                        for u in sub_users:
-                            bot.send_message(u[0], link)
-
-    db.execute("DELETE FROM Posts")
-
-    for i in groups:
-        posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
-        for _k in posts['items']:
-            if type(_k) != int:
-                if 'id' in _k:
-                    txt = post_texts(_k)
-                    db.execute("INSERT INTO Posts (id, gid, p_date, p_text) VALUES (?, ?, ?, ?)",
-                               (str(i[0]) + '_' + str(_k['id']), str(i[0]), str(_k['date']), str(txt)))
-
-    database.commit()
-    database.close()
-    t = threading.Timer(60, get_post)
-    t.start()
-
-
-get_post()
+# bot_modules.get_rss_post()
+#
+# bot_modules.get_vk_post()
 
 
 markup.row('Ok')
 markup.row('Главное меню')
 
 markup1.row('5 последних постов')
+markup1.row('5 последних постов из RSS')
 markup1.row('Подписаться на обновления')
 # markup1.row('Выбрать интересующие категории')
 markup1.row('Назад')
@@ -158,18 +101,27 @@ def news_source(message):
 
     for j in groups:
         if message.text == str(j[1]):
-            group_selection(message, str(j[0]))
+            bot_modules.group_selection(message, str(j[0]))
 
     if message.text == 'Ok':
         bot.send_message(message.chat.id, 'Что ты хочешь получить?', reply_markup=markup1)
 
     if message.text == '5 последних постов':
-        vk_arr = five_last_posts(message)
+        vk_arr = bot_modules.five_last_posts(message)
         if vk_arr:
             for _i in vk_arr:
                 bot.send_message(message.chat.id, _i)
         else:
             bot.send_message(message.chat.id, 'Ты не выбрал группу')
+
+    if message.text == '5 последних постов из RSS':
+        rss_arr = bot_modules.five_last_rss(message)
+        if rss_arr:
+            for _i in rss_arr:
+                bot.send_message(message.chat.id, _i)
+        else:
+            bot.send_message(message.chat.id, 'Ты не выбрал RSS')
+
     if message.text == 'Подписаться на обновления':
         db.execute("SELECT id FROM Users WHERE id = ? AND is_sub = 0", (message.chat.id,))
         subsc = db.fetchall()
@@ -182,46 +134,6 @@ def news_source(message):
     elif message.text == 'Назад':
         bot.send_message(message.chat.id, 'Выбери, откуда ты хочешь получить новости, а затем нажми "Ок"',
                          reply_markup=markup)
-
-
-def group_selection(msg, grp_id):
-    dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
-    dtbs_c = dtbs.cursor()
-
-    dtbs_c.execute("SELECT gid FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-    check_group = dtbs_c.fetchall()
-    print(check_group)
-    if not check_group:
-        print(msg.chat.id)
-        dtbs_c.execute("INSERT INTO UsersGroups VALUES(?, ?)", (msg.chat.id, grp_id,))
-        dtbs.commit()
-        bot.send_message(msg.chat.id, 'Ты выбрал ' + msg.text)
-    else:
-        bot.send_message(msg.chat.id, msg.text + ' уже была выбрана')
-
-    dtbs.close()
-
-
-def five_last_posts(msg):
-    arr_link = []
-    link_count = 0
-    dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
-    dtbs_c = dtbs.cursor()
-
-    dtbs_c.execute("SELECT p.id, g.name, p.p_text FROM Posts as p, UsersGroups as ug, Groups as g "
-                   "WHERE ug.uid = ? AND ug.gid = p.gid AND ug.gid = g.id "
-                   "ORDER BY p.p_date DESC ", (msg.chat.id,))
-    flp = dtbs_c.fetchall()
-    for i in flp:
-        print(i)
-        link = str(i[1]) + '\n' + i[2] + '\n' + 'https://vk.com/wall-' + str(i[0])
-        if link_count < 5:
-            arr_link.append(link)
-            link_count += 1
-            print(link)
-
-    dtbs.close()
-    return arr_link
 
 
 if __name__ == '__main__':
