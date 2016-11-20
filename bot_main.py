@@ -1,10 +1,7 @@
 import vk
-import feedparser
 import telebot
 import sqlite3
 import time
-import datetime
-import threading
 from telebot import types
 import bot_modules
 
@@ -38,9 +35,9 @@ groups = dbm.fetchall()
 for i in groups:
     markup.row(i[1])
 
-# bot_modules.get_rss_post()
-#
-# bot_modules.get_vk_post()
+bot_modules.get_rss_post()
+
+bot_modules.get_vk_post(bot, vk_api)
 
 
 markup.row('Ok')
@@ -101,7 +98,7 @@ def news_source(message):
 
     for j in groups:
         if message.text == str(j[1]):
-            bot_modules.group_selection(message, str(j[0]))
+            bot_modules.group_selection(bot, message, str(j[0]))
 
     if message.text == 'Ok':
         bot.send_message(message.chat.id, 'Что ты хочешь получить?', reply_markup=markup1)

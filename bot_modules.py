@@ -2,7 +2,6 @@ import sqlite3
 import datetime
 import threading
 import feedparser
-import bot_main
 
 
 Month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'June': '06',
@@ -68,7 +67,7 @@ def post_texts(vk_post):
     return ''.join(psttxt)
 
 
-def get_vk_post():
+def get_vk_post(bot, vk_api):
     database = sqlite3.connect('HSE_BOT_DB.sqlite')
     db = database.cursor()
 
@@ -80,7 +79,7 @@ def get_vk_post():
                    "WHERE u.id = ug.uid AND u.is_sub = 1 AND ug.gid = ?", (str(i[0]),))
         sub_users = db.fetchall()
         print(sub_users)
-        posts = bot_main.vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
+        posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
         for p in posts['items']:
             if type(p) != int:
                 if 'id' in p:
@@ -89,12 +88,12 @@ def get_vk_post():
                         print('new post')
                         link = str(i[1]) + '\n' + txt + '\n' + 'https://vk.com/wall-' + i[0] + '_' + str(p['id'])
                         for u in sub_users:
-                            bot_main.bot.send_message(u[0], link)
+                            bot.send_message(u[0], link)
 
     db.execute("DELETE FROM Posts")
 
     for i in vk_groups:
-        posts = bot_main.vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
+        posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
         for _k in posts['items']:
             if type(_k) != int:
                 if 'id' in _k:
@@ -104,11 +103,11 @@ def get_vk_post():
 
     database.commit()
     database.close()
-    t = threading.Timer(60, get_vk_post)
+    t = threading.Timer(60, get_vk_post, [bot, vk_api])
     t.start()
 
 
-def group_selection(msg, grp_id):
+def group_selection(bot, msg, grp_id):
     dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
     dtbs_c = dtbs.cursor()
 
@@ -119,9 +118,9 @@ def group_selection(msg, grp_id):
         print(msg.chat.id)
         dtbs_c.execute("INSERT INTO UsersGroups VALUES(?, ?)", (msg.chat.id, grp_id,))
         dtbs.commit()
-        bot_main.bot.send_message(msg.chat.id, 'Ты выбрал ' + msg.text)
+        bot.send_message(msg.chat.id, 'Ты выбрал ' + msg.text)
     else:
-        bot_main.bot.send_message(msg.chat.id, msg.text + ' уже была выбрана')
+        bot.send_message(msg.chat.id, msg.text + ' уже была выбрана')
 
     dtbs.close()
 
