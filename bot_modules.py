@@ -18,9 +18,34 @@ dbm.execute("SELECT * FROM Groups WHERE id NOT LIKE 'rss%'")
 vk_groups = dbm.fetchall()
 
 
-def get_rss_post():
+def get_rss_post(bot):
     database = sqlite3.connect('HSE_BOT_DB.sqlite')
     db = database.cursor()
+
+    for i in rss_groups:
+        print(i[1])
+        db.execute("SELECT MAX(rss_date) FROM RSS WHERE rss_id = ?", (str(i[0]),))
+        last_post = db.fetchall()
+        db.execute("SELECT u.id FROM Users as u, UsersGroups as ug "
+                   "WHERE u.id = ug.uid AND u.is_sub = 1 AND ug.gid = ?", (str(i[0]),))
+        sub_users = db.fetchall()
+        print(sub_users)
+        rss = feedparser.parse(i[2])
+        entr = rss['entries']
+        for g in entr:
+            t = g['published'].split(' ')
+            if t[2] in Month:
+                t[2] = Month[t[2]]
+            rssdate = t[1:4]
+            for t in t[4].split(':'):
+                rssdate.append(t)
+            rssdate = '/'.join(rssdate)
+            utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
+            if int(utime) > int(last_post[0][0]):
+                link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
+                print(link)
+                for u in sub_users:
+                    bot.send_message(u[0], link)
 
     db.execute("DELETE FROM RSS")
 
@@ -28,13 +53,10 @@ def get_rss_post():
         rss = feedparser.parse(i[2])
         entr = rss['entries']
         for g in entr:
-            print(g['title'])
-            print(g['links'][0]['href'])
             t = g['published'].split(' ')
             if t[2] in Month:
                 t[2] = Month[t[2]]
             rssdate = t[1:4]
-            print(rssdate)
             for t in t[4].split(':'):
                 rssdate.append(t)
             rssdate = '/'.join(rssdate)
@@ -110,18 +132,71 @@ def get_vk_post(bot, vk_api):
 def group_selection(bot, msg, grp_id):
     dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
     dtbs_c = dtbs.cursor()
+    dtbs_c.execute("SELECT bcond FROM Users WHERE id = ?", (msg.chat.id,))
+    bot_condition = dtbs_c.fetchall()
+    print(bot_condition[0][0])
+    if bot_condition[0][0] == 2:
+        print('test')
+        dtbs_c.execute("SELECT * FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
+        check_group = dtbs_c.fetchall()
+        print(check_group)
+        if not check_group:
+            print(msg.chat.id)
+            dtbs_c.execute("INSERT INTO UsersGroups (uid, gid, upget) VALUES (?, ?, 1)", (msg.chat.id, grp_id,))
+            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
+        else:
+            if check_group[0][2] == 0:
+                dtbs_c.execute("UPDATE UsersGroups SET upget = 1 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
+                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
+            else:
+                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана')
+    if bot_condition[0][0] == 4:
+        dtbs_c.execute("SELECT * FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
+        check_group = dtbs_c.fetchall()
+        print(check_group)
+        if not check_group:
+            print(msg.chat.id)
+            dtbs_c.execute("INSERT INTO UsersGroups (uid, gid, fetget) VALUES (?, ?, 1)", (msg.chat.id, grp_id,))
+            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
+        else:
+            print(check_group[0][3])
+            if check_group[0][3] == 0:
+                dtbs_c.execute("UPDATE UsersGroups SET fetget = 1 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
+                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
+            else:
+                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана')
 
-    dtbs_c.execute("SELECT gid FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-    check_group = dtbs_c.fetchall()
-    print(check_group)
-    if not check_group:
-        print(msg.chat.id)
-        dtbs_c.execute("INSERT INTO UsersGroups VALUES(?, ?)", (msg.chat.id, grp_id,))
-        dtbs.commit()
-        bot.send_message(msg.chat.id, 'Ты выбрал ' + msg.text)
-    else:
-        bot.send_message(msg.chat.id, msg.text + ' уже была выбрана')
+    dtbs.commit()
+    dtbs.close()
 
+
+def group_unselection(bot, msg, grp_id):
+    dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
+    dtbs_c = dtbs.cursor()
+    dtbs_c.execute("SELECT bcond FROM Users WHERE id = ?", (msg.chat.id,))
+    bot_condition = dtbs_c.fetchall()
+    if bot_condition[0][0] == 1:
+        dtbs_c.execute("SELECT gid FROM UsersGroups WHERE gid = ? AND uid =? AND upget = 1", (grp_id, msg.chat.id,))
+        check_group = dtbs_c.fetchall()
+        print(check_group)
+        if check_group:
+            print(msg.chat.id)
+            dtbs_c.execute("DELETE FROM UsersGroups WHERE uid = ? AND gid = ?", (msg.chat.id, grp_id,))
+            dtbs.commit()
+            bot.send_message(msg.chat.id, 'Ты отписался ' + msg.text)
+        else:
+            bot.send_message(msg.chat.id, msg.text + ' уже была выбрана')
+    if bot_condition[0][0] == 3:
+        dtbs_c.execute("SELECT gid FROM UsersGroups WHERE gid = ? AND uid = ? AND fetget = 1", (grp_id, msg.chat.id,))
+        check_group = dtbs_c.fetchall()
+        print(check_group)
+        if check_group:
+            print(msg.chat.id)
+            dtbs_c.execute("DELETE FROM UsersGroups WHERE uid = ? AND gid = ?", (msg.chat.id, grp_id,))
+            dtbs.commit()
+            bot.send_message(msg.chat.id, 'Ты отписался ' + msg.text)
+        else:
+            bot.send_message(msg.chat.id, msg.text + ' уже была выбрана')
     dtbs.close()
 
 
