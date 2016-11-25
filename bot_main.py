@@ -5,7 +5,7 @@ import time
 from telebot import types
 import bot_modules
 
-bot = telebot.TeleBot('281761912:AAErjD0U7krOu6-8-j96rzpIC1xDLjF8dLs')
+bot = telebot.TeleBot('')
 
 session = vk.Session()
 vk_api = vk.API(session, v='5.59')
