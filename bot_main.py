@@ -68,6 +68,8 @@ def send_welcome(message):
                          reply_markup=markup_start)
     else:
         bot.send_message(message.chat.id, 'Добро пожаловать. Снова.', reply_markup=markup_start)
+
+
 # @bot.message_handler(func=lambda message: True, content_types=['sticker'])
 # def stckr(message):
 #     print(message)
@@ -134,7 +136,9 @@ def news_source(message):
         else:
             bot.send_message(message.chat.id, 'Ты подписан на все группы', reply_markup=markup)
 
-    # if message.text == 'OK':
+    if message.text == 'ОК':
+        db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
+        database.commit()
 
     if message.text == 'Назад':
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))

@@ -135,6 +135,15 @@ def group_selection(bot, msg, grp_id):
     dtbs_c.execute("SELECT bcond FROM Users WHERE id = ?", (msg.chat.id,))
     bot_condition = dtbs_c.fetchall()
     print(bot_condition[0][0])
+
+    if bot_condition[0][0] == 1:
+        dtbs_c.execute("SELECT gid FROM UsersGroups WHERE gid = ? AND uid =? AND upget = 1", (grp_id, msg.chat.id,))
+        check_group = dtbs_c.fetchall()
+        print(check_group)
+        if check_group:
+            print(msg.chat.id)
+            dtbs_c.execute("DELETE FROM UsersGroups WHERE uid = ? AND gid = ?", (msg.chat.id, grp_id,))
+
     if bot_condition[0][0] == 2:
         print('test')
         dtbs_c.execute("SELECT * FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
@@ -150,6 +159,18 @@ def group_selection(bot, msg, grp_id):
                 bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
             else:
                 bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана')
+
+    if bot_condition[0][0] == 3:
+        dtbs_c.execute("SELECT gid FROM UsersGroups WHERE gid = ? AND uid = ? AND fetget = 1", (grp_id, msg.chat.id,))
+        check_group = dtbs_c.fetchall()
+        print(check_group)
+        if check_group:
+            print(msg.chat.id)
+            dtbs_c.execute("DELETE FROM UsersGroups WHERE uid = ? AND gid = ?", (msg.chat.id, grp_id,))
+            bot.send_message(msg.chat.id, 'Ты отписался от "' + msg.text + '"')
+        else:
+            bot.send_message(msg.chat.id, 'Ты не был подписан на "' + msg.text + '"')
+
     if bot_condition[0][0] == 4:
         dtbs_c.execute("SELECT * FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
         check_group = dtbs_c.fetchall()
@@ -170,34 +191,13 @@ def group_selection(bot, msg, grp_id):
     dtbs.close()
 
 
-def group_unselection(bot, msg, grp_id):
-    dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
-    dtbs_c = dtbs.cursor()
-    dtbs_c.execute("SELECT bcond FROM Users WHERE id = ?", (msg.chat.id,))
-    bot_condition = dtbs_c.fetchall()
-    if bot_condition[0][0] == 1:
-        dtbs_c.execute("SELECT gid FROM UsersGroups WHERE gid = ? AND uid =? AND upget = 1", (grp_id, msg.chat.id,))
-        check_group = dtbs_c.fetchall()
-        print(check_group)
-        if check_group:
-            print(msg.chat.id)
-            dtbs_c.execute("DELETE FROM UsersGroups WHERE uid = ? AND gid = ?", (msg.chat.id, grp_id,))
-            dtbs.commit()
-            bot.send_message(msg.chat.id, 'Ты отписался ' + msg.text)
-        else:
-            bot.send_message(msg.chat.id, msg.text + ' уже была выбрана')
-    if bot_condition[0][0] == 3:
-        dtbs_c.execute("SELECT gid FROM UsersGroups WHERE gid = ? AND uid = ? AND fetget = 1", (grp_id, msg.chat.id,))
-        check_group = dtbs_c.fetchall()
-        print(check_group)
-        if check_group:
-            print(msg.chat.id)
-            dtbs_c.execute("DELETE FROM UsersGroups WHERE uid = ? AND gid = ?", (msg.chat.id, grp_id,))
-            dtbs.commit()
-            bot.send_message(msg.chat.id, 'Ты отписался ' + msg.text)
-        else:
-            bot.send_message(msg.chat.id, msg.text + ' уже была выбрана')
-    dtbs.close()
+# def group_unselection(bot, msg, grp_id):
+#     dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
+#     dtbs_c = dtbs.cursor()
+#     dtbs_c.execute("SELECT bcond FROM Users WHERE id = ?", (msg.chat.id,))
+#     bot_condition = dtbs_c.fetchall()
+#
+#     dtbs.close()
 
 
 def five_last_posts(msg):
