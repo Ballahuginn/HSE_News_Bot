@@ -168,8 +168,9 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
             bot.send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости, как только они '
                                               'выходят, а затем нажми "Завершить"', reply_markup=markup)
         else:
-            bot.send_message(message.chat.id, 'Ты НЕ подписан на получение новостей по запросу', reply_markup=markup)
-            bot_modules.press_done(db, database, message, bot, types)
+            bot.send_message(message.chat.id, 'Ты НЕ подписан на получение новостей по запросу')
+            markup = bot_modules.press_done(db, database, message, types)
+            bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
 
     if bot_condition[0][0] == 2:
         db.execute("UPDATE Users SET bcond = 4 WHERE id = ?", (message.chat.id,))
@@ -191,21 +192,22 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
                                               ', а затем нажми Завершить', reply_markup=markup)
         else:
             bot.send_message(message.chat.id, 'Ты подписан на все группы для получения новостей '
-                                              'по запросу', reply_markup=markup)
-            bot_modules.press_done(db, database, message, bot, types)
+                                              'по запросу')
+            markup = bot_modules.press_done(db, database, message, types)
+            bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
 
 
 def press_done(db, database, message, types):
     db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
     database.commit()
-    markup = types.ReplyKeyboardMarkup()
-    markup.row('5 последних постов')
-    markup.row('5 последних постов из RSS')
-    markup.row('Настройки')
-    markup.row('О проекте')
-    markup.row('Оставить пожелания')
+    markup2 = types.ReplyKeyboardMarkup()
+    markup2.row('5 последних постов')
+    markup2.row('5 последних постов из RSS')
+    markup2.row('Настройки')
+    markup2.row('О проекте')
+    markup2.row('Оставить пожелания')
 
-    return markup
+    return markup2
 
 
 def group_selection(bot, msg, grp_id, bot_condition):
