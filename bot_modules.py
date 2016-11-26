@@ -27,7 +27,7 @@ def get_rss_post(bot):
         db.execute("SELECT MAX(rss_date) FROM RSS WHERE rss_id = ?", (str(i[0]),))
         last_post = db.fetchall()
         db.execute("SELECT u.id FROM Users as u, UsersGroups as ug "
-                   "WHERE u.id = ug.uid AND u.is_sub = 1 AND ug.gid = ?", (str(i[0]),))
+                   "WHERE u.id = ug.uid AND ug.upget = 1 AND ug.gid = ?", (str(i[0]),))
         sub_users = db.fetchall()
         print(sub_users)
         rss = feedparser.parse(i[2])
@@ -98,7 +98,7 @@ def get_vk_post(bot, vk_api):
         db.execute("SELECT MAX(p_date) FROM Posts WHERE gid = ?", (str(i[0]),))
         last_post = db.fetchall()
         db.execute("SELECT u.id FROM Users as u, UsersGroups as ug "
-                   "WHERE u.id = ug.uid AND u.is_sub = 1 AND ug.gid = ?", (str(i[0]),))
+                   "WHERE u.id = ug.uid AND ug.upget = 1 AND ug.gid = ?", (str(i[0]),))
         sub_users = db.fetchall()
         print(sub_users)
         posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
@@ -120,8 +120,10 @@ def get_vk_post(bot, vk_api):
             if type(_k) != int:
                 if 'id' in _k:
                     txt = post_texts(_k)
-                    db.execute("INSERT INTO Posts (id, gid, p_date, p_text) VALUES (?, ?, ?, ?)",
-                               (str(i[0]) + '_' + str(_k['id']), str(i[0]), str(_k['date']), str(txt)))
+                    db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
+                               "VALUES (?, ?, ?, ?, ?, ?)",
+                               (str(i[0]) + '_' + str(_k['id']), str(i[0]), str(_k['date']), str(txt),
+                               _k['likes']['count'], _k['reposts']['count']))
 
     database.commit()
     database.close()
@@ -178,6 +180,7 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         active_groups = db.fetchall()
         markup = types.ReplyKeyboardMarkup()
         markup.row('Завершить')
+        markup.row('Выбрать все')
         check_if_all = bot_modules.groups_as_buttons_sub(groups, active_groups, markup)
         if check_if_all > 0:
             if len(active_groups) != 0:
@@ -196,18 +199,18 @@ def press_done(db, database, message, bot, types):
     db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
     database.commit()
     markup = types.ReplyKeyboardMarkup()
-    markup.row("5 последних постов")
-    markup.row("Настройки")
-    markup.row("О проекте")
-    markup.row("Оставить пожелания")
-    bot.send_message(message.chat.id, 'Настройка завершена.', reply_markup=markup)
+    markup.row('5 последних постов')
+    markup.row('5 последних постов из RSS')
+    markup.row('Настройки')
+    markup.row('О проекте')
+    markup.row('Оставить пожелания')
+
+    return markup
 
 
-def group_selection(bot, msg, grp_id,bot_condition):
+def group_selection(bot, msg, grp_id, bot_condition):
     dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
     dtbs_c = dtbs.cursor()
-    #dtbs_c.execute("SELECT bcond FROM Users WHERE id = ?", (msg.chat.id,))
-    #bot_condition = dtbs_c.fetchall()
     dtbs_c.execute("SELECT * FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
     check_group = dtbs_c.fetchall()
     print(bot_condition[0][0])
@@ -265,15 +268,6 @@ def group_selection(bot, msg, grp_id,bot_condition):
     dtbs.close()
 
 
-# def group_unselection(bot, msg, grp_id):
-#     dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
-#     dtbs_c = dtbs.cursor()
-#     dtbs_c.execute("SELECT bcond FROM Users WHERE id = ?", (msg.chat.id,))
-#     bot_condition = dtbs_c.fetchall()
-#
-#     dtbs.close()
-
-
 def five_last_posts(msg):
     arr_link = []
     link_count = 0
@@ -281,16 +275,14 @@ def five_last_posts(msg):
     dtbs_c = dtbs.cursor()
 
     dtbs_c.execute("SELECT p.id, g.name, p.p_text FROM Posts as p, UsersGroups as ug, Groups as g "
-                   "WHERE ug.uid = ? AND ug.gid = p.gid AND ug.gid = g.id "
+                   "WHERE ug.uid = ? AND ug.gid = p.gid AND ug.gid = g.id AND ug.fetget = 1 "
                    "ORDER BY p.p_date DESC ", (msg.chat.id,))
     flp = dtbs_c.fetchall()
     for i in flp:
         link = str(i[1]) + '\n' + i[2] + '\n' + 'https://vk.com/wall-' + str(i[0])
         if link_count < 5:
-            print(i)
             arr_link.append(link)
             link_count += 1
-            print(link)
 
     dtbs.close()
     return arr_link
@@ -303,15 +295,13 @@ def five_last_rss(msg):
     dtbs_c = dtbs.cursor()
 
     dtbs_c.execute("SELECT g.name, rss.rss_title, rss.rss_link FROM Groups as g, RSS as rss, UsersGroups as ug"
-                   " WHERE ug.uid = ? AND ug.gid = rss.rss_id AND ug.gid = g.id "
+                   " WHERE ug.uid = ? AND ug.gid = rss.rss_id AND ug.gid = g.id AND ug.fetget = 1 "
                    "ORDER BY rss.rss_date DESC", (msg.chat.id,))
     last_rss = dtbs_c.fetchall()
     for i in last_rss:
         link = str(i[0]) + '\n' + i[1] + '\n' + i[2]
         if rss_count < 5:
-            print(i)
             arr_link.append(link)
             rss_count += 1
-            print(link)
 
     return arr_link
