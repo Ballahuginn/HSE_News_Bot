@@ -5,7 +5,7 @@ import time
 from telebot import types
 import bot_modules
 
-bot = telebot.TeleBot('281761912:AAErjD0U7krOu6-8-j96rzpIC1xDLjF8dLs')
+bot = telebot.TeleBot('')
 
 session = vk.Session()
 vk_api = vk.API(session, v='5.59')
@@ -21,9 +21,9 @@ markup_none = types.ReplyKeyboardHide()
 dbm.execute("SELECT * FROM Groups")
 groups = dbm.fetchall()
 
-#bot_modules.get_rss_post(bot)
+bot_modules.get_rss_post(bot)
 
-#bot_modules.get_vk_post(bot, vk_api)
+bot_modules.get_vk_post(bot, vk_api)
 
 
 @bot.message_handler(commands=['start'])
