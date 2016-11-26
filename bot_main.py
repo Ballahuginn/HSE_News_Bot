@@ -116,8 +116,9 @@ def news_source(message):
                 active_groups = db.fetchall()
                 check_if_all = bot_modules.groups_as_buttons_unsub(groups, active_groups, markup)
                 if check_if_all == 0:
-                    bot.send_message(message.chat.id, 'Ты НЕ подписан на все группы получать новости, '
-                                                      'как только они выходят', reply_markup=markup)
+                    bot.send_message(message.chat.id,
+                                     'Ты не подписан ни на одну группу для получения постоянных новостей',
+                                     reply_markup=markup)
                     bot_modules.press_next(db, database, message, groups, bot, bot_modules, types)
                 else:
                     bot.send_message(message.chat.id, 'Выбери группы или нажми "Далее"', reply_markup=markup)
@@ -146,7 +147,8 @@ def news_source(message):
                 if check_if_all == 0:
                     bot.send_message(message.chat.id, 'Ты НЕ подписан на получение новостей по запросу',
                                      reply_markup=markup)
-                    bot_modules.press_done(db, database, message, bot, types)
+                    markup = bot_modules.press_done(db, database, message, types)
+                    bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
                 else:
                     bot.send_message(message.chat.id, 'Выбери группы или нажми "Завершить"', reply_markup=markup)
             if bot_condition[0][0] == 4:
@@ -161,7 +163,8 @@ def news_source(message):
                 if check_if_all == 0:
                     bot.send_message(message.chat.id, 'Ты подписан на все группы для получения новостей '
                                                       'по запросу', reply_markup=markup)
-                    bot_modules.press_done(db, database, message, bot, types)
+                    markup = bot_modules.press_done(db, database, message, types)
+                    bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
                 else:
                     bot.send_message(message.chat.id, 'Выбери группы или нажми "Завершить"', reply_markup=markup)
 
@@ -178,7 +181,7 @@ def news_source(message):
             db.execute("UPDATE UsersGroups SET fetget = 0 WHERE uid = ?", (message.chat.id,))
             database.commit()
             bot.send_message(message.chat.id, 'Ты отписался от всех групп для получения новостей по запросу')
-            bot_modules.press_done(db, database, message, bot, types)
+            bot_modules.press_done(db, database, message, types)
 
     if message.text == 'Выбрать все':
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
@@ -212,7 +215,7 @@ def news_source(message):
         bot_modules.press_next(db, database, message, groups, bot, bot_modules, types)
 
     if message.text == 'Завершить':
-        markup = bot_modules.press_done(db, database, message, bot, types)
+        markup = bot_modules.press_done(db, database, message, types)
         bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
 
     if message.text == '5 последних постов':
@@ -239,7 +242,7 @@ def news_source(message):
         bot.send_message(message.chat.id, 'Выбери, что ты хочешь сделать', reply_markup=markup)
 
     if message.text == 'Главное меню':
-        markup = bot_modules.press_done(db, database, message, bot, types)
+        markup = bot_modules.press_done(db, database, message, types)
         bot.send_message(message.chat.id, 'Добро пожаловать в главное меню!', reply_markup=markup)
 
     if message.text == 'О проекте':
@@ -261,7 +264,7 @@ def news_source(message):
                        (message.chat.id, message.text))
             db.execute("UPDATE Users SET review = 0 WHERE id = ?", (message.chat.id,))
             database.commit()
-            markup = bot_modules.press_done(db, database, message, bot, types)
+            markup = bot_modules.press_done(db, database, message, types)
             bot.send_message(message.chat.id, 'Спасибо за отзыв! Твое мнение очень важно для нас!', reply_markup=markup)
 
 

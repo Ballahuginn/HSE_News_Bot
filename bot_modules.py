@@ -195,7 +195,7 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
             bot_modules.press_done(db, database, message, bot, types)
 
 
-def press_done(db, database, message, bot, types):
+def press_done(db, database, message, types):
     db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
     database.commit()
     markup = types.ReplyKeyboardMarkup()

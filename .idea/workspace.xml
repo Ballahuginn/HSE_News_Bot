@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fa830a63-66d8-4f4f-976d-538f4aab4fd4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HSE_BOT_DB.sqlite" afterPath="$PROJECT_DIR$/HSE_BOT_DB.sqlite" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/HSE_News_Bot.iml" afterPath="$PROJECT_DIR$/.idea/HSE_News_Bot.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot_main.py" afterPath="$PROJECT_DIR$/bot_main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot_modules.py" afterPath="$PROJECT_DIR$/bot_modules.py" />
     </list>
@@ -20,7 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/HSE_News_Bot$bot.coverage" NAME="bot Coverage Results" MODIFIED="1480170535069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HSE_News_Bot$bot.coverage" NAME="bot Coverage Results" MODIFIED="1480172956637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -38,32 +35,32 @@
               <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-                <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-                <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-                <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-                <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-                <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-                <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-                <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-                <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-                <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-                <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-                <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-                <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-                <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-                <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-                <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-                <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-                <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-                <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-                <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-                <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-                <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-                <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-                <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-                <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-                <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+                <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+                <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+                <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+                <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+                <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+                <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+                <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+                <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+                <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+                <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+                <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+                <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+                <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+                <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+                <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+                <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+                <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+                <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+                <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+                <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+                <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+                <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+                <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+                <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+                <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+                <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
               </folding>
             </state>
           </provider>
@@ -72,35 +69,35 @@
       <file leaf-file-name="bot_modules.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bot_modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3120">
-              <caret line="208" column="0" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
+            <state relative-caret-position="240">
+              <caret line="197" column="37" selection-start-line="197" selection-start-column="37" selection-end-line="197" selection-end-column="37" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1480170603000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
-                <marker date="1480170603000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
-                <marker date="1480170603000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
-                <marker date="1480170603000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
-                <marker date="1480170603000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
-                <marker date="1480170603000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
-                <marker date="1480170603000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
-                <marker date="1480170603000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
-                <marker date="1480170603000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
-                <marker date="1480170603000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
-                <marker date="1480170603000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
-                <marker date="1480170603000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
-                <marker date="1480170603000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
-                <marker date="1480170603000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
-                <marker date="1480170603000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
-                <marker date="1480170603000" expanded="true" signature="7997:8036" ph="UPDATE Users... " />
-                <marker date="1480170603000" expanded="true" signature="8466:8516" ph="SELECT * FRO... UsersGroups" />
-                <marker date="1480170603000" expanded="true" signature="8766:8823" ph="UPDATE Users... " />
-                <marker date="1480170603000" expanded="true" signature="9303:9361" ph="INSERT INTO UsersGroups... " />
-                <marker date="1480170603000" expanded="true" signature="9561:9618" ph="UPDATE Users... " />
-                <marker date="1480170603000" expanded="true" signature="10003:10061" ph="UPDATE Users... " />
-                <marker date="1480170603000" expanded="true" signature="10541:10600" ph="INSERT INTO UsersGroups... " />
-                <marker date="1480170603000" expanded="true" signature="10837:10895" ph="UPDATE Users... " />
-                <marker date="1480170603000" expanded="true" signature="11321:11537" ph="SELECT p.id,... Posts" />
-                <marker date="1480170603000" expanded="true" signature="11971:12209" ph="SELECT g.nam... Groups" />
+                <marker date="1480172954000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+                <marker date="1480172954000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+                <marker date="1480172954000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+                <marker date="1480172954000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+                <marker date="1480172954000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+                <marker date="1480172954000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+                <marker date="1480172954000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+                <marker date="1480172954000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+                <marker date="1480172954000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+                <marker date="1480172954000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+                <marker date="1480172954000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+                <marker date="1480172954000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+                <marker date="1480172954000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+                <marker date="1480172954000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
+                <marker date="1480172954000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
+                <marker date="1480172954000" expanded="true" signature="7992:8031" ph="UPDATE Users... " />
+                <marker date="1480172954000" expanded="true" signature="8461:8511" ph="SELECT * FRO... UsersGroups" />
+                <marker date="1480172954000" expanded="true" signature="8761:8818" ph="UPDATE Users... " />
+                <marker date="1480172954000" expanded="true" signature="9298:9356" ph="INSERT INTO UsersGroups... " />
+                <marker date="1480172954000" expanded="true" signature="9556:9613" ph="UPDATE Users... " />
+                <marker date="1480172954000" expanded="true" signature="9998:10056" ph="UPDATE Users... " />
+                <marker date="1480172954000" expanded="true" signature="10536:10595" ph="INSERT INTO UsersGroups... " />
+                <marker date="1480172954000" expanded="true" signature="10832:10890" ph="UPDATE Users... " />
+                <marker date="1480172954000" expanded="true" signature="11316:11532" ph="SELECT p.id,... Posts" />
+                <marker date="1480172954000" expanded="true" signature="11966:12204" ph="SELECT g.nam... Groups" />
               </folding>
             </state>
           </provider>
@@ -496,32 +493,32 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -532,31 +529,31 @@
           <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1480170603000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
-            <marker date="1480170603000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
-            <marker date="1480170603000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
-            <marker date="1480170603000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
-            <marker date="1480170603000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
-            <marker date="1480170603000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="7997:8036" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="8466:8516" ph="SELECT * FRO... UsersGroups" />
-            <marker date="1480170603000" expanded="true" signature="8766:8823" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="9303:9361" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="9561:9618" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10003:10061" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10541:10600" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="10837:10895" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="11321:11537" ph="SELECT p.id,... Posts" />
-            <marker date="1480170603000" expanded="true" signature="11971:12209" ph="SELECT g.nam... Groups" />
+            <marker date="1480172954000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480172954000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480172954000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480172954000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480172954000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480172954000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="7992:8031" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="8461:8511" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480172954000" expanded="true" signature="8761:8818" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9298:9356" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="9556:9613" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9998:10056" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="10536:10595" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="10832:10890" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="11316:11532" ph="SELECT p.id,... Posts" />
+            <marker date="1480172954000" expanded="true" signature="11966:12204" ph="SELECT g.nam... Groups" />
           </folding>
         </state>
       </provider>
@@ -567,32 +564,32 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -603,31 +600,31 @@
           <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="200" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1480170603000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
-            <marker date="1480170603000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
-            <marker date="1480170603000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
-            <marker date="1480170603000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
-            <marker date="1480170603000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
-            <marker date="1480170603000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="7997:8036" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="8466:8516" ph="SELECT * FRO... UsersGroups" />
-            <marker date="1480170603000" expanded="true" signature="8766:8823" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="9303:9361" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="9561:9618" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10003:10061" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10541:10600" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="10837:10895" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="11321:11537" ph="SELECT p.id,... Posts" />
-            <marker date="1480170603000" expanded="true" signature="11971:12209" ph="SELECT g.nam... Groups" />
+            <marker date="1480172954000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480172954000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480172954000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480172954000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480172954000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480172954000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="7992:8031" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="8461:8511" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480172954000" expanded="true" signature="8761:8818" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9298:9356" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="9556:9613" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9998:10056" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="10536:10595" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="10832:10890" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="11316:11532" ph="SELECT p.id,... Posts" />
+            <marker date="1480172954000" expanded="true" signature="11966:12204" ph="SELECT g.nam... Groups" />
           </folding>
         </state>
       </provider>
@@ -638,32 +635,32 @@
           <caret line="83" column="18" selection-start-line="83" selection-start-column="18" selection-end-line="83" selection-end-column="18" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -674,31 +671,31 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1480170603000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
-            <marker date="1480170603000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
-            <marker date="1480170603000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
-            <marker date="1480170603000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
-            <marker date="1480170603000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
-            <marker date="1480170603000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="7997:8036" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="8466:8516" ph="SELECT * FRO... UsersGroups" />
-            <marker date="1480170603000" expanded="true" signature="8766:8823" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="9303:9361" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="9561:9618" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10003:10061" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10541:10600" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="10837:10895" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="11321:11537" ph="SELECT p.id,... Posts" />
-            <marker date="1480170603000" expanded="true" signature="11971:12209" ph="SELECT g.nam... Groups" />
+            <marker date="1480172954000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480172954000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480172954000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480172954000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480172954000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480172954000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="7992:8031" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="8461:8511" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480172954000" expanded="true" signature="8761:8818" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9298:9356" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="9556:9613" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9998:10056" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="10536:10595" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="10832:10890" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="11316:11532" ph="SELECT p.id,... Posts" />
+            <marker date="1480172954000" expanded="true" signature="11966:12204" ph="SELECT g.nam... Groups" />
           </folding>
         </state>
       </provider>
@@ -709,32 +706,32 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -745,32 +742,32 @@
           <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -781,31 +778,31 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1480170603000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
-            <marker date="1480170603000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
-            <marker date="1480170603000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
-            <marker date="1480170603000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
-            <marker date="1480170603000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
-            <marker date="1480170603000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="7997:8036" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="8466:8516" ph="SELECT * FRO... UsersGroups" />
-            <marker date="1480170603000" expanded="true" signature="8766:8823" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="9303:9361" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="9561:9618" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10003:10061" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10541:10600" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="10837:10895" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="11321:11537" ph="SELECT p.id,... Posts" />
-            <marker date="1480170603000" expanded="true" signature="11971:12209" ph="SELECT g.nam... Groups" />
+            <marker date="1480172954000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480172954000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480172954000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480172954000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480172954000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480172954000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="7992:8031" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="8461:8511" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480172954000" expanded="true" signature="8761:8818" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9298:9356" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="9556:9613" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9998:10056" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="10536:10595" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="10832:10890" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="11316:11532" ph="SELECT p.id,... Posts" />
+            <marker date="1480172954000" expanded="true" signature="11966:12204" ph="SELECT g.nam... Groups" />
           </folding>
         </state>
       </provider>
@@ -816,32 +813,32 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -852,32 +849,32 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -888,32 +885,32 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -924,32 +921,32 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -967,32 +964,32 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
@@ -1007,35 +1004,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bot_modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3120">
-          <caret line="208" column="0" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
+        <state relative-caret-position="240">
+          <caret line="197" column="37" selection-start-line="197" selection-start-column="37" selection-end-line="197" selection-end-column="37" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1480170603000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170603000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
-            <marker date="1480170603000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
-            <marker date="1480170603000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
-            <marker date="1480170603000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
-            <marker date="1480170603000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
-            <marker date="1480170603000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
-            <marker date="1480170603000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
-            <marker date="1480170603000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
-            <marker date="1480170603000" expanded="true" signature="7997:8036" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="8466:8516" ph="SELECT * FRO... UsersGroups" />
-            <marker date="1480170603000" expanded="true" signature="8766:8823" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="9303:9361" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="9561:9618" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10003:10061" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="10541:10600" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170603000" expanded="true" signature="10837:10895" ph="UPDATE Users... " />
-            <marker date="1480170603000" expanded="true" signature="11321:11537" ph="SELECT p.id,... Posts" />
-            <marker date="1480170603000" expanded="true" signature="11971:12209" ph="SELECT g.nam... Groups" />
+            <marker date="1480172954000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172954000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480172954000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480172954000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480172954000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480172954000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480172954000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480172954000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480172954000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="6675:6714" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="6783:6923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172954000" expanded="true" signature="7992:8031" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="8461:8511" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480172954000" expanded="true" signature="8761:8818" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9298:9356" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="9556:9613" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="9998:10056" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="10536:10595" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172954000" expanded="true" signature="10832:10890" ph="UPDATE Users... " />
+            <marker date="1480172954000" expanded="true" signature="11316:11532" ph="SELECT p.id,... Posts" />
+            <marker date="1480172954000" expanded="true" signature="11966:12204" ph="SELECT g.nam... Groups" />
           </folding>
         </state>
       </provider>
@@ -1046,32 +1043,32 @@
           <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1480170774000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
-            <marker date="1480170774000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
-            <marker date="1480170774000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="5781:5928" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="6750:6898" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="8506:8542" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="8664:8710" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9087:9134" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="9426:9462" ph="SELECT bcond... Users" />
-            <marker date="1480170774000" expanded="true" signature="9584:9710" ph="SELECT * FRO... Groups" />
-            <marker date="1480170774000" expanded="true" signature="9795:9841" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10026:10095" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="10254:10380" ph="SELECT g.id,... Groups" />
-            <marker date="1480170774000" expanded="true" signature="10465:10512" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="10697:10766" ph="INSERT INTO UsersGroups... " />
-            <marker date="1480170774000" expanded="true" signature="12778:12818" ph="UPDATE Users... " />
-            <marker date="1480170774000" expanded="true" signature="13014:13051" ph="SELECT revie... Users" />
-            <marker date="1480170774000" expanded="true" signature="13159:13248" ph="INSERT INTO Reviews... " />
-            <marker date="1480170774000" expanded="true" signature="13331:13371" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="446:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="814:847" ph="SELECT id FR... Users" />
+            <marker date="1480172999000" expanded="true" signature="944:1027" ph="INSERT INTO Users... " />
+            <marker date="1480172999000" expanded="true" signature="1919:1958" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="2028:2167" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="3062:3101" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="3171:3310" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="4441:4477" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="4819:4966" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="5795:5942" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="6764:6912" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="7775:7923" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="8724:8760" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="8882:8928" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9305:9352" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480172999000" expanded="true" signature="9797:9923" ph="SELECT * FRO... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="10467:10593" ph="SELECT g.id,... Groups" />
+            <marker date="1480172999000" expanded="true" signature="10678:10725" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="10910:10979" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480172999000" expanded="true" signature="12981:13021" ph="UPDATE Users... " />
+            <marker date="1480172999000" expanded="true" signature="13217:13254" ph="SELECT revie... Users" />
+            <marker date="1480172999000" expanded="true" signature="13362:13451" ph="INSERT INTO Reviews... " />
+            <marker date="1480172999000" expanded="true" signature="13534:13574" ph="UPDATE Users... " />
           </folding>
         </state>
       </provider>
