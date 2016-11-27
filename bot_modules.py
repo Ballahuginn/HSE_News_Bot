@@ -166,11 +166,11 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         check_if_all = bot_modules.groups_as_buttons_unsub(groups, active_groups, markup)
         if check_if_all > 0:
             bot.send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости по запросу'
-                                              ', а затем нажми "Завершить"', reply_markup=markup)
+                                              ', а затем нажми "Завершить".', reply_markup=markup)
         else:
-            bot.send_message(message.chat.id, 'Ты НЕ подписан на получение новостей по запросу')
+            bot.send_message(message.chat.id, 'Ты НЕ подписан на получение новостей по запросу.')
             markup = bot_modules.press_done(db, database, message, types)
-            bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
+            bot.send_message(message.chat.id, 'Настройка завершена.', reply_markup=markup)
 
     if bot_condition[0][0] == 2:
         db.execute("UPDATE Users SET bcond = 4 WHERE id = ?", (message.chat.id,))
@@ -189,12 +189,12 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
                 for i in active_groups:
                     bot.send_message(message.chat.id, i[1])
             bot.send_message(message.chat.id, 'Выбери группы, откуда ты хочешь получать новости по запросу'
-                                              ', а затем нажми Завершить', reply_markup=markup)
+                                              ', а затем нажми Завершить.', reply_markup=markup)
         else:
             bot.send_message(message.chat.id, 'Ты подписан на все группы для получения новостей '
-                                              'по запросу')
+                                              'по запросу.')
             markup = bot_modules.press_done(db, database, message, types)
-            bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
+            bot.send_message(message.chat.id, 'Настройка завершена.', reply_markup=markup)
 
 
 def press_done(db, database, message, types):
@@ -222,49 +222,49 @@ def group_selection(bot, msg, grp_id, bot_condition):
         if check_group:
             if check_group[0][2] == 1:
                 dtbs_c.execute("UPDATE UsersGroups SET upget = 0 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                bot.send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '"')
+                bot.send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '".')
             else:
-                bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"')
+                bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '".')
         else:
-            bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"')
+            bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '".')
 
     if bot_condition[0][0] == 2:
         print(check_group)
         if not check_group:
             print(msg.chat.id)
             dtbs_c.execute("INSERT INTO UsersGroups (uid, gid, upget) VALUES (?, ?, 1)", (msg.chat.id, grp_id,))
-            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
+            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '".')
         else:
             if check_group[0][2] == 0:
                 dtbs_c.execute("UPDATE UsersGroups SET upget = 1 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
+                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '".')
             else:
-                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана')
+                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана.')
 
     if bot_condition[0][0] == 3:
         print(check_group)
         if check_group:
             if check_group[0][3] == 1:
                 dtbs_c.execute("UPDATE UsersGroups SET fetget = 0 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                bot.send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '"')
+                bot.send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '".')
             else:
-                bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"')
+                bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '".')
         else:
-            bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"')
+            bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '".')
 
     if bot_condition[0][0] == 4:
         print(check_group)
         if not check_group:
             print(msg.chat.id)
             dtbs_c.execute("INSERT INTO UsersGroups (uid, gid, fetget) VALUES (?, ?, 1)", (msg.chat.id, grp_id,))
-            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
+            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '".')
         else:
             print(check_group[0][3])
             if check_group[0][3] == 0:
                 dtbs_c.execute("UPDATE UsersGroups SET fetget = 1 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
+                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '".')
             else:
-                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана')
+                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана.')
 
     dtbs.commit()
     dtbs.close()
