@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/HSE_News_Bot.iml" filepath="$PROJECT_DIR$/.idea/HSE_News_Bot.iml" />
+      <module fileurl="file://$USER_HOME$/Bot for Server/HSE_News_Bot/.idea/HSE_News_Bot.iml" filepath="$USER_HOME$/Bot for Server/HSE_News_Bot/.idea/HSE_News_Bot.iml" />
     </modules>
   </component>
 </project>

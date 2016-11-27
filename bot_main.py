@@ -5,10 +5,10 @@ import time
 from telebot import types
 import bot_modules
 
-bot = telebot.TeleBot('')
+bot = telebot.TeleBot('TOKEN')
 
 session = vk.Session()
-vk_api = vk.API(session, v='5.59')
+vk_api = vk.API(session, v='5.59', timeout=10)
 
 databasem = sqlite3.connect('HSE_BOT_DB.sqlite')
 dbm = databasem.cursor()
@@ -73,8 +73,8 @@ def news_source(message):
             bot.send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости, как только они '
                                               'выходят, а затем нажми "Далее"', reply_markup=markup)
         else:
-            bot.send_message(message.chat.id, 'Ты НЕ подписан на все группы получать новости, '
-                                              'как только они выходят')
+            bot.send_message(message.chat.id,
+                             'Ты НЕ подписан ни на одну группу, для получения новостей, как только они выходят')
             bot_modules.press_next(db, database, message, groups, bot, bot_modules, types)
 
     if message.text == 'Выбрать группы для подписки':
@@ -174,7 +174,7 @@ def news_source(message):
             db.execute("UPDATE UsersGroups SET upget = 0 WHERE uid = ?", (message.chat.id,))
             database.commit()
             bot.send_message(message.chat.id, 'Ты отписался от всех групп для получения новостей, '
-                                              'как только они выходят', markup)
+                                              'как только они выходят')
             bot_modules.press_next(db, database, message, groups, bot, bot_modules, types)
         if bot_condition[0][0] == 3:
             db.execute("UPDATE UsersGroups SET fetget = 0 WHERE uid = ?", (message.chat.id,))
@@ -255,17 +255,17 @@ def news_source(message):
                                           'Плагиат и копирование данного бота преследуются по закону!')
 
     if message.text == 'Оставить пожелания':
-        db.execute("UPDATE Users SET review = 1 WHERE id = ?", (message.chat.id,))
+        db.execute("UPDATE Users SET bcond = 5 WHERE id = ?", (message.chat.id,))
         database.commit()
         bot.send_message(message.chat.id, 'Как ты думаешь, чего не хвататет этому боту?', reply_markup=markup_none)
 
     else:
-        db.execute("SELECT review FROM Users WHERE id = ?", (message.chat.id,))
-        review = db.fetchall()
-        if review[0][0] == 1:
+        db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
+        bot_condition = db.fetchall()
+        if bot_condition[0][0] == 5:
             db.execute("INSERT INTO Reviews (uid, rev_text, rev_date) VALUES (?, ?, datetime('now', 'localtime'))",
                        (message.chat.id, message.text))
-            db.execute("UPDATE Users SET review = 0 WHERE id = ?", (message.chat.id,))
+            db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
             database.commit()
             markup = bot_modules.press_done(db, database, message, types)
             bot.send_message(message.chat.id, 'Спасибо за отзыв! Твое мнение очень важно для нас!', reply_markup=markup)

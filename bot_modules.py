@@ -165,8 +165,8 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         markup.row('Отменить все')
         check_if_all = bot_modules.groups_as_buttons_unsub(groups, active_groups, markup)
         if check_if_all > 0:
-            bot.send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости, как только они '
-                                              'выходят, а затем нажми "Завершить"', reply_markup=markup)
+            bot.send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости по запросу'
+                                              ', а затем нажми "Завершить"', reply_markup=markup)
         else:
             bot.send_message(message.chat.id, 'Ты НЕ подписан на получение новостей по запросу')
             markup = bot_modules.press_done(db, database, message, types)
