@@ -1,3 +1,4 @@
+import telebot
 import sqlite3
 import datetime
 import threading
@@ -23,13 +24,13 @@ def get_rss_post(bot):
     db = database.cursor()
 
     for i in rss_groups:
-        print(i[1])
+        # print(i[1])
         db.execute("SELECT MAX(rss_date) FROM RSS WHERE rss_id = ?", (str(i[0]),))
         last_post = db.fetchall()
         db.execute("SELECT u.id FROM Users as u, UsersGroups as ug "
                    "WHERE u.id = ug.uid AND ug.upget = 1 AND ug.gid = ?", (str(i[0]),))
         sub_users = db.fetchall()
-        print(sub_users)
+        # print(sub_users)
         rss = feedparser.parse(i[2])
         entr = rss['entries']
         for g in entr:
@@ -43,9 +44,12 @@ def get_rss_post(bot):
             utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
             if int(utime) > int(last_post[0][0]):
                 link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
-                print(link)
+                # print(link)
                 for u in sub_users:
-                    bot.send_message(u[0], link)
+                    try:
+                        bot.send_message(u[0], link)
+                    except telebot.apihelper.ApiException:
+                        print('User blocked the Bot. User:' + u[0])
 
     db.execute("DELETE FROM RSS")
 
@@ -66,7 +70,7 @@ def get_rss_post(bot):
 
     database.commit()
     database.close()
-    t = threading.Timer(3600, get_rss_post)
+    t = threading.Timer(3600, get_rss_post, [bot])
     t.start()
 
 
@@ -94,28 +98,38 @@ def get_vk_post(bot, vk_api):
     db = database.cursor()
 
     for i in vk_groups:
-        print(i[1])
+        # print(i[1])
         db.execute("SELECT MAX(p_date) FROM Posts WHERE gid = ?", (str(i[0]),))
         last_post = db.fetchall()
         db.execute("SELECT u.id FROM Users as u, UsersGroups as ug "
                    "WHERE u.id = ug.uid AND ug.upget = 1 AND ug.gid = ?", (str(i[0]),))
         sub_users = db.fetchall()
-        print(sub_users)
-        posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
-        for p in posts['items']:
-            if type(p) != int:
-                if 'id' in p:
-                    if int(p['date']) > int(last_post[0][0]):
-                        txt = post_texts(p)
-                        print('new post')
-                        link = str(i[1]) + '\n' + txt + '\n' + 'https://vk.com/wall-' + i[0] + '_' + str(p['id'])
-                        for u in sub_users:
-                            bot.send_message(u[0], link)
+        # print(sub_users)
+        try:
+            posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
+        except requests.exceptions.ReadTimeout:
+            print('VK Timed Out')
+        if last_post[0][0]:
+            for p in posts['items']:
+                if type(p) != int:
+                    if 'id' in p:
+                        if p['date'] > int(last_post[0][0]):
+                            txt = post_texts(p)
+                            # print('new post')
+                            link = str(i[1]) + '\n' + txt + '\n' + 'https://vk.com/wall-' + i[0] + '_' + str(p['id'])
+                            for u in sub_users:
+                                try:
+                                    bot.send_message(u[0], link)
+                                except telebot.apihelper.ApiException:
+                                    print('User blocked the Bot. User:' + u[0])
 
     db.execute("DELETE FROM Posts")
 
     for i in vk_groups:
-        posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
+        try:
+            posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
+        except requests.exceptions.ReadTimeout:
+            print('VK Timed Out')
         for _k in posts['items']:
             if type(_k) != int:
                 if 'id' in _k:
@@ -166,11 +180,11 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         check_if_all = bot_modules.groups_as_buttons_unsub(groups, active_groups, markup)
         if check_if_all > 0:
             bot.send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости по запросу'
-                                              ', а затем нажми "Завершить".', reply_markup=markup)
+                                              ', а затем нажми "Завершить"', reply_markup=markup)
         else:
-            bot.send_message(message.chat.id, 'Ты НЕ подписан на получение новостей по запросу.')
+            bot.send_message(message.chat.id, 'Ты НЕ подписан на получение новостей по запросу')
             markup = bot_modules.press_done(db, database, message, types)
-            bot.send_message(message.chat.id, 'Настройка завершена.', reply_markup=markup)
+            bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
 
     if bot_condition[0][0] == 2:
         db.execute("UPDATE Users SET bcond = 4 WHERE id = ?", (message.chat.id,))
@@ -189,12 +203,12 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
                 for i in active_groups:
                     bot.send_message(message.chat.id, i[1])
             bot.send_message(message.chat.id, 'Выбери группы, откуда ты хочешь получать новости по запросу'
-                                              ', а затем нажми Завершить.', reply_markup=markup)
+                                              ', а затем нажми Завершить', reply_markup=markup)
         else:
             bot.send_message(message.chat.id, 'Ты подписан на все группы для получения новостей '
-                                              'по запросу.')
+                                              'по запросу')
             markup = bot_modules.press_done(db, database, message, types)
-            bot.send_message(message.chat.id, 'Настройка завершена.', reply_markup=markup)
+            bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
 
 
 def press_done(db, database, message, types):
@@ -215,56 +229,56 @@ def group_selection(bot, msg, grp_id, bot_condition):
     dtbs_c = dtbs.cursor()
     dtbs_c.execute("SELECT * FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
     check_group = dtbs_c.fetchall()
-    print(bot_condition[0][0])
+    # print(bot_condition[0][0])
 
     if bot_condition[0][0] == 1:
-        print(check_group)
+        # print(check_group)
         if check_group:
             if check_group[0][2] == 1:
                 dtbs_c.execute("UPDATE UsersGroups SET upget = 0 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                bot.send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '".')
+                bot.send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '"')
             else:
-                bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '".')
+                bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"')
         else:
-            bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '".')
+            bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"')
 
     if bot_condition[0][0] == 2:
-        print(check_group)
+        # print(check_group)
         if not check_group:
-            print(msg.chat.id)
+            # print(msg.chat.id)
             dtbs_c.execute("INSERT INTO UsersGroups (uid, gid, upget) VALUES (?, ?, 1)", (msg.chat.id, grp_id,))
-            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '".')
+            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
         else:
             if check_group[0][2] == 0:
                 dtbs_c.execute("UPDATE UsersGroups SET upget = 1 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '".')
+                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
             else:
-                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана.')
+                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана')
 
     if bot_condition[0][0] == 3:
-        print(check_group)
+        # print(check_group)
         if check_group:
             if check_group[0][3] == 1:
                 dtbs_c.execute("UPDATE UsersGroups SET fetget = 0 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                bot.send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '".')
+                bot.send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '"')
             else:
-                bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '".')
+                bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"')
         else:
-            bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '".')
+            bot.send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"')
 
     if bot_condition[0][0] == 4:
-        print(check_group)
+        # print(check_group)
         if not check_group:
-            print(msg.chat.id)
+            # print(msg.chat.id)
             dtbs_c.execute("INSERT INTO UsersGroups (uid, gid, fetget) VALUES (?, ?, 1)", (msg.chat.id, grp_id,))
-            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '".')
+            bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
         else:
-            print(check_group[0][3])
+            # print(check_group[0][3])
             if check_group[0][3] == 0:
                 dtbs_c.execute("UPDATE UsersGroups SET fetget = 1 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '".')
+                bot.send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"')
             else:
-                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана.')
+                bot.send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана')
 
     dtbs.commit()
     dtbs.close()
