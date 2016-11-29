@@ -2,7 +2,7 @@ import sqlite3
 import datetime
 import threading
 import feedparser
-
+from datetime import datetime, timedelta
 
 Month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'June': '06',
          'July': '07', 'Aug': '08', 'Sept': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
@@ -90,8 +90,7 @@ def post_texts(vk_post):
 
 
 def get_vk_post(bot, vk_api):
-    database = sqlite3.connect('HSE_BOT_DB.sqlite')
-    db = database.cursor()
+    db = databasem.cursor()
 
     for i in vk_groups:
         print(i[1])
@@ -109,10 +108,14 @@ def get_vk_post(bot, vk_api):
                         txt = post_texts(p)
                         print('new post')
                         link = str(i[1]) + '\n' + txt + '\n' + 'https://vk.com/wall-' + i[0] + '_' + str(p['id'])
-                        for u in sub_users:
-                            bot.send_message(u[0], link)
+                        db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
+                               "VALUES (?, ?, ?, ?, ?, ?)",
+                               (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']), str(txt),
+                               p['likes']['count'], p['reposts']['count']))
+                        #for u in sub_users:
+                            #bot.send_message(u[0], link)
 
-    db.execute("DELETE FROM Posts")
+    #db.execute("DELETE FROM Posts")
 
     for i in vk_groups:
         posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
@@ -120,15 +123,34 @@ def get_vk_post(bot, vk_api):
             if type(_k) != int:
                 if 'id' in _k:
                     txt = post_texts(_k)
-                    db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
-                               "VALUES (?, ?, ?, ?, ?, ?)",
-                               (str(i[0]) + '_' + str(_k['id']), str(i[0]), str(_k['date']), str(txt),
-                               _k['likes']['count'], _k['reposts']['count']))
+                    #db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
+                               #"VALUES (?, ?, ?, ?, ?, ?)",
+                               #(str(i[0]) + '_' + str(_k['id']), str(i[0]), str(_k['date']), str(txt),
+                               #_k['likes']['count'], _k['reposts']['count']))
 
-    database.commit()
-    database.close()
+    #database.commit()
+    #databasem.close()
     t = threading.Timer(60, get_vk_post, [bot, vk_api])
     t.start()
+
+    #c = threading.Timer(86400, rem_old_vk_posts, [bot, vk_api])
+    #c.start()
+    #rem_old_vk_posts(bot, vk_api)
+
+
+def rem_old_vk_posts(bot, vk_api):
+    print("yupi")
+    db = databasem.cursor()
+    db.execute("SELECT * FROM Groups")
+    groups = db.fetchall()
+    db.execute("SELECT * FROM Posts")
+    posts = db.fetchall()
+    for g in groups:
+        for p in posts:
+            if p[1] == g[0]:
+                #print(int((datetime.today() - timedelta(hours=24) - datetime.utcfromtimestamp(0)).total_seconds()))
+                if p[2] < str(int((datetime.today() - timedelta(hours=24) - datetime.utcfromtimestamp(0)).total_seconds())):
+                    print(p[0], g[1], datetime.fromtimestamp(int(p[2])))
 
 
 def groups_as_buttons_sub(groups, active_groups, markup):
