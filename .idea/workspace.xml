@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa830a63-66d8-4f4f-976d-538f4aab4fd4" name="Default" comment="">
+<<<<<<< HEAD
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/HSE News Bot.iml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/mail2_000.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bot_main.py" />
@@ -11,6 +12,13 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HSE_BOT_DB.sqlite" afterPath="$PROJECT_DIR$/HSE_BOT_DB.sqlite" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot_main.py" afterPath="$PROJECT_DIR$/bot_main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot_modules.py" afterPath="$PROJECT_DIR$/bot_modules.py" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
     </list>
     <ignored path="HSE_News_Bot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,7 +32,10 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/HSE_News_Bot$bot.coverage" NAME="bot Coverage Results" MODIFIED="1480250816588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+<<<<<<< HEAD
     <SUITE FILE_PATH="coverage/HSE News Bot$bot_main.coverage" NAME="bot_main Coverage Results" MODIFIED="1487343007436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+=======
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -36,6 +47,7 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="bot_main.py" pinned="false" current-in-tab="true">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/bot_main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
@@ -71,12 +83,47 @@
                 <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
                 <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
                 <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+        <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+                <marker date="1480274002000" expanded="true" signature="458:478" ph="SELECT * FRO... Groups" />
+                <marker date="1480274002000" expanded="true" signature="826:859" ph="SELECT id FR... Users" />
+                <marker date="1480274002000" expanded="true" signature="956:1039" ph="INSERT INTO Users... " />
+                <marker date="1480274002000" expanded="true" signature="1933:1972" ph="UPDATE Users... " />
+                <marker date="1480274002000" expanded="true" signature="2042:2181" ph="SELECT g.id,... Groups" />
+                <marker date="1480274002000" expanded="true" signature="3046:3085" ph="UPDATE Users... " />
+                <marker date="1480274002000" expanded="true" signature="3155:3294" ph="SELECT g.id,... Groups" />
+                <marker date="1480274002000" expanded="true" signature="4404:4440" ph="SELECT bcond... Users" />
+                <marker date="1480274002000" expanded="true" signature="4782:4929" ph="SELECT g.id,... Groups" />
+                <marker date="1480274002000" expanded="true" signature="5700:5847" ph="SELECT g.id,... Groups" />
+                <marker date="1480274002000" expanded="true" signature="6648:6796" ph="SELECT g.id,... Groups" />
+                <marker date="1480274002000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
+                <marker date="1480274002000" expanded="true" signature="8587:8623" ph="SELECT bcond... Users" />
+                <marker date="1480274002000" expanded="true" signature="8745:8791" ph="UPDATE Users... " />
+                <marker date="1480274002000" expanded="true" signature="9168:9215" ph="UPDATE Users... " />
+                <marker date="1480274002000" expanded="true" signature="9601:9637" ph="SELECT bcond... Users" />
+                <marker date="1480274002000" expanded="true" signature="9759:9885" ph="SELECT g.id,... Groups" />
+                <marker date="1480274002000" expanded="true" signature="9970:10016" ph="UPDATE Users... " />
+                <marker date="1480274002000" expanded="true" signature="10203:10272" ph="INSERT INTO UsersGroups... " />
+                <marker date="1480274002000" expanded="true" signature="10522:10648" ph="SELECT g.id,... Groups" />
+                <marker date="1480274002000" expanded="true" signature="10733:10780" ph="UPDATE Users... " />
+                <marker date="1480274002000" expanded="true" signature="10967:11036" ph="INSERT INTO UsersGroups... " />
+                <marker date="1480274002000" expanded="true" signature="13202:13241" ph="UPDATE Users... " />
+                <marker date="1480274002000" expanded="true" signature="13437:13473" ph="SELECT bcond... Users" />
+                <marker date="1480274002000" expanded="true" signature="13595:13684" ph="INSERT INTO Reviews... " />
+                <marker date="1480274002000" expanded="true" signature="13767:13806" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="bot_modules.py" pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/bot_modules.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
@@ -121,6 +168,39 @@
                 <marker date="1487342722160" expanded="true" signature="16331:16389" ph="UPDATE Users... " />
                 <marker date="1487342722160" expanded="true" signature="16815:17031" ph="SELECT p.id,... Posts" />
                 <marker date="1487342722160" expanded="true" signature="17465:17703" ph="SELECT g.nam... Groups" />
+=======
+        <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_modules.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3825">
+              <caret line="255" column="10" selection-start-line="255" selection-start-column="10" selection-end-line="255" selection-end-column="10" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+                <marker date="1480267151000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+                <marker date="1480267151000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+                <marker date="1480267151000" expanded="true" signature="668:714" ph="SELECT MAX(r... RSS" />
+                <marker date="1480267151000" expanded="true" signature="785:905" ph="SELECT u.id Users" />
+                <marker date="1480267151000" expanded="true" signature="1689:1704" ph="DELETE FROM " />
+                <marker date="1480267151000" expanded="true" signature="2187:2262" ph="INSERT INTO RSS... " />
+                <marker date="1480267151000" expanded="true" signature="3395:3438" ph="SELECT MAX(p... Posts" />
+                <marker date="1480267151000" expanded="true" signature="3509:3629" ph="SELECT u.id Users" />
+                <marker date="1480267151000" expanded="true" signature="4261:4278" ph="DELETE FROM " />
+                <marker date="1480267151000" expanded="true" signature="4554:4677" ph="INSERT INTO Posts... " />
+                <marker date="1480267151000" expanded="true" signature="5503:5539" ph="SELECT bcond... Users" />
+                <marker date="1480267151000" expanded="true" signature="5649:5688" ph="UPDATE Users... " />
+                <marker date="1480267151000" expanded="true" signature="5757:5897" ph="SELECT g.id,... Groups" />
+                <marker date="1480267151000" expanded="true" signature="6747:6786" ph="UPDATE Users... " />
+                <marker date="1480267151000" expanded="true" signature="6855:6995" ph="SELECT g.id,... Groups" />
+                <marker date="1480267151000" expanded="true" signature="8137:8176" ph="UPDATE Users... " />
+                <marker date="1480267151000" expanded="true" signature="8613:8663" ph="SELECT * FRO... UsersGroups" />
+                <marker date="1480267151000" expanded="true" signature="8917:8974" ph="UPDATE Users... " />
+                <marker date="1480267151000" expanded="true" signature="9458:9516" ph="INSERT INTO UsersGroups... " />
+                <marker date="1480267151000" expanded="true" signature="9716:9773" ph="UPDATE Users... " />
+                <marker date="1480267151000" expanded="true" signature="10160:10218" ph="UPDATE Users... " />
+                <marker date="1480267151000" expanded="true" signature="10700:10759" ph="INSERT INTO UsersGroups... " />
+                <marker date="1480267151000" expanded="true" signature="10996:11054" ph="UPDATE Users... " />
+                <marker date="1480267151000" expanded="true" signature="11480:11696" ph="SELECT p.id,... Posts" />
+                <marker date="1480267151000" expanded="true" signature="12130:12368" ph="SELECT g.nam... Groups" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
               </folding>
             </state>
           </provider>
@@ -157,10 +237,17 @@
       <list>
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/bot.py" />
+<<<<<<< HEAD
         <option value="$USER_HOME$/Bot for Server/HSE_News_Bot/bot_modules.py" />
         <option value="$USER_HOME$/Bot for Server/HSE_News_Bot/bot_main.py" />
         <option value="$PROJECT_DIR$/bot_modules.py" />
         <option value="$PROJECT_DIR$/bot_main.py" />
+=======
+        <option value="$PROJECT_DIR$/bot_main.py" />
+        <option value="$PROJECT_DIR$/bot_modules.py" />
+        <option value="$USER_HOME$/Bot for Server/HSE_News_Bot/bot_modules.py" />
+        <option value="$USER_HOME$/Bot for Server/HSE_News_Bot/bot_main.py" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
       </list>
     </option>
   </component>
@@ -197,6 +284,7 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
+<<<<<<< HEAD
               <option name="myItemId" value="HSE News Bot" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
@@ -207,18 +295,33 @@
           </PATH>
         </subPane>
       </pane>
+=======
+              <option name="myItemId" value="HSE_News_Bot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+<<<<<<< HEAD
+=======
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$USER_HOME$/HSE_News_Bot" />
     </key>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Python.bot_main">
     <configuration default="false" name="bot_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -238,6 +341,9 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
+=======
+  <component name="RunManager">
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -452,6 +558,7 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
+<<<<<<< HEAD
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="Python.bot_main" />
     </list>
@@ -460,6 +567,8 @@
         <item index="0" class="java.lang.String" itemvalue="Python.bot_main" />
       </list>
     </recent_temporary>
+=======
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -480,7 +589,11 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15208334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25264272" sideWeight="0.5104167" order="7" side_tool="true" content_ui="tabs" />
+=======
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.253406" sideWeight="0.5083333" order="7" side_tool="true" content_ui="tabs" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -491,7 +604,11 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25264272" sideWeight="0.48958334" order="2" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.253406" sideWeight="0.49166667" order="2" side_tool="false" content_ui="tabs" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -514,11 +631,16 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+<<<<<<< HEAD
       <option name="time" value="6" />
+=======
+      <option name="time" value="5" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/bot_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -959,11 +1081,15 @@
     <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_main.py" />
     <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_modules.py" />
     <entry file="file://$PROJECT_DIR$/bot_main.py">
+=======
+    <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_main.py">
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+<<<<<<< HEAD
             <marker date="1487343506798" expanded="true" signature="418:438" ph="SELECT id FR... Users" />
             <marker date="1487343506798" expanded="true" signature="521:541" ph="SELECT * FRO... Groups" />
             <marker date="1487343506798" expanded="true" signature="938:971" ph="SELECT id FR... Users" />
@@ -1041,11 +1167,78 @@
             <marker date="1487342722160" expanded="true" signature="16331:16389" ph="UPDATE Users... " />
             <marker date="1487342722160" expanded="true" signature="16815:17031" ph="SELECT p.id,... Posts" />
             <marker date="1487342722160" expanded="true" signature="17465:17703" ph="SELECT g.nam... Groups" />
+=======
+            <marker date="1480274002000" expanded="true" signature="458:478" ph="SELECT * FRO... Groups" />
+            <marker date="1480274002000" expanded="true" signature="826:859" ph="SELECT id FR... Users" />
+            <marker date="1480274002000" expanded="true" signature="956:1039" ph="INSERT INTO Users... " />
+            <marker date="1480274002000" expanded="true" signature="1933:1972" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="2042:2181" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="3046:3085" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="3155:3294" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="4404:4440" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="4782:4929" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="5700:5847" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="6648:6796" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="8587:8623" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="8745:8791" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="9168:9215" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="9601:9637" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="9759:9885" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="9970:10016" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="10203:10272" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480274002000" expanded="true" signature="10522:10648" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="10733:10780" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="10967:11036" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480274002000" expanded="true" signature="13202:13241" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="13437:13473" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="13595:13684" ph="INSERT INTO Reviews... " />
+            <marker date="1480274002000" expanded="true" signature="13767:13806" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/bot_main.py">
+=======
+    <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3825">
+          <caret line="255" column="10" selection-start-line="255" selection-start-column="10" selection-end-line="255" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1480267151000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480267151000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480267151000" expanded="true" signature="668:714" ph="SELECT MAX(r... RSS" />
+            <marker date="1480267151000" expanded="true" signature="785:905" ph="SELECT u.id Users" />
+            <marker date="1480267151000" expanded="true" signature="1689:1704" ph="DELETE FROM " />
+            <marker date="1480267151000" expanded="true" signature="2187:2262" ph="INSERT INTO RSS... " />
+            <marker date="1480267151000" expanded="true" signature="3395:3438" ph="SELECT MAX(p... Posts" />
+            <marker date="1480267151000" expanded="true" signature="3509:3629" ph="SELECT u.id Users" />
+            <marker date="1480267151000" expanded="true" signature="4261:4278" ph="DELETE FROM " />
+            <marker date="1480267151000" expanded="true" signature="4554:4677" ph="INSERT INTO Posts... " />
+            <marker date="1480267151000" expanded="true" signature="5503:5539" ph="SELECT bcond... Users" />
+            <marker date="1480267151000" expanded="true" signature="5649:5688" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="5757:5897" ph="SELECT g.id,... Groups" />
+            <marker date="1480267151000" expanded="true" signature="6747:6786" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="6855:6995" ph="SELECT g.id,... Groups" />
+            <marker date="1480267151000" expanded="true" signature="8137:8176" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="8613:8663" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480267151000" expanded="true" signature="8917:8974" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="9458:9516" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480267151000" expanded="true" signature="9716:9773" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="10160:10218" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="10700:10759" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480267151000" expanded="true" signature="10996:11054" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="11480:11696" ph="SELECT p.id,... Posts" />
+            <marker date="1480267151000" expanded="true" signature="12130:12368" ph="SELECT g.nam... Groups" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_main.py">
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1138,6 +1331,7 @@
           <caret line="83" column="18" lean-forward="false" selection-start-line="83" selection-start-column="18" selection-end-line="83" selection-end-column="18" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+<<<<<<< HEAD
             <marker date="1487343506798" expanded="true" signature="418:438" ph="SELECT id FR... Users" />
             <marker date="1487343506798" expanded="true" signature="521:541" ph="SELECT * FRO... Groups" />
             <marker date="1487343506798" expanded="true" signature="938:971" ph="SELECT id FR... Users" />
@@ -1167,10 +1361,39 @@
             <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
             <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
             <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+            <marker date="1480274002000" expanded="true" signature="458:478" ph="SELECT * FRO... Groups" />
+            <marker date="1480274002000" expanded="true" signature="826:859" ph="SELECT id FR... Users" />
+            <marker date="1480274002000" expanded="true" signature="956:1039" ph="INSERT INTO Users... " />
+            <marker date="1480274002000" expanded="true" signature="1933:1972" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="2042:2181" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="3046:3085" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="3155:3294" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="4404:4440" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="4782:4929" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="5700:5847" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="6648:6796" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="8587:8623" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="8745:8791" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="9168:9215" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="9601:9637" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="9759:9885" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="9970:10016" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="10203:10272" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480274002000" expanded="true" signature="10522:10648" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="10733:10780" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="10967:11036" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480274002000" expanded="true" signature="13202:13241" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="13437:13473" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="13595:13684" ph="INSERT INTO Reviews... " />
+            <marker date="1480274002000" expanded="true" signature="13767:13806" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/bot_modules.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1215,6 +1438,39 @@
             <marker date="1487342722160" expanded="true" signature="16331:16389" ph="UPDATE Users... " />
             <marker date="1487342722160" expanded="true" signature="16815:17031" ph="SELECT p.id,... Posts" />
             <marker date="1487342722160" expanded="true" signature="17465:17703" ph="SELECT g.nam... Groups" />
+=======
+    <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3825">
+          <caret line="255" column="10" selection-start-line="255" selection-start-column="10" selection-end-line="255" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1480267151000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480267151000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480267151000" expanded="true" signature="668:714" ph="SELECT MAX(r... RSS" />
+            <marker date="1480267151000" expanded="true" signature="785:905" ph="SELECT u.id Users" />
+            <marker date="1480267151000" expanded="true" signature="1689:1704" ph="DELETE FROM " />
+            <marker date="1480267151000" expanded="true" signature="2187:2262" ph="INSERT INTO RSS... " />
+            <marker date="1480267151000" expanded="true" signature="3395:3438" ph="SELECT MAX(p... Posts" />
+            <marker date="1480267151000" expanded="true" signature="3509:3629" ph="SELECT u.id Users" />
+            <marker date="1480267151000" expanded="true" signature="4261:4278" ph="DELETE FROM " />
+            <marker date="1480267151000" expanded="true" signature="4554:4677" ph="INSERT INTO Posts... " />
+            <marker date="1480267151000" expanded="true" signature="5503:5539" ph="SELECT bcond... Users" />
+            <marker date="1480267151000" expanded="true" signature="5649:5688" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="5757:5897" ph="SELECT g.id,... Groups" />
+            <marker date="1480267151000" expanded="true" signature="6747:6786" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="6855:6995" ph="SELECT g.id,... Groups" />
+            <marker date="1480267151000" expanded="true" signature="8137:8176" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="8613:8663" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480267151000" expanded="true" signature="8917:8974" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="9458:9516" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480267151000" expanded="true" signature="9716:9773" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="10160:10218" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="10700:10759" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480267151000" expanded="true" signature="10996:11054" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="11480:11696" ph="SELECT p.id,... Posts" />
+            <marker date="1480267151000" expanded="true" signature="12130:12368" ph="SELECT g.nam... Groups" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
@@ -1224,6 +1480,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+<<<<<<< HEAD
             <element signature="e#0#9#0" expanded="true" />
             <marker date="1487343506798" expanded="true" signature="418:438" ph="SELECT id FR... Users" />
             <marker date="1487343506798" expanded="true" signature="521:541" ph="SELECT * FRO... Groups" />
@@ -1254,6 +1511,241 @@
             <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
             <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
             <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bot_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2040">
+          <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
+          <folding>
+            <marker date="1480240627000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480240627000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480240627000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480240627000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480240627000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480240627000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="6735:6774" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="6843:6983" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="8125:8164" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="8601:8651" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480240627000" expanded="true" signature="8901:8958" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="9438:9496" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="9696:9753" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10138:10196" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10676:10735" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="10972:11030" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="11456:11672" ph="SELECT p.id,... Posts" />
+            <marker date="1480240627000" expanded="true" signature="12106:12344" ph="SELECT g.nam... Groups" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bot_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bot_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4825">
+          <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="200" selection-end-column="0" />
+          <folding>
+            <marker date="1480240627000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480240627000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480240627000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480240627000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480240627000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480240627000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="6735:6774" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="6843:6983" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="8125:8164" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="8601:8651" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480240627000" expanded="true" signature="8901:8958" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="9438:9496" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="9696:9753" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10138:10196" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10676:10735" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="10972:11030" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="11456:11672" ph="SELECT p.id,... Posts" />
+            <marker date="1480240627000" expanded="true" signature="12106:12344" ph="SELECT g.nam... Groups" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bot_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="83" column="18" selection-start-line="83" selection-start-column="18" selection-end-line="83" selection-end-column="18" />
+          <folding>
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bot_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1480240627000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480240627000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480240627000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480240627000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480240627000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480240627000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="6735:6774" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="6843:6983" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="8125:8164" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="8601:8651" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480240627000" expanded="true" signature="8901:8958" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="9438:9496" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="9696:9753" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10138:10196" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10676:10735" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="10972:11030" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="11456:11672" ph="SELECT p.id,... Posts" />
+            <marker date="1480240627000" expanded="true" signature="12106:12344" ph="SELECT g.nam... Groups" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bot_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
@@ -1261,6 +1753,7 @@
     <entry file="file://$PROJECT_DIR$/bot_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
+<<<<<<< HEAD
           <caret line="8" column="18" lean-forward="false" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1293,6 +1786,36 @@
             <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
             <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
             <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+          <folding>
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
@@ -1300,6 +1823,7 @@
     <entry file="file://$PROJECT_DIR$/bot_modules.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
+<<<<<<< HEAD
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
@@ -1341,6 +1865,35 @@
             <marker date="1487342722160" expanded="true" signature="16331:16389" ph="UPDATE Users... " />
             <marker date="1487342722160" expanded="true" signature="16815:17031" ph="SELECT p.id,... Posts" />
             <marker date="1487342722160" expanded="true" signature="17465:17703" ph="SELECT g.nam... Groups" />
+=======
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1480240627000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480240627000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480240627000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480240627000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480240627000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480240627000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="6735:6774" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="6843:6983" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="8125:8164" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="8601:8651" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480240627000" expanded="true" signature="8901:8958" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="9438:9496" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="9696:9753" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10138:10196" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10676:10735" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="10972:11030" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="11456:11672" ph="SELECT p.id,... Posts" />
+            <marker date="1480240627000" expanded="true" signature="12106:12344" ph="SELECT g.nam... Groups" />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
@@ -1348,6 +1901,7 @@
     <entry file="file://$PROJECT_DIR$/bot_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
+<<<<<<< HEAD
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1380,6 +1934,36 @@
             <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
             <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
             <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
@@ -1387,6 +1971,7 @@
     <entry file="file://$PROJECT_DIR$/bot_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
+<<<<<<< HEAD
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1419,6 +2004,36 @@
             <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
             <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
             <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
@@ -1426,6 +2041,7 @@
     <entry file="file://$PROJECT_DIR$/bot_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
+<<<<<<< HEAD
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1458,6 +2074,36 @@
             <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
             <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
             <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
@@ -1465,6 +2111,7 @@
     <entry file="file://$PROJECT_DIR$/bot_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
+<<<<<<< HEAD
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1497,6 +2144,36 @@
             <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
             <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
             <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
@@ -1513,6 +2190,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+<<<<<<< HEAD
             <element signature="e#0#9#0" expanded="true" />
             <marker date="1487343506798" expanded="true" signature="418:438" ph="SELECT id FR... Users" />
             <marker date="1487343506798" expanded="true" signature="521:541" ph="SELECT * FRO... Groups" />
@@ -1543,6 +2221,34 @@
             <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
             <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
             <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
@@ -1606,6 +2312,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/bot_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1641,6 +2348,144 @@
             <marker date="1487343506798" expanded="true" signature="13907:13943" ph="SELECT bcond... Users" />
             <marker date="1487343506798" expanded="true" signature="14065:14154" ph="INSERT INTO Reviews... " />
             <marker date="1487343506798" expanded="true" signature="14237:14276" ph="UPDATE Users... " />
+=======
+    <entry file="file://$PROJECT_DIR$/bot_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="14" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
+          <folding>
+            <marker date="1480240627000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480240627000" expanded="true" signature="666:712" ph="SELECT MAX(r... RSS" />
+            <marker date="1480240627000" expanded="true" signature="783:903" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="1683:1698" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="2181:2256" ph="INSERT INTO RSS... " />
+            <marker date="1480240627000" expanded="true" signature="3387:3430" ph="SELECT MAX(p... Posts" />
+            <marker date="1480240627000" expanded="true" signature="3501:3621" ph="SELECT u.id Users" />
+            <marker date="1480240627000" expanded="true" signature="4249:4266" ph="DELETE FROM " />
+            <marker date="1480240627000" expanded="true" signature="4542:4665" ph="INSERT INTO Posts... " />
+            <marker date="1480240627000" expanded="true" signature="5491:5527" ph="SELECT bcond... Users" />
+            <marker date="1480240627000" expanded="true" signature="5637:5676" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="5745:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="6735:6774" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="6843:6983" ph="SELECT g.id,... Groups" />
+            <marker date="1480240627000" expanded="true" signature="8125:8164" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="8601:8651" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480240627000" expanded="true" signature="8901:8958" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="9438:9496" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="9696:9753" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10138:10196" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="10676:10735" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480240627000" expanded="true" signature="10972:11030" ph="UPDATE Users... " />
+            <marker date="1480240627000" expanded="true" signature="11456:11672" ph="SELECT p.id,... Posts" />
+            <marker date="1480240627000" expanded="true" signature="12106:12344" ph="SELECT g.nam... Groups" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bot_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+          <folding>
+            <marker date="1480250814000" expanded="true" signature="498:518" ph="SELECT * FRO... Groups" />
+            <marker date="1480250814000" expanded="true" signature="866:899" ph="SELECT id FR... Users" />
+            <marker date="1480250814000" expanded="true" signature="996:1079" ph="INSERT INTO Users... " />
+            <marker date="1480250814000" expanded="true" signature="1971:2010" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="2080:2219" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="3084:3123" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="3193:3332" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="4442:4478" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="4820:4967" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="5738:5885" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="6686:6834" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="7697:7845" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="8625:8661" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="8783:8829" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9206:9253" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="9639:9675" ph="SELECT bcond... Users" />
+            <marker date="1480250814000" expanded="true" signature="9797:9923" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10008:10054" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="10239:10308" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="10558:10684" ph="SELECT g.id,... Groups" />
+            <marker date="1480250814000" expanded="true" signature="10769:10816" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="11001:11070" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480250814000" expanded="true" signature="13236:13275" ph="UPDATE Users... " />
+            <marker date="1480250814000" expanded="true" signature="13471:13507" ph="SELECT revie... Users" />
+            <marker date="1480250814000" expanded="true" signature="13629:13718" ph="INSERT INTO Reviews... " />
+            <marker date="1480250814000" expanded="true" signature="13801:13840" ph="UPDATE Users... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3825">
+          <caret line="255" column="10" selection-start-line="255" selection-start-column="10" selection-end-line="255" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1480267151000" expanded="true" signature="335:376" ph="SELECT * FRO... Groups" />
+            <marker date="1480267151000" expanded="true" signature="421:466" ph="SELECT * FRO... Groups" />
+            <marker date="1480267151000" expanded="true" signature="668:714" ph="SELECT MAX(r... RSS" />
+            <marker date="1480267151000" expanded="true" signature="785:905" ph="SELECT u.id Users" />
+            <marker date="1480267151000" expanded="true" signature="1689:1704" ph="DELETE FROM " />
+            <marker date="1480267151000" expanded="true" signature="2187:2262" ph="INSERT INTO RSS... " />
+            <marker date="1480267151000" expanded="true" signature="3395:3438" ph="SELECT MAX(p... Posts" />
+            <marker date="1480267151000" expanded="true" signature="3509:3629" ph="SELECT u.id Users" />
+            <marker date="1480267151000" expanded="true" signature="4261:4278" ph="DELETE FROM " />
+            <marker date="1480267151000" expanded="true" signature="4554:4677" ph="INSERT INTO Posts... " />
+            <marker date="1480267151000" expanded="true" signature="5503:5539" ph="SELECT bcond... Users" />
+            <marker date="1480267151000" expanded="true" signature="5649:5688" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="5757:5897" ph="SELECT g.id,... Groups" />
+            <marker date="1480267151000" expanded="true" signature="6747:6786" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="6855:6995" ph="SELECT g.id,... Groups" />
+            <marker date="1480267151000" expanded="true" signature="8137:8176" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="8613:8663" ph="SELECT * FRO... UsersGroups" />
+            <marker date="1480267151000" expanded="true" signature="8917:8974" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="9458:9516" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480267151000" expanded="true" signature="9716:9773" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="10160:10218" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="10700:10759" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480267151000" expanded="true" signature="10996:11054" ph="UPDATE Users... " />
+            <marker date="1480267151000" expanded="true" signature="11480:11696" ph="SELECT p.id,... Posts" />
+            <marker date="1480267151000" expanded="true" signature="12130:12368" ph="SELECT g.nam... Groups" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Bot for Server/HSE_News_Bot/bot_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <marker date="1480274002000" expanded="true" signature="458:478" ph="SELECT * FRO... Groups" />
+            <marker date="1480274002000" expanded="true" signature="826:859" ph="SELECT id FR... Users" />
+            <marker date="1480274002000" expanded="true" signature="956:1039" ph="INSERT INTO Users... " />
+            <marker date="1480274002000" expanded="true" signature="1933:1972" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="2042:2181" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="3046:3085" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="3155:3294" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="4404:4440" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="4782:4929" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="5700:5847" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="6648:6796" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="7659:7807" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="8587:8623" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="8745:8791" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="9168:9215" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="9601:9637" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="9759:9885" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="9970:10016" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="10203:10272" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480274002000" expanded="true" signature="10522:10648" ph="SELECT g.id,... Groups" />
+            <marker date="1480274002000" expanded="true" signature="10733:10780" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="10967:11036" ph="INSERT INTO UsersGroups... " />
+            <marker date="1480274002000" expanded="true" signature="13202:13241" ph="UPDATE Users... " />
+            <marker date="1480274002000" expanded="true" signature="13437:13473" ph="SELECT bcond... Users" />
+            <marker date="1480274002000" expanded="true" signature="13595:13684" ph="INSERT INTO Reviews... " />
+            <marker date="1480274002000" expanded="true" signature="13767:13806" ph="UPDATE Users... " />
+>>>>>>> 8b8b0129591752ff9d438a7a7778f939f065026b
           </folding>
         </state>
       </provider>
