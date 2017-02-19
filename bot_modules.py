@@ -10,8 +10,8 @@ import feedparser
 Month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'June': '06',
          'July': '07', 'Aug': '08', 'Sept': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
 
-databasem = sqlite3.connect('HSE_BOT_DB.sqlite')
-
+dbpath='%PATH%'
+databasem = sqlite3.connect(dbpath)
 dbm = databasem.cursor()
 
 dbm.execute("SELECT * FROM Groups WHERE id LIKE 'rss%'")
@@ -21,8 +21,15 @@ dbm.execute("SELECT * FROM Groups WHERE id NOT LIKE 'rss%'")
 vk_groups = dbm.fetchall()
 
 
+def send_message(bot, usr, msg, param):
+    try:
+        bot.send_message(usr, msg, param)
+    except telebot.apihelper.ApiException:
+        print('User blocked the Bot. User: ' + usr)
+        print('Undelivered message: ' + msg)
+
 def get_rss_post(bot):
-    database = sqlite3.connect('HSE_BOT_DB.sqlite')
+    database = sqlite3.connect(dbpath)
     db = database.cursor()
 
     for i in rss_groups:
@@ -95,7 +102,7 @@ def get_rss_post(bot):
 
 
 def get_vk_post(bot, vk_api):
-    database = sqlite3.connect('HSE_BOT_DB.sqlite')
+    database = sqlite3.connect(dbpath)
     db = database.cursor()
 
     for i in vk_groups:
@@ -176,7 +183,7 @@ def evening_hse(bot, vk_api):
     # print(datetime.time(15, 10))
     # print(datetime.datetime.now().time())
     if datetime.time(21, 00) <= datetime.datetime.now().time() <= datetime.time(21, 1):
-        database = sqlite3.connect('HSE_BOT_DB.sqlite')
+        database = sqlite3.connect(dbpath)
         db = database.cursor()
 
         curr_time = int(time.time()) - 172800
@@ -220,11 +227,11 @@ def evening_hse(bot, vk_api):
                 for j in range(5):
                     link += pp[j][1] + '\nhttps://vk.com/wall-' + str(pp[j][0]) + '\n\n'
 
-                link += 'Спасибо, что читаете нас :)'
+                link += 'Спасибо, что читаете нас \U0001F60A'
 
-                bot.send_message(u[0], link, disable_web_page_preview=True)
+                send_message(bot, u[0], link, disable_web_page_preview=True)
             else:
-                bot.send_message(u[0], "Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей :(")
+                send_message(bot, u[0], "Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей \U0001F614")
 
     t = threading.Timer(60, evening_hse, [bot, vk_api])
     t.start()
@@ -284,13 +291,13 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         check_if_all = bot_modules.groups_as_buttons_sub(vk_groups, active_groups, markup)
         if check_if_all > 0:
             if len(active_groups) != 0:
+                bot.send_message(message.chat.id, 'Ты хочешь подписаться на Вечернюю Вышку?\n\n'
+                                                  'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
+                                                  'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки'
+                                                  ', а затем нажми Завершить', reply_markup=markup)
                 bot.send_message(message.chat.id, 'Ты уже подписан на следующие группы:')
                 for i in active_groups:
                     bot.send_message(message.chat.id, i[1])
-            bot.send_message(message.chat.id, 'Ты хочешь подписаться на Вечернюю Вышку?\n\n'
-                                              'Вечернаяя Вышка - это 5 самых популярных материалов за день.'
-                                              'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки'
-                                              ', а затем нажми Завершить', reply_markup=markup)
         else:
             bot.send_message(message.chat.id, 'Ты подписан на все группы для Вечерней Вышки')
             markup = bot_modules.press_done(db, database, message, types)
@@ -311,7 +318,7 @@ def press_done(db, database, message, types):
 
 
 def group_selection(bot, msg, grp_id, bot_condition):
-    dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
+    dtbs = sqlite3.connect(dbpath)
     dtbs_c = dtbs.cursor()
     dtbs_c.execute("SELECT * FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
     check_group = dtbs_c.fetchall()
@@ -373,7 +380,7 @@ def group_selection(bot, msg, grp_id, bot_condition):
 def five_last_posts(msg):
     arr_link = []
     link_count = 0
-    dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
+    dtbs = sqlite3.connect(dbpath)
     dtbs_c = dtbs.cursor()
 
     dtbs_c.execute("SELECT p.id, g.name, p.p_text FROM Posts as p, UsersGroups as ug, Groups as g "
@@ -393,7 +400,7 @@ def five_last_posts(msg):
 def five_last_rss(msg):
     arr_link = []
     rss_count = 0
-    dtbs = sqlite3.connect('HSE_BOT_DB.sqlite')
+    dtbs = sqlite3.connect(dbpath)
     dtbs_c = dtbs.cursor()
 
     dtbs_c.execute("SELECT g.name, rss.rss_title, rss.rss_link FROM Groups as g, RSS as rss, UsersGroups as ug"
