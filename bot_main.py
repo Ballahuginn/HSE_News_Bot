@@ -5,12 +5,13 @@ import time
 from telebot import types
 import bot_modules
 
-bot = telebot.TeleBot('TOKEN')
+dbpath=''
+bot = telebot.TeleBot('')
 
 session = vk.Session()
 vk_api = vk.API(session, v='5.62', timeout=100)
 
-databasem = sqlite3.connect('HSE_BOT_DB.sqlite')
+databasem = sqlite3.connect(dbpath)
 dbm = databasem.cursor()
 
 # botCondition 0 - простой, 1 - отказ для подписки,
@@ -33,7 +34,7 @@ bot_modules.evening_hse(bot, vk_api)
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    database = sqlite3.connect('HSE_BOT_DB.sqlite')
+    database = sqlite3.connect(dbpath)
     db = database.cursor()
     markup = types.ReplyKeyboardMarkup()
     markup.row('\U00002705 Выбрать группы для подписки')
@@ -47,7 +48,7 @@ def send_welcome(message):
         # print(bot.get_chat(message.chat.id))
         bot.send_message(message.chat.id,
                          'Привет! Я бот, который поможет тебе следить за всеми новостями твоего любимого ВУЗа! \n'
-                         'Я могу присылать тебе новости из разных групп ВК связанных с Вышкой.\n'
+                         'Я могу присылать тебе новости из разных групп ВК, связанных с Вышкой.\n'
                          'А еще у меня есть вечерняя рассылка популярных новостей :)',
                          reply_markup=markup)
     else:
@@ -59,7 +60,7 @@ def send_welcome(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def news_source(message):
 
-    database = sqlite3.connect('HSE_BOT_DB.sqlite')
+    database = sqlite3.connect(dbpath)
     db = database.cursor()
 
     if message.text == '\U0001F6AB Выбрать группы для отписки':
@@ -263,7 +264,7 @@ def news_source(message):
     if message.text == '\U0001F4AC Оставить пожелания':
         db.execute("UPDATE Users SET bcond = 5 WHERE id = ?", (message.chat.id,))
         database.commit()
-        bot.send_message(message.chat.id, 'Как ты думаешь, чего не хвататет этому боту?', reply_markup=markup_none)
+        bot.send_message(message.chat.id, 'Как ты думаешь, чего не хвататет этому боту? \U0001F914', reply_markup=markup_none)
 
     else:
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
@@ -274,7 +275,7 @@ def news_source(message):
             db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
             database.commit()
             markup = bot_modules.press_done(db, database, message, types)
-            bot.send_message(message.chat.id, 'Спасибо за отзыв! Твое мнение очень важно для нас!', reply_markup=markup)
+            bot.send_message(message.chat.id, 'Спасибо за отзыв! Твое мнение очень важно для нас! \U0001F64F', reply_markup=markup)
 
 
 if __name__ == '__main__':
