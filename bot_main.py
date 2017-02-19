@@ -1,21 +1,15 @@
 import vk
-import telebot
 import sqlite3
 import time
 from telebot import types
 import bot_modules
-import configparser
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-dbpath=config['DEFAULT']['DB']
-bot = telebot.TeleBot(config['TELEGRAM.API']['TOKEN'])
-api =  config['VK.API']['ver']
+dbpath = bot_modules.dbpath
+bot = bot_modules.bot
 
 
 session = vk.Session()
-vk_api = vk.API(session, v=api, timeout=100)
+vk_api = vk.API(session, v=bot_modules.api_ver, timeout=bot_modules.timeout)
 
 databasem = sqlite3.connect(dbpath)
 dbm = databasem.cursor()
@@ -55,7 +49,7 @@ def send_welcome(message):
         bot.send_message(message.chat.id,
                          'Привет! Я бот, который поможет тебе следить за всеми новостями твоего любимого ВУЗа! \n'
                          'Я могу присылать тебе новости из разных групп ВК, связанных с Вышкой.\n'
-                         'А еще у меня есть вечерняя рассылка популярных новостей :)',
+                         'А еще у меня есть вечерняя рассылка популярных новостей \U0001F306',
                          reply_markup=markup)
     else:
         markup.row('\U0001F6AB Выбрать группы для отписки')
@@ -157,7 +151,7 @@ def news_source(message):
                 active_groups = db.fetchall()
                 check_if_all = bot_modules.groups_as_buttons_unsub(bot_modules.vk_groups, active_groups, markup)
                 if check_if_all == 0:
-                    bot.send_message(message.chat.id, 'Ты НЕ подписан на Вечернюю Вышку',
+                    bot.send_message(message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку',
                                      reply_markup=markup)
                     markup = bot_modules.press_done(db, database, message, types)
                     bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
@@ -174,7 +168,7 @@ def news_source(message):
                 check_if_all = bot_modules.groups_as_buttons_sub(bot_modules.vk_groups, active_groups, markup)
                 if check_if_all == 0:
                     bot_modules.send_message(bot, message.chat.id, 'Ты подписан на все группы для получения новостей '
-                                                      'в Вечерней Вышке', False)
+                                                      'в \U0001F306 Вечерней Вышке', False)
                     markup = bot_modules.press_done(db, database, message, types)
                     bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
                 else:

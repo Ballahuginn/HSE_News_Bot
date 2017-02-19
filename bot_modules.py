@@ -15,9 +15,18 @@ config.read('config.ini')
 Month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'June': '06',
          'July': '07', 'Aug': '08', 'Sept': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
 
+bot = telebot.TeleBot(config['TELEGRAM.API']['TOKEN'])
+api_ver =  config['VK.API']['ver']
+timeout =  int(config['VK.API']['timeout'])
+
 dbpath=config['DEFAULT']['DB']
 databasem = sqlite3.connect(dbpath)
 dbm = databasem.cursor()
+
+start_h = int(config['EVENING']['start_h'])
+start_m = int(config['EVENING']['start_m'])
+end_h = int(config['EVENING']['end_h'])
+end_m = int(config['EVENING']['end_m'])
 
 dbm.execute("SELECT * FROM Groups WHERE id LIKE 'rss%'")
 rss_groups = dbm.fetchall()
@@ -187,7 +196,7 @@ def evening_hse(bot, vk_api):
 
     # print(datetime.time(15, 10))
     # print(datetime.datetime.now().time())
-    if datetime.time(21, 00) <= datetime.datetime.now().time() <= datetime.time(21, 1):
+    if datetime.time(start_h, start_m) <= datetime.datetime.now().time() <= datetime.time(end_h, end_m):
         database = sqlite3.connect(dbpath)
         db = database.cursor()
 
@@ -216,11 +225,11 @@ def evening_hse(bot, vk_api):
 
         popular_post = []
         for u in sub_users:
-            link = 'Вечерняя Вышка специально для вас! \n\n'
+            link = '\U0001F306 Вечерняя Вышка специально для вас! \n\n'
             db.execute("SELECT gid FROM UsersGroups WHERE fetget = 1 AND uid = ?", (u[0],))
             usr_grps = db.fetchall()
             for g in usr_grps:
-                db.execute("SELECT id, p_text, (p_likes + p_reposts) as pop FROM Posts WHERE gid = ? AND p_date > ? "
+                db.execute("SELECT id, p_text, (p_likes + p_reposts*10) as pop FROM Posts WHERE gid = ? AND p_date > ? "
                            "ORDER BY pop DESC ", (g[0], (int(time.time()) - 86400),))
                 g_posts = db.fetchall()
                 for gp in g_posts:
@@ -229,14 +238,17 @@ def evening_hse(bot, vk_api):
             popular_post = []
 
             if pp:
-                for j in range(5):
-                    link += pp[j][1] + '\nhttps://vk.com/wall-' + str(pp[j][0]) + '\n\n'
-
+                if len(pp)>=5:
+                    for j in range(5):
+                        link += pp[j][1] + '\nhttps://vk.com/wall-' + str(pp[j][0]) + '\n\n'
+                else:
+                    for j in range(len(pp)):
+                        link += pp[j][1] + '\nhttps://vk.com/wall-' + str(pp[j][0]) + '\n\n'
                 link += 'Спасибо, что читаете нас \U0001F60A'
 
-                send_message(bot, u[0], link, False)
+                send_message(bot, u[0], link, True)
             else:
-                send_message(bot, u[0], "Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей \U0001F614", False)
+                send_message(bot, u[0], "\U0001F306 Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей \U0001F614", False)
 
     t = threading.Timer(60, evening_hse, [bot, vk_api])
     t.start()
@@ -276,10 +288,10 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         markup.row('Отписаться от всех')
         check_if_all = bot_modules.groups_as_buttons_unsub(vk_groups, active_groups, markup)
         if check_if_all > 0:
-            bot.send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в Вечерней Вышке'
+            bot.send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в \U0001F306 Вечерней Вышке'
                                               ', а затем нажми "Завершить"', reply_markup=markup)
         else:
-            bot.send_message(message.chat.id, 'Ты НЕ подписан на Вечернюю Вышку')
+            bot.send_message(message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку')
             markup = bot_modules.press_done(db, database, message, types)
             bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
 
