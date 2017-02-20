@@ -307,16 +307,16 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         markup.row('Выбрать все')
         check_if_all = groups_as_buttons_sub(vk_groups, active_groups, markup)
         if check_if_all > 0:
-            #if len(active_groups) != 0: understand why we needed this
             bot.send_message(message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
                                                 'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
                                                 'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки'
                                                 ', а затем нажми "\U0001F3C1 Завершить"', reply_markup=markup)
-            send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы:', False)
-            for i in active_groups:
-                send_message(bot, message.chat.id, i[1], False)
+            if len(active_groups) != 0:
+                send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы:', False)
+                for i in active_groups:
+                    send_message(bot, message.chat.id, i[1], False)
         else:
-            send_message(bot, message.chat.id, 'Ты подписан на все группы для \U0001F306 Вечерней Вышки', False)
+            send_message(bot, message.chat.id, 'Ты уже подписан на все группы для \U0001F306 Вечерней Вышки', False)
             markup = bot_modules.press_done(db, database, message, types)
             bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
 
@@ -327,7 +327,8 @@ def press_done(db, database, message, types):
     markup2 = types.ReplyKeyboardMarkup()
     # markup2.row('5 последних постов')
     # markup2.row('5 последних постов из RSS')
-    markup2.row('\U0001f527 Настройки')
+    markup2.row('\U0001F4DC Подписки')
+    markup2.row('\U0001F527 Настройки')
     markup2.row('\U00002139 О проекте')
     markup2.row('\U0001F4AC Оставить пожелания')
 

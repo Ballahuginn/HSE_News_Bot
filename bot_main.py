@@ -261,6 +261,31 @@ def news_source(message):
                                           'Этот бот является первым новостым ботом НИУ ВШЭ!\n'
                                           'Плагиат и копирование данного бота преследуются по закону!', False)
 
+    if message.text == '\U0001F4DC Подписки':
+        db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                   "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
+                   (message.chat.id,))
+        active_groups = db.fetchall()
+        if len(active_groups) != 0:
+            bot_modules.send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы для получения новостей, '
+                                                      'как только они выходят:', False)
+            for i in active_groups:
+                bot_modules.send_message(bot, message.chat.id, i[1], False)
+        else:
+            bot_modules.send_message(bot, message.chat.id, 'Ты не подписан на группы для получения новостей, '
+                                                      'как только они выходят', False)
+
+        db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                   "WHERE ug.uid = ? AND ug.gid = g.id AND ug.fetget = 1",
+                   (message.chat.id,))
+        active_groups = db.fetchall()
+        if len(active_groups) != 0:
+            bot_modules.send_message(bot, message.chat.id, 'Список групп для \U0001F306 Вечерней Вышки:', False)
+            for i in active_groups:
+                bot_modules.send_message(bot, message.chat.id, i[1], False)
+        else:
+            bot_modules.send_message(bot, message.chat.id, '\U0001F306 Вечерняя Вышка не настроена.', False)
+
     if message.text == '\U0001F4AC Оставить пожелания':
         db.execute("UPDATE Users SET bcond = 5 WHERE id = ?", (message.chat.id,))
         database.commit()
