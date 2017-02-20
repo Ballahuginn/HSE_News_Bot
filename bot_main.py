@@ -41,8 +41,8 @@ def send_welcome(message):
     db.execute("SELECT id FROM Users WHERE id = ?", (message.chat.id,))
     check_user = db.fetchall()
     if not check_user:
-        db.execute("INSERT INTO Users (id, reg_date, bcond) VALUES (?, datetime('now', 'localtime'), 0)",
-                   (message.chat.id,))
+        db.execute("INSERT INTO Users (id, reg_date, bcond, username, first_name, last_name) VALUES (?, datetime('now', 'localtime'), 0, ?, ?, ?)",
+                   (message.chat.id, message.chat.username, message.chat.first_name, message.chat.last_name,))
         database.commit()
         database.close()
         # print(bot.get_chat(message.chat.id))
