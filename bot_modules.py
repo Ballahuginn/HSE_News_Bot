@@ -305,16 +305,16 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         markup = types.ReplyKeyboardMarkup()
         markup.row('\U0001F3C1 Завершить')
         markup.row('Выбрать все')
-        check_if_all = bot_modules.groups_as_buttons_sub(vk_groups, active_groups, markup)
+        check_if_all = groups_as_buttons_sub(vk_groups, active_groups, markup)
         if check_if_all > 0:
-            if len(active_groups) != 0:
-                bot.send_message(message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
-                                                  'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
-                                                  'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки'
-                                                  ', а затем нажми "\U0001F3C1 Завершить"', reply_markup=markup)
-                send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы:', False)
-                for i in active_groups:
-                    send_message(bot, message.chat.id, i[1], False)
+            #if len(active_groups) != 0: understand why we needed this
+            bot.send_message(message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
+                                                'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
+                                                'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки'
+                                                ', а затем нажми "\U0001F3C1 Завершить"', reply_markup=markup)
+            send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы:', False)
+            for i in active_groups:
+                send_message(bot, message.chat.id, i[1], False)
         else:
             send_message(bot, message.chat.id, 'Ты подписан на все группы для \U0001F306 Вечерней Вышки', False)
             markup = bot_modules.press_done(db, database, message, types)
