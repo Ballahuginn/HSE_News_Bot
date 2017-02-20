@@ -140,7 +140,7 @@ def get_vk_post(bot, vk_api):
                         if p['date'] > int(last_post[0][0]):
                             link = str(i[1]) + '\n' + p['text'].splitlines()[0].split('.')[0] + '\nhttps://vk.com/wall-' + i[0] + '_' + str(p['id'])
                             for u in sub_users:
-                                send_message(bot, u[0], link, True)
+                                send_message(bot, u[0], link, False)
                             if p['text']:
                                 db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
                                            "VALUES (?, ?, ?, ?, ?, ?)",
