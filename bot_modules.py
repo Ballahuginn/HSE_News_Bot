@@ -16,8 +16,8 @@ Month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'June'
          'July': '07', 'Aug': '08', 'Sept': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
 
 bot = telebot.TeleBot(config['TELEGRAM.API']['TOKEN'])
-api_ver =  config['VK.API']['ver']
-timeout =  int(config['VK.API']['timeout'])
+api_ver = config['VK.API']['ver']
+timeout = int(config['VK.API']['timeout'])
 
 dbpath=config['DEFAULT']['DB']
 databasem = sqlite3.connect(dbpath)
@@ -44,6 +44,7 @@ def send_message(bot, usr, msg, param):
     except telebot.apihelper.ApiException:
         print('User blocked the Bot. User: ' + usr)
         print('Undelivered message: ' + msg)
+
 
 def get_rss_post(bot):
     database = sqlite3.connect(dbpath)
@@ -327,8 +328,8 @@ def press_done(db, database, message, types):
     markup2 = types.ReplyKeyboardMarkup()
     # markup2.row('5 последних постов')
     # markup2.row('5 последних постов из RSS')
-    markup2.row('\U0001F4DC Подписки')
-    markup2.row('\U0001F527 Настройки')
+    markup2.row('\U0001F4DC Подписки', '\U0001F527 Настройки')
+    # markup2.row('\U0001F527 Настройки')
     markup2.row('\U00002139 О проекте')
     markup2.row('\U0001F4AC Оставить пожелания')
 

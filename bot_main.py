@@ -25,7 +25,7 @@ markup_none = types.ReplyKeyboardRemove()
 dbm.execute("SELECT * FROM Groups")
 groups = dbm.fetchall()
 
-bot_modules.get_rss_post(bot)
+# bot_modules.get_rss_post(bot)
 
 bot_modules.get_vk_post(bot, vk_api)
 
@@ -228,21 +228,21 @@ def news_source(message):
         markup = bot_modules.press_done(db, database, message, types)
         bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
 
-    if message.text == '5 последних постов':
-        vk_arr = bot_modules.five_last_posts(message)
-        if vk_arr:
-            for _i in vk_arr:
-                bot_modules.send_message(bot, message.chat.id, _i, False)
-        else:
-            bot_modules.send_message(bot, message.chat.id, 'Ты не выбрал группы', False)
-
-    if message.text == '5 последних постов из RSS':
-        rss_arr = bot_modules.five_last_rss(message)
-        if rss_arr:
-            for _i in rss_arr:
-                bot.send_message(message.chat.id, _i)
-        else:
-            bot_modules.send_message(bot, message.chat.id, 'Ты не выбрал RSS', False)
+    # if message.text == '5 последних постов':
+    #     vk_arr = bot_modules.five_last_posts(message)
+    #     if vk_arr:
+    #         for _i in vk_arr:
+    #             bot_modules.send_message(bot, message.chat.id, _i, False)
+    #     else:
+    #         bot_modules.send_message(bot, message.chat.id, 'Ты не выбрал группы', False)
+    #
+    # if message.text == '5 последних постов из RSS':
+    #     rss_arr = bot_modules.five_last_rss(message)
+    #     if rss_arr:
+    #         for _i in rss_arr:
+    #             bot.send_message(message.chat.id, _i)
+    #     else:
+    #         bot_modules.send_message(bot, message.chat.id, 'Ты не выбрал RSS', False)
 
     if message.text == '\U0001f527 Настройки':
         markup = types.ReplyKeyboardMarkup()
@@ -267,10 +267,12 @@ def news_source(message):
                    (message.chat.id,))
         active_groups = db.fetchall()
         if len(active_groups) != 0:
-            bot_modules.send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы для получения новостей, '
-                                                      'как только они выходят:', False)
+            grp = 'Ты уже подписан на следующие группы для получения новостей, как только они выходят:\n\n'
+            # bot_modules.send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы для получения новостей, '
+            #                                           'как только они выходят:', False)
             for i in active_groups:
-                bot_modules.send_message(bot, message.chat.id, i[1], False)
+                grp += str(i[1]) + '\n'
+            bot_modules.send_message(bot, message.chat.id, grp, False)
         else:
             bot_modules.send_message(bot, message.chat.id, 'Ты не подписан на группы для получения новостей, '
                                                       'как только они выходят', False)
@@ -280,11 +282,13 @@ def news_source(message):
                    (message.chat.id,))
         active_groups = db.fetchall()
         if len(active_groups) != 0:
-            bot_modules.send_message(bot, message.chat.id, 'Список групп для \U0001F306 Вечерней Вышки:', False)
+            grp = 'Список групп для \U0001F306 Вечерней Вышки:\n\n'
+            # bot_modules.send_message(bot, message.chat.id, 'Список групп для \U0001F306 Вечерней Вышки:', False)
             for i in active_groups:
-                bot_modules.send_message(bot, message.chat.id, i[1], False)
+                grp += str(i[1]) + '\n'
+            bot_modules.send_message(bot, message.chat.id, grp, False)
         else:
-            bot_modules.send_message(bot, message.chat.id, '\U0001F306 Вечерняя Вышка не настроена.', False)
+            bot_modules.send_message(bot, message.chat.id, '\U0001F306 Вечерняя Вышка не настроена', False)
 
     if message.text == '\U0001F4AC Оставить пожелания':
         db.execute("UPDATE Users SET bcond = 5 WHERE id = ?", (message.chat.id,))
