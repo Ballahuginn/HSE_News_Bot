@@ -25,7 +25,7 @@ markup_none = types.ReplyKeyboardRemove()
 dbm.execute("SELECT * FROM Groups")
 groups = dbm.fetchall()
 
-# bot_modules.get_rss_post(bot)
+bot_modules.get_rss_post(bot)
 
 bot_modules.get_vk_post(bot, vk_api)
 
@@ -40,8 +40,10 @@ def send_welcome(message):
     markup.row('\U00002705 Выбрать группы для подписки')
     db.execute("SELECT id FROM Users WHERE id = ?", (message.chat.id,))
     check_user = db.fetchall()
+
     if not check_user:
-        db.execute("INSERT INTO Users (id, reg_date, bcond, username, first_name, last_name) VALUES (?, datetime('now', 'localtime'), 0, ?, ?, ?)",
+        db.execute("INSERT INTO Users (id, reg_date, bcond, username, first_name, last_name) VALUES "
+                   "(?, datetime('now', 'localtime'), 0, ?, ?, ?)",
                    (message.chat.id, message.chat.username, message.chat.first_name, message.chat.last_name,))
         database.commit()
         database.close()
@@ -55,6 +57,25 @@ def send_welcome(message):
         markup.row('\U0001F6AB Выбрать группы для отписки')
         markup.row('\U0001F51D Главное меню')
         bot.send_message(message.chat.id, 'Добро пожаловать. Снова.', reply_markup=markup)
+
+
+@bot.message_handler(commands=['stop'])
+def send_goodbye(message):
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
+    db.execute("SELECT id FROM Users WHERE id = ?", (message.chat.id,))
+    check_user = db.fetchall()
+
+    if check_user:
+        db.execute("UPDATE UsersGroups SET upget = 0, fetget = 0 WHERE uid = ?", (message.chat.id,))
+        database.commit()
+        bot.send_message(message.chat.id, 'Очень жаль, что ты решил отписаться от всего \U0001F614\n'
+                                          'Но я всегда буду рад, если ты снова решишь подписаться!\n '
+                                          'Нужно просто нажать /start \U0001F609',
+                         reply_markup=markup_none)
+    else:
+        bot.send_message(message.chat.id, 'Мне кажется или ты еще не начинал пользоваться ботом?\n'
+                                          'Чтобы начать им пользоваться нажми /start \U0001F60E')
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
