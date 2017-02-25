@@ -37,10 +37,13 @@ vk_groups = dbm.fetchall()
 
 def send_message(bot, usr, msg, param):
     try:
-        if param:
+        if param == 'True':
             bot.send_message(usr, msg, disable_web_page_preview=True)
         else:
-            bot.send_message(usr, msg)
+            if param == 'True':
+                bot.send_message(usr, msg)
+            else:
+                bot.send_message(usr, msg, reply_markup=param)
     except telebot.apihelper.ApiException:
         print('User blocked the Bot. User: ' + usr)
         print('Undelivered message: ' + msg)
@@ -289,8 +292,8 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         markup.row('Отписаться от всех')
         check_if_all = bot_modules.groups_as_buttons_unsub(vk_groups, active_groups, markup)
         if check_if_all > 0:
-            bot.send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в \U0001F306 Вечерней Вышке'
-                                              ', а затем нажми "Завершить"', reply_markup=markup)
+            send_message(bot, message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в \U0001F306 Вечерней Вышке'
+                                              ', а затем нажми "Завершить"', markup)
         else:
             bot.send_message(message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку')
             markup = bot_modules.press_done(db, database, message, types)
