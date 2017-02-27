@@ -1,6 +1,7 @@
 import vk
 import sqlite3
 import time
+import traceback
 from telebot import types
 import bot_modules
 
@@ -17,8 +18,8 @@ dbm = databasem.cursor()
 # botCondition 0 - простой, 1 - отказ для подписки,
 # 2 - выбор для подписки, 3 - отказ для последних, 4 - выбор для последних
 
-dbm.execute("SELECT id FROM Users")
-users = dbm.fetchall()
+#dbm.execute("SELECT id FROM Users")
+#users = dbm.fetchall() not used anywhere
 
 markup_none = types.ReplyKeyboardRemove()
 
@@ -30,7 +31,6 @@ bot_modules.get_rss_post(bot)
 bot_modules.get_vk_post(bot, vk_api)
 
 bot_modules.evening_hse(bot, vk_api)
-
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -272,6 +272,7 @@ def news_source(message):
         markup.row('\U0001F51D Главное меню')
         bot.send_message(message.chat.id, 'Выбери, что ты хочешь сделать', reply_markup=markup)
 
+
     if message.text == '\U0001F51D Главное меню':
         markup = bot_modules.press_done(db, database, message, types)
         bot.send_message(message.chat.id, 'Добро пожаловать в главное меню!', reply_markup=markup)
@@ -327,8 +328,16 @@ def news_source(message):
             markup = bot_modules.press_done(db, database, message, types)
             bot.send_message(message.chat.id, 'Спасибо за отзыв! Твое мнение очень важно для нас! \U0001F64F', reply_markup=markup)
 
+def telegram_polling():
+    try:
+        bot.polling(none_stop=True, timeout=60) #constantly get messages from Telegram
+    except:
+        with open("logs.log", "a") as file:
+            file.write("\r\n\r\n" + time.strftime("%c")+"\r\n<<ERROR polling>>\r\n"+ traceback.format_exc() + "\r\n<<ERROR polling>>")
+        print("ERROR polling")
+        bot.stop_polling()
+        time.sleep(100)
+        telegram_polling()
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True)
-    while True:
-        time.sleep(200)
+    telegram_polling()

@@ -3,6 +3,7 @@ import sqlite3
 import threading
 import time
 import feedparser
+import traceback
 import telebot
 import configparser
 
@@ -45,6 +46,11 @@ def send_message(bot, usr, msg, param):
             else:
                 bot.send_message(usr, msg, reply_markup=param)
     except telebot.apihelper.ApiException:
+        with open("logs.log", "a") as file:
+            file.write("\r\n\r\n" + time.strftime(
+                "%c") + "\r\n<<ERROR sending message>>\r\n" + "\r\nUser: "+ usr +
+                       "\r\nUndelivered message: "+ msg +
+                       "\r\n" + traceback.format_exc() + "\r\n<<ERROR sending message>>")
         print('User blocked the Bot. User: ' + usr)
         print('Undelivered message: ' + msg)
 
@@ -75,10 +81,7 @@ def get_rss_post(bot):
             if int(utime) > int(last_post[0][0]):
                 link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
                 for u in sub_users:
-                    try:
-                        bot.send_message(u[0], link)
-                    except telebot.apihelper.ApiException:
-                        print('User blocked the Bot. User: ' + u[0])
+                    send_message(bot, u[0], link, False)
 
     db.execute("DELETE FROM RSS")
 
@@ -125,7 +128,6 @@ def get_rss_post(bot):
 def get_vk_post(bot, vk_api):
     database = sqlite3.connect(dbpath)
     db = database.cursor()
-
     for i in vk_groups:
         db.execute("SELECT MAX(p_date) FROM Posts WHERE gid = ?", (str(i[0]),))
         last_post = db.fetchall()
@@ -134,17 +136,46 @@ def get_vk_post(bot, vk_api):
                    "WHERE u.id = ug.uid AND ug.upget = 1 AND ug.gid = ?", (str(i[0]),))
         sub_users = db.fetchall()
         if last_post[0][0]:
-            # try:
-            posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
-            # except requests.exceptions.ReadTimeout:
-            #     print('VK Timed Out')
-            for p in posts['items']:
-                if type(p) != int:
-                    if 'id' in p:
-                        if p['date'] > int(last_post[0][0]):
-                            link = str(i[1]) + '\n' + p['text'].splitlines()[0].split('.')[0] + '\nhttps://vk.com/wall-' + i[0] + '_' + str(p['id'])
-                            for u in sub_users:
-                                send_message(bot, u[0], link, False)
+            print('Fetching posts from group ' + i[0])
+            try:
+                posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
+                for p in posts['items']:
+                    if type(p) != int:
+                        if 'id' in p:
+                            if p['date'] > int(last_post[0][0]):
+                                link = str(i[1]) + '\n' + p['text'].splitlines()[0].split('.')[0] + '\nhttps://vk.com/wall-' + i[0] + '_' + str(p['id'])
+                                for u in sub_users:
+                                    print('check')
+                                    print(bot.inline_handler(lambda query: query.query == 'users.getFullUser(85489862)'))
+                                    send_message(bot, u[0], link, False)
+                                if p['text']:
+                                    db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
+                                               "VALUES (?, ?, ?, ?, ?, ?)",
+                                               (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
+                                                p['text'].splitlines()[0].split('.')[0], p['likes']['count'],
+                                                p['reposts']['count']))
+                                else:
+                                    db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
+                                               "VALUES (?, ?, ?, ' ', ?, ?)",
+                                               (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
+                                                p['likes']['count'],
+                                                p['reposts']['count']))
+                print('Fetching successful')
+            except Exception as e:
+                with open("logs.log", "a") as file:
+                    file.write("\r\n\r\n" + time.strftime(
+                        "%c") + "\r\n<<ERROR fetching post>>\r\n" +
+                               "\r\nGroup: " + i[0] +
+                               "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
+                print(e)
+                print('Unsuccessful fetch for group '+i[0])
+        else:
+            print('Fetching posts from group ' + i[0])
+            try:
+                posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
+                for p in posts['items']:
+                    if type(p) != int:
+                        if 'id' in p:
                             if p['text']:
                                 db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
                                            "VALUES (?, ?, ?, ?, ?, ?)",
@@ -154,25 +185,16 @@ def get_vk_post(bot, vk_api):
                             else:
                                 db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
                                            "VALUES (?, ?, ?, ' ', ?, ?)",
-                                           (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
-                                            p['likes']['count'],
+                                           (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']), p['likes']['count'],
                                             p['reposts']['count']))
-        else:
-            posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
-            for p in posts['items']:
-                if type(p) != int:
-                    if 'id' in p:
-                        if p['text']:
-                            db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
-                                       "VALUES (?, ?, ?, ?, ?, ?)",
-                                       (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
-                                        p['text'].splitlines()[0].split('.')[0], p['likes']['count'],
-                                        p['reposts']['count']))
-                        else:
-                            db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
-                                       "VALUES (?, ?, ?, ' ', ?, ?)",
-                                       (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']), p['likes']['count'],
-                                        p['reposts']['count']))
+            except Exception as e:
+                with open("logs.log", "a") as file:
+                    file.write("\r\n\r\n" + time.strftime(
+                        "%c") + "\r\n<<ERROR fetching post>>\r\n" +
+                               "\r\nGroup: " + i[0] +
+                               "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
+                print(e)
+                print('Unsuccessful fetch for group ' + i[0])
 
     # db.execute("DELETE FROM Posts")
 
