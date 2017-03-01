@@ -21,19 +21,11 @@ api_ver = config['VK.API']['ver']
 timeout = int(config['VK.API']['timeout'])
 
 dbpath=config['DEFAULT']['DB']
-databasem = sqlite3.connect(dbpath)
-dbm = databasem.cursor()
 
 start_h = int(config['EVENING']['start_h'])
 start_m = int(config['EVENING']['start_m'])
 end_h = int(config['EVENING']['end_h'])
 end_m = int(config['EVENING']['end_m'])
-
-dbm.execute("SELECT * FROM Groups WHERE id LIKE 'rss%'")
-rss_groups = dbm.fetchall()
-
-dbm.execute("SELECT * FROM Groups WHERE id NOT LIKE 'rss%'")
-vk_groups = dbm.fetchall()
 
 
 def send_message(bot, usr, msg, param):
@@ -58,49 +50,66 @@ def send_message(bot, usr, msg, param):
 def get_rss_post(bot):
     database = sqlite3.connect(dbpath)
     db = database.cursor()
-
-    for i in rss_groups:
-        db.execute("SELECT MAX(rss_date) FROM RSS WHERE rss_id = ?", (str(i[0]),))
-        last_post = db.fetchall()
-
-        db.execute("SELECT u.id FROM Users as u, UsersGroups as ug "
-                   "WHERE u.id = ug.uid AND ug.upget = 1 AND ug.gid = ?", (str(i[0]),))
-        sub_users = db.fetchall()
-
-        rss = feedparser.parse(i[2])
-        entr = rss['entries']
-        for g in entr:
-            t = g['published'].split(' ')
-            if t[2] in Month:
-                t[2] = Month[t[2]]
-            rssdate = t[1:4]
-            for t in t[4].split(':'):
-                rssdate.append(t)
-            rssdate = '/'.join(rssdate)
-            utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
-            if int(utime) > int(last_post[0][0]):
-                link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
-                for u in sub_users:
-                    send_message(bot, u[0], link, False)
-
-    db.execute("DELETE FROM RSS")
-
-    for i in rss_groups:
-        rss = feedparser.parse(i[2])
-        entr = rss['entries']
-        for g in entr:
-            t = g['published'].split(' ')
-            if t[2] in Month:
-                t[2] = Month[t[2]]
-            rssdate = t[1:4]
-            for t in t[4].split(':'):
-                rssdate.append(t)
-            rssdate = '/'.join(rssdate)
-            utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
-            db.execute("INSERT INTO RSS (rss_id, rss_date, rss_link, rss_title) VALUES (?, ?, ?, ?)",
-                       (str(i[0]), str(utime), str(g['links'][0]['href']), g['title']))
-
-    database.commit()
+    for i in rss_groups_list():
+        try:
+            db.execute("SELECT MAX(rss_date) FROM RSS WHERE rss_id = ?", (str(i[0]),))
+            last_post = db.fetchall()
+            db.execute("SELECT u.id FROM Users as u, UsersGroups as ug "
+                       "WHERE u.id = ug.uid AND ug.upget = 1 AND ug.gid = ?", (str(i[0]),))
+            sub_users = db.fetchall()
+            rss = feedparser.parse(i[2])
+            entr = rss['entries']
+            if rss['feed']:
+                for g in entr:
+                    t = g['published'].split(' ')
+                    if t[2] in Month:
+                        t[2] = Month[t[2]]
+                    rssdate = t[1:4]
+                    for t in t[4].split(':'):
+                        rssdate.append(t)
+                    rssdate = '/'.join(rssdate)
+                    utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
+                    if last_post[0][0]:
+                        if int(utime) > int(last_post[0][0]):
+                            link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
+                            print(link)
+                            for u in sub_users:
+                                send_message(bot, u[0], link, False)
+                    else:
+                        link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
+                        print(link)
+                        for u in sub_users:
+                            send_message(bot, u[0], link, False)
+        except:
+            with open("logs.log", "a") as file:
+                file.write("\r\n\r\n" + time.strftime(
+                    "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
+                           "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
+            print("ERROR RSS parse")
+    try:
+        db.execute("DELETE FROM RSS")
+        for i in rss_groups_list():
+            rss = feedparser.parse(i[2])
+            entr = rss['entries']
+            if rss['feed']:
+                for g in entr:
+                    t = g['published'].split(' ')
+                    if t[2] in Month:
+                        t[2] = Month[t[2]]
+                    rssdate = t[1:4]
+                    for t in t[4].split(':'):
+                        rssdate.append(t)
+                    rssdate = '/'.join(rssdate)
+                    utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
+                    db.execute("INSERT INTO RSS (rss_id, rss_date, rss_link, rss_title) VALUES (?, ?, ?, ?)",
+                               (str(i[0]), str(utime), str(g['links'][0]['href']), g['title']))
+        database.commit()
+    except:
+        with open("logs.log", "a") as file:
+            file.write("\r\n\r\n" + time.strftime(
+                "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
+                       "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
+        print("ERROR RSS table update")
     database.close()
     t = threading.Timer(1800, get_rss_post, [bot])
     t.start()
@@ -128,7 +137,7 @@ def get_rss_post(bot):
 def get_vk_post(bot, vk_api):
     database = sqlite3.connect(dbpath)
     db = database.cursor()
-    for i in vk_groups:
+    for i in vk_groups_list():
         db.execute("SELECT MAX(p_date) FROM Posts WHERE gid = ?", (str(i[0]),))
         last_post = db.fetchall()
 
@@ -198,7 +207,7 @@ def get_vk_post(bot, vk_api):
 
     # db.execute("DELETE FROM Posts")
 
-    # for i in vk_groups:
+    # for i in vk_groups_list():
     #     # try:
     #     posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
     #     # except requests.exceptions.ReadTimeout:
@@ -228,7 +237,7 @@ def evening_hse(bot, vk_api):
 
         curr_time = int(time.time()) - 172800
 
-        for i in vk_groups:
+        for i in vk_groups_list():
             db.execute("SELECT COUNT(id) FROM Posts WHERE gid = ?", (str(i[0]),))
             posts_count = db.fetchall()
 
@@ -312,7 +321,7 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         markup = types.ReplyKeyboardMarkup()
         markup.row('\U0001F3C1 Завершить')
         markup.row('Отписаться от всех')
-        check_if_all = bot_modules.groups_as_buttons_unsub(vk_groups, active_groups, markup)
+        check_if_all = bot_modules.groups_as_buttons_unsub(vk_groups_list(), active_groups, markup)
         if check_if_all > 0:
             send_message(bot, message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в \U0001F306 Вечерней Вышке'
                                               ', а затем нажми "Завершить"', markup)
@@ -331,7 +340,7 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         markup = types.ReplyKeyboardMarkup()
         markup.row('\U0001F3C1 Завершить')
         markup.row('Выбрать все')
-        check_if_all = groups_as_buttons_sub(vk_groups, active_groups, markup)
+        check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
         if check_if_all > 0:
             bot.send_message(message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
                                                 'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
@@ -458,3 +467,27 @@ def five_last_rss(msg):
             rss_count += 1
 
     return arr_link
+
+def groups_list_refresh():
+    databasem = sqlite3.connect(dbpath)
+    dbm = databasem.cursor()
+    dbm.execute("SELECT * FROM Groups")
+    groups = dbm.fetchall()
+    dbm.close()
+    return groups
+
+def vk_groups_list():
+    databasem = sqlite3.connect(dbpath)
+    dbm = databasem.cursor()
+    dbm.execute("SELECT * FROM Groups WHERE id NOT LIKE 'rss%'")
+    groups = dbm.fetchall()
+    dbm.close()
+    return groups
+
+def rss_groups_list():
+    databasem = sqlite3.connect(dbpath)
+    dbm = databasem.cursor()
+    dbm.execute("SELECT * FROM Groups WHERE id LIKE 'rss%'")
+    groups = dbm.fetchall()
+    dbm.close()
+    return groups
