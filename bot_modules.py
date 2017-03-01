@@ -5,6 +5,7 @@ import time
 import feedparser
 import traceback
 import telebot
+from telebot import types
 import configparser
 
 config = configparser.ConfigParser()
@@ -33,7 +34,7 @@ def send_message(bot, usr, msg, param):
         if param == 'True':
             bot.send_message(usr, msg, disable_web_page_preview=True)
         else:
-            if param == 'True':
+            if param == 'False':
                 bot.send_message(usr, msg)
             else:
                 bot.send_message(usr, msg, reply_markup=param)
@@ -59,6 +60,8 @@ def get_rss_post(bot):
             sub_users = db.fetchall()
             rss = feedparser.parse(i[2])
             entr = rss['entries']
+            print("Parsing RSS:")
+            print(entr)
             if rss['feed']:
                 for g in entr:
                     t = g['published'].split(' ')
@@ -80,6 +83,13 @@ def get_rss_post(bot):
                         print(link)
                         for u in sub_users:
                             send_message(bot, u[0], link, False)
+            else:
+                with open("logs.log", "a") as file:
+                    file.write("\r\n\r\n" + time.strftime(
+                        "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
+                               "\r\n" + str(rss) + "\r\n<<ERROR RSS parse>>")
+                print("ERROR RSS parse")
+                print(rss)
         except:
             with open("logs.log", "a") as file:
                 file.write("\r\n\r\n" + time.strftime(
@@ -240,15 +250,23 @@ def evening_hse(bot, vk_api):
         for i in vk_groups_list():
             db.execute("SELECT COUNT(id) FROM Posts WHERE gid = ?", (str(i[0]),))
             posts_count = db.fetchall()
-
-            posts = vk_api.wall.get(owner_id='-' + i[0], count=posts_count[0][0], filter='owner')
-            for p in posts['items']:
-                if type(p) != int:
-                    if 'id' in p:
-                        if p['date'] > (int(time.time()) - 86400):
-                            db.execute("UPDATE Posts SET p_likes = ?, p_reposts = ? WHERE id = ?",
-                                       (p['likes']['count'], p['reposts']['count'], str(i[0]) + '_' + str(p['id']),))
-
+            try:
+                posts = vk_api.wall.get(owner_id='-' + i[0], count=posts_count[0][0], filter='owner')
+                for p in posts['items']:
+                    if type(p) != int:
+                        if 'id' in p:
+                            if p['date'] > (int(time.time()) - 86400):
+                                db.execute("UPDATE Posts SET p_likes = ?, p_reposts = ? WHERE id = ?",
+                                           (p['likes']['count'], p['reposts']['count'], str(i[0]) + '_' + str(p['id']),))
+            except Exception as e:
+                with open("logs.log", "a") as file:
+                    file.write("\r\n\r\n" + time.strftime(
+                        "%c") + "\r\n<<ERROR fetching post>>\r\n" +
+                               "\r\nGroup: " + i[0] +
+                               "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
+                print(e)
+                print('Unsuccessful fetch for group ' + i[0])
+                
             db.execute("SELECT COUNT(id) FROM Posts WHERE gid = ?", (i[0],))
             entr_numb = db.fetchall()
             if entr_numb[0][0] > 6:
@@ -285,6 +303,7 @@ def evening_hse(bot, vk_api):
             else:
                 send_message(bot, u[0], "\U0001F306 Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей \U0001F614", False)
 
+        db.close()
     t = threading.Timer(60, evening_hse, [bot, vk_api])
     t.start()
 
@@ -326,9 +345,9 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
             send_message(bot, message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в \U0001F306 Вечерней Вышке'
                                               ', а затем нажми "Завершить"', markup)
         else:
-            bot.send_message(message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку')
-            markup = bot_modules.press_done(db, database, message, types)
-            bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
+            send_message(bot, message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку', False)
+            markup = bot_modules.press_done(message)
+            send_message(bot, message.chat.id, 'Настройка завершена', markup)
 
     if bot_condition[0][0] == 2:
         db.execute("UPDATE Users SET bcond = 4 WHERE id = ?", (message.chat.id,))
@@ -342,21 +361,23 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         markup.row('Выбрать все')
         check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
         if check_if_all > 0:
-            bot.send_message(message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
+            send_message(bot, message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
                                                 'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
                                                 'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки'
-                                                ', а затем нажми "\U0001F3C1 Завершить"', reply_markup=markup)
+                                                ', а затем нажми "\U0001F3C1 Завершить"', markup)
             if len(active_groups) != 0:
                 send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы:', False)
                 for i in active_groups:
                     send_message(bot, message.chat.id, i[1], False)
         else:
             send_message(bot, message.chat.id, 'Ты уже подписан на все группы для \U0001F306 Вечерней Вышки', False)
-            markup = bot_modules.press_done(db, database, message, types)
-            bot.send_message(message.chat.id, 'Настройка завершена', reply_markup=markup)
+            markup = bot_modules.press_done(message)
+            send_message(bot, message.chat.id, 'Настройка завершена', markup)
 
 
-def press_done(db, database, message, types):
+def press_done(message):
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
     db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
     database.commit()
     markup2 = types.ReplyKeyboardMarkup()
@@ -366,6 +387,7 @@ def press_done(db, database, message, types):
     # markup2.row('\U0001F527 Настройки')
     markup2.row('\U00002139 О проекте')
     markup2.row('\U0001F4AC Оставить пожелания')
+    db.close()
 
     return markup2
 
@@ -468,7 +490,7 @@ def five_last_rss(msg):
 
     return arr_link
 
-def groups_list_refresh():
+def groups_list():
     databasem = sqlite3.connect(dbpath)
     dbm = databasem.cursor()
     dbm.execute("SELECT * FROM Groups")
@@ -491,3 +513,17 @@ def rss_groups_list():
     groups = dbm.fetchall()
     dbm.close()
     return groups
+
+def user_name(chat):
+    databasem = sqlite3.connect(dbpath)
+    dbm = databasem.cursor()
+    print(chat.id)
+    dbm.execute("SELECT username, first_name FROM Users WHERE id = ?", (chat.id))
+    user = dbm.fetchall()
+    dbm.close()
+    print (user)
+    if user[0][1]:
+        name = user[0][1]
+    else:
+        name = user[0][2]
+    return name
