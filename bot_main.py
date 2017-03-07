@@ -102,7 +102,7 @@ def news_source(message):
         active_groups = db.fetchall()
 
         markup = types.ReplyKeyboardMarkup()
-        markup.row(nextb)
+        markup.row('\U000027A1 Далее')
         markup.row('Отписаться от всех')
         check_if_all = bot_modules.groups_as_buttons_unsub(bot_modules.groups_list(), active_groups, markup)
         if check_if_all > 0:
@@ -122,7 +122,7 @@ def news_source(message):
                    (message.chat.id,))
         active_groups = db.fetchall()
         markup = types.ReplyKeyboardMarkup()
-        markup.row(nextb)
+        markup.row('\U000027A1 Далее')
         markup.row('Выбрать все')
         check_if_all = bot_modules.groups_as_buttons_sub(bot_modules.groups_list(), active_groups, markup)
         if check_if_all > 0:
@@ -144,7 +144,7 @@ def news_source(message):
             bot_modules.group_selection(bot, message, str(j[0]), bot_condition)
             markup = types.ReplyKeyboardMarkup()
             if bot_condition[0][0] == 1:
-                markup.row(nextb)
+                markup.row('\U000027A1 Далее')
                 markup.row('Отписаться от всех')
                 db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
                            "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
@@ -158,7 +158,7 @@ def news_source(message):
                 else:
                     bot_modules.send_message(bot, message.chat.id, 'Выбери группы или нажми "Далее"', markup)
             if bot_condition[0][0] == 2:
-                markup.row(nextb)
+                markup.row('\U000027A1 Далее')
                 markup.row('Выбрать все')
                 db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
                            "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
@@ -248,7 +248,7 @@ def news_source(message):
             markup = bot_modules.press_done(message)
             bot_modules.send_message(bot, message.chat.id, 'Настройка завершена', markup)
 
-    if message.text == nextb:
+    if message.text == '\U000027A1 Далее':
         bot_modules.press_next(message, bot_modules.groups_list())
 
     if message.text == '\U0001F3C1 Завершить':
