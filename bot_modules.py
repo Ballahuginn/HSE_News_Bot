@@ -32,14 +32,14 @@ nextb = (config['COMMANDS']['NEXT'])
 
 def send_message(bot, usr, msg, param):
     try:
-        if param:
+        print(type(param))
+        if param and (type(param) is bool):
             print(param)
             bot.send_message(usr, msg, disable_web_page_preview=True)
-        else:
-            if not (param):
-                bot.send_message(usr, msg)
-            else:
-                bot.send_message(usr, msg, reply_markup=param)
+        if not (param) and (type(param) is bool):
+            bot.send_message(usr, msg)
+        if type(param) is types.ReplyKeyboardMarkup:
+            bot.send_message(usr, msg, reply_markup=param)
     except telebot.apihelper.ApiException:
         with open("logs.log", "a") as file:
             file.write("\r\n\r\n" + time.strftime(
@@ -330,7 +330,9 @@ def groups_as_buttons_unsub(groups, active_groups, markup):
     return check_if_all
 
 
-def press_next(db, database, message, groups, bot, bot_modules, types):
+def press_next(message, groups):
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
     db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
     bot_condition = db.fetchall()
     if bot_condition[0][0] == 1:
@@ -344,13 +346,13 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
         markup = types.ReplyKeyboardMarkup()
         markup.row('\U0001F3C1 Завершить')
         markup.row('Отписаться от всех')
-        check_if_all = bot_modules.groups_as_buttons_unsub(vk_groups_list(), active_groups, markup)
+        check_if_all = groups_as_buttons_unsub(vk_groups_list(), active_groups, markup)
         if check_if_all > 0:
             send_message(bot, message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в \U0001F306 Вечерней Вышке'
                                               ', а затем нажми "Завершить"', markup)
         else:
             send_message(bot, message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку', False)
-            markup = bot_modules.press_done(message)
+            markup = press_done(message)
             send_message(bot, message.chat.id, 'Настройка завершена', markup)
 
     if bot_condition[0][0] == 2:
@@ -375,7 +377,7 @@ def press_next(db, database, message, groups, bot, bot_modules, types):
                     send_message(bot, message.chat.id, i[1], False)
         else:
             send_message(bot, message.chat.id, 'Ты уже подписан на все группы для \U0001F306 Вечерней Вышки', False)
-            markup = bot_modules.press_done(message)
+            markup = press_done(message)
             send_message(bot, message.chat.id, 'Настройка завершена', markup)
 
 
