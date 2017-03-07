@@ -5,14 +5,12 @@ import time
 import feedparser
 import traceback
 import telebot
+import re
 from telebot import types
 import configparser
 
 config = configparser.ConfigParser()
 config.read('config.ini')
-
-# import requests
-
 
 Month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'June': '06',
          'July': '07', 'Aug': '08', 'Sept': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
@@ -29,12 +27,16 @@ end_h = int(config['EVENING']['end_h'])
 end_m = int(config['EVENING']['end_m'])
 
 
+config.read('locale_ru.ini')
+nextb = (config['COMMANDS']['NEXT'])
+
 def send_message(bot, usr, msg, param):
     try:
-        if param == 'True':
+        if param:
+            print(param)
             bot.send_message(usr, msg, disable_web_page_preview=True)
         else:
-            if param == 'False':
+            if not (param):
                 bot.send_message(usr, msg)
             else:
                 bot.send_message(usr, msg, reply_markup=param)
@@ -164,8 +166,7 @@ def get_vk_post(bot, vk_api):
                             if p['date'] > int(last_post[0][0]):
                                 link = str(i[1]) + '\n' + p['text'].splitlines()[0].split('.')[0] + '\nhttps://vk.com/wall-' + i[0] + '_' + str(p['id'])
                                 for u in sub_users:
-                                    print('check')
-                                    print(bot.inline_handler(lambda query: query.query == 'users.getFullUser(85489862)'))
+                                    link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                                     send_message(bot, u[0], link, False)
                                 if p['text']:
                                     db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
@@ -206,6 +207,7 @@ def get_vk_post(bot, vk_api):
                                            "VALUES (?, ?, ?, ' ', ?, ?)",
                                            (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']), p['likes']['count'],
                                             p['reposts']['count']))
+                print('Fetching successful')
             except Exception as e:
                 with open("logs.log", "a") as file:
                     file.write("\r\n\r\n" + time.strftime(
@@ -278,7 +280,8 @@ def evening_hse(bot, vk_api):
 
         popular_post = []
         for u in sub_users:
-            link = '\U0001F306 Вечерняя Вышка специально для вас! \n\n'
+            link = user_name(u[0])
+            link += ',\n\n\U0001F306 Вечерняя Вышка специально для вас: \n\n'
             db.execute("SELECT gid FROM UsersGroups WHERE fetget = 1 AND uid = ?", (u[0],))
             usr_grps = db.fetchall()
             for g in usr_grps:
@@ -299,6 +302,7 @@ def evening_hse(bot, vk_api):
                         link += pp[j][1] + '\nhttps://vk.com/wall-' + str(pp[j][0]) + '\n\n'
                 link += 'Спасибо, что читаете нас \U0001F60A'
 
+                link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                 send_message(bot, u[0], link, True)
             else:
                 send_message(bot, u[0], "\U0001F306 Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей \U0001F614", False)
@@ -514,16 +518,18 @@ def rss_groups_list():
     dbm.close()
     return groups
 
-def user_name(chat):
+def user_name(id):
     databasem = sqlite3.connect(dbpath)
     dbm = databasem.cursor()
-    print(chat.id)
-    dbm.execute("SELECT username, first_name FROM Users WHERE id = ?", (chat.id))
+    print(id)
+    dbm.execute("SELECT username, first_name FROM Users WHERE id = ?", (id,))
     user = dbm.fetchall()
     dbm.close()
     print (user)
     if user[0][1]:
         name = user[0][1]
+    elif user[0][0]:
+        name = user[0][0]
     else:
-        name = user[0][2]
+        name = 'Друг'
     return name
