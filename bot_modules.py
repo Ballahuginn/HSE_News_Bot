@@ -15,7 +15,7 @@ config.read('config.ini')
 Month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'June': '06',
          'July': '07', 'Aug': '08', 'Sept': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
 
-bot = telebot.TeleBot(config['TELEGRAM.API']['TOKEN'])
+bot_token = telebot.TeleBot(config['TELEGRAM.API']['TOKEN'])
 api_ver = config['VK.API']['ver']
 timeout = int(config['VK.API']['timeout'])
 
@@ -30,21 +30,22 @@ end_m = int(config['EVENING']['end_m'])
 config.read('locale_ru.ini')
 nextb = (config['COMMANDS']['NEXT'])
 
+
 def send_message(bot, usr, msg, param):
     try:
         print(type(param))
         if param and (type(param) is bool):
             print(param)
             bot.send_message(usr, msg, disable_web_page_preview=True)
-        if not (param) and (type(param) is bool):
+        if not param and (type(param) is bool):
             bot.send_message(usr, msg)
         if type(param) is types.ReplyKeyboardMarkup:
             bot.send_message(usr, msg, reply_markup=param)
     except telebot.apihelper.ApiException:
         with open("logs.log", "a") as file:
             file.write("\r\n\r\n" + time.strftime(
-                "%c") + "\r\n<<ERROR sending message>>\r\n" + "\r\nUser: "+ usr +
-                       "\r\nUndelivered message: "+ msg +
+                "%c") + "\r\n<<ERROR sending message>>\r\n" + "\r\nUser: " + usr +
+                       "\r\nUndelivered message: " + msg +
                        "\r\n" + traceback.format_exc() + "\r\n<<ERROR sending message>>")
         print('User blocked the Bot. User: ' + usr)
         print('Undelivered message: ' + msg)
@@ -164,7 +165,8 @@ def get_vk_post(bot, vk_api):
                     if type(p) != int:
                         if 'id' in p:
                             if p['date'] > int(last_post[0][0]):
-                                link = str(i[1]) + '\n' + p['text'].splitlines()[0].split('.')[0] + '\nhttps://vk.com/wall-' + i[0] + '_' + str(p['id'])
+                                link = str(i[1]) + '\n' + p['text'].splitlines()[0].split('.')[0] + \
+                                       '\nhttps://vk.com/wall-' + i[0] + '_' + str(p['id'])
                                 for u in sub_users:
                                     link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                                     send_message(bot, u[0], link, False)
@@ -205,8 +207,8 @@ def get_vk_post(bot, vk_api):
                             else:
                                 db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
                                            "VALUES (?, ?, ?, ' ', ?, ?)",
-                                           (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']), p['likes']['count'],
-                                            p['reposts']['count']))
+                                           (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
+                                            p['likes']['count'], p['reposts']['count']))
                 print('Fetching successful')
             except Exception as e:
                 with open("logs.log", "a") as file:
@@ -305,7 +307,8 @@ def evening_hse(bot, vk_api):
                 link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                 send_message(bot, u[0], link, True)
             else:
-                send_message(bot, u[0], "\U0001F306 Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей \U0001F614", False)
+                send_message(bot, u[0], '\U0001F306 Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей '
+                                        '\U0001F614', False)
 
         db.close()
     t = threading.Timer(60, evening_hse, [bot, vk_api])
@@ -330,7 +333,7 @@ def groups_as_buttons_unsub(groups, active_groups, markup):
     return check_if_all
 
 
-def press_next(message, groups):
+def press_next(message, bot, groups):
     database = sqlite3.connect(dbpath)
     db = database.cursor()
     db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
@@ -348,8 +351,8 @@ def press_next(message, groups):
         markup.row('Отписаться от всех')
         check_if_all = groups_as_buttons_unsub(vk_groups_list(), active_groups, markup)
         if check_if_all > 0:
-            send_message(bot, message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в \U0001F306 Вечерней Вышке'
-                                              ', а затем нажми "Завершить"', markup)
+            send_message(bot, message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в '
+                                               '\U0001F306 Вечерней Вышке, а затем нажми "Завершить"', markup)
         else:
             send_message(bot, message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку', False)
             markup = press_done(message)
@@ -368,9 +371,9 @@ def press_next(message, groups):
         check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
         if check_if_all > 0:
             send_message(bot, message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
-                                                'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
-                                                'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки'
-                                                ', а затем нажми "\U0001F3C1 Завершить"', markup)
+                                               'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
+                                               'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки'
+                                               ', а затем нажми "\U0001F3C1 Завершить"', markup)
             if len(active_groups) != 0:
                 send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы:', False)
                 for i in active_groups:
@@ -458,76 +461,41 @@ def group_selection(bot, msg, grp_id, bot_condition):
     dtbs.close()
 
 
-def five_last_posts(msg):
-    arr_link = []
-    link_count = 0
-    dtbs = sqlite3.connect(dbpath)
-    dtbs_c = dtbs.cursor()
-
-    dtbs_c.execute("SELECT p.id, g.name, p.p_text FROM Posts as p, UsersGroups as ug, Groups as g "
-                   "WHERE ug.uid = ? AND ug.gid = p.gid AND ug.gid = g.id AND ug.fetget = 1 "
-                   "ORDER BY p.p_date DESC ", (msg.chat.id,))
-    flp = dtbs_c.fetchall()
-    for i in flp:
-        link = str(i[1]) + '\n' + i[2] + '\n' + 'https://vk.com/wall-' + str(i[0])
-        if link_count < 5:
-            arr_link.append(link)
-            link_count += 1
-
-    dtbs.close()
-    return arr_link
-
-
-def five_last_rss(msg):
-    arr_link = []
-    rss_count = 0
-    dtbs = sqlite3.connect(dbpath)
-    dtbs_c = dtbs.cursor()
-
-    dtbs_c.execute("SELECT g.name, rss.rss_title, rss.rss_link FROM Groups as g, RSS as rss, UsersGroups as ug"
-                   " WHERE ug.uid = ? AND ug.gid = rss.rss_id AND ug.gid = g.id AND ug.fetget = 1 "
-                   "ORDER BY rss.rss_date DESC", (msg.chat.id,))
-    last_rss = dtbs_c.fetchall()
-    for i in last_rss:
-        link = str(i[0]) + '\n' + i[1] + '\n' + i[2]
-        if rss_count < 5:
-            arr_link.append(link)
-            rss_count += 1
-
-    return arr_link
-
 def groups_list():
-    databasem = sqlite3.connect(dbpath)
-    dbm = databasem.cursor()
-    dbm.execute("SELECT * FROM Groups")
-    groups = dbm.fetchall()
-    dbm.close()
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
+    db.execute("SELECT * FROM Groups")
+    groups = db.fetchall()
+    db.close()
     return groups
+
 
 def vk_groups_list():
-    databasem = sqlite3.connect(dbpath)
-    dbm = databasem.cursor()
-    dbm.execute("SELECT * FROM Groups WHERE id NOT LIKE 'rss%'")
-    groups = dbm.fetchall()
-    dbm.close()
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
+    db.execute("SELECT * FROM Groups WHERE id NOT LIKE 'rss%'")
+    groups = db.fetchall()
+    db.close()
     return groups
+
 
 def rss_groups_list():
-    databasem = sqlite3.connect(dbpath)
-    dbm = databasem.cursor()
-    dbm.execute("SELECT * FROM Groups WHERE id LIKE 'rss%'")
-    groups = dbm.fetchall()
-    dbm.close()
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
+    db.execute("SELECT * FROM Groups WHERE id LIKE 'rss%'")
+    groups = db.fetchall()
+    db.close()
     return groups
 
-def user_name(id):
-    databasem = sqlite3.connect(dbpath)
-    dbm = databasem.cursor()
+
+def user_name(usr_id):
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
     print(id)
-    dbm.execute("SELECT username, first_name FROM Users WHERE id = ?", (id,))
-    user = dbm.fetchall()
-    dbm.close()
-    print (user)
+    db.execute("SELECT username, first_name FROM Users WHERE id = ?", (usr_id,))
+    user = db.fetchall()
+    db.close()
+    print(user)
     if user[0][1]:
         name = user[0][1]
     elif user[0][0]:
@@ -535,3 +503,42 @@ def user_name(id):
     else:
         name = 'Друг'
     return name
+
+
+# def five_last_posts(msg):
+#     arr_link = []
+#     link_count = 0
+#     dtbs = sqlite3.connect(dbpath)
+#     dtbs_c = dtbs.cursor()
+#
+#     dtbs_c.execute("SELECT p.id, g.name, p.p_text FROM Posts as p, UsersGroups as ug, Groups as g "
+#                    "WHERE ug.uid = ? AND ug.gid = p.gid AND ug.gid = g.id AND ug.fetget = 1 "
+#                    "ORDER BY p.p_date DESC ", (msg.chat.id,))
+#     flp = dtbs_c.fetchall()
+#     for i in flp:
+#         link = str(i[1]) + '\n' + i[2] + '\n' + 'https://vk.com/wall-' + str(i[0])
+#         if link_count < 5:
+#             arr_link.append(link)
+#             link_count += 1
+#
+#     dtbs.close()
+#     return arr_link
+#
+#
+# def five_last_rss(msg):
+#     arr_link = []
+#     rss_count = 0
+#     dtbs = sqlite3.connect(dbpath)
+#     dtbs_c = dtbs.cursor()
+#
+#     dtbs_c.execute("SELECT g.name, rss.rss_title, rss.rss_link FROM Groups as g, RSS as rss, UsersGroups as ug"
+#                    " WHERE ug.uid = ? AND ug.gid = rss.rss_id AND ug.gid = g.id AND ug.fetget = 1 "
+#                    "ORDER BY rss.rss_date DESC", (msg.chat.id,))
+#     last_rss = dtbs_c.fetchall()
+#     for i in last_rss:
+#         link = str(i[0]) + '\n' + i[1] + '\n' + i[2]
+#         if rss_count < 5:
+#             arr_link.append(link)
+#             rss_count += 1
+#
+#     return arr_link

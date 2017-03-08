@@ -6,7 +6,7 @@ from telebot import types
 import bot_modules
 
 dbpath = bot_modules.dbpath
-bot = bot_modules.bot
+bot = bot_modules.bot_token
 
 nextb = bot_modules.nextb
 
@@ -16,29 +16,30 @@ vk_api = vk.API(session, v=bot_modules.api_ver, timeout=bot_modules.timeout)
 # botCondition 0 - простой, 1 - отказ для подписки,
 # 2 - выбор для подписки, 3 - отказ для последних, 4 - выбор для последних
 
-# databasem = sqlite3.connect(dbpath)
-# dbm = databasem.cursor()
-# dbm.execute("SELECT id FROM Users")
-# users = dbm.fetchall()
-# for i in users:
-#     try:
-#         u = bot.get_chat(i[0]).username
-#         f = bot.get_chat(i[0]).first_name
-#         l = bot.get_chat(i[0]).last_name
-#         dbm.execute("UPDATE Users SET username = ?, first_name = ?, last_name = ? WHERE id = ?", (u, f, l, i[0],))
-#     except Exception as e:
-#         print (e)
-# databasem.commit()
-# databasem.close()
+databasem = sqlite3.connect(dbpath)
+dbm = databasem.cursor()
+dbm.execute("SELECT id FROM Users")
+users = dbm.fetchall()
+for i in users:
+    try:
+        u = bot.get_chat(i[0]).username
+        f = bot.get_chat(i[0]).first_name
+        l = bot.get_chat(i[0]).last_name
+        dbm.execute("UPDATE Users SET username = ?, first_name = ?, last_name = ? WHERE id = ?", (u, f, l, i[0],))
+    except Exception as e:
+        print(e)
+databasem.commit()
+databasem.close()
 
 
 markup_none = types.ReplyKeyboardRemove()
 
-bot_modules.get_rss_post(bot)
+# bot_modules.get_rss_post(bot)
 
 bot_modules.get_vk_post(bot, vk_api)
 
 bot_modules.evening_hse(bot, vk_api)
+
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -56,15 +57,14 @@ def send_welcome(message):
         database.commit()
         database.close()
         # print(bot.get_chat(message.chat.id))
-        bot_modules.send_message(bot, message.chat.id,
-                         'Привет, ' + bot_modules.user_name(message.chat.id) + '! Я бот, который поможет тебе следить за всеми новостями твоего любимого ВУЗа! \n'
-                         'Я могу присылать тебе новости из разных групп ВК, связанных с Вышкой.\n'
-                         'А еще у меня есть вечерняя рассылка популярных новостей \U0001F306',
-                         markup)
+        bot_modules.send_message(bot, message.chat.id, 'Привет, ' + bot_modules.user_name(message.chat.id) +
+                                 '! Я бот, который поможет тебе следить за всеми новостями твоего любимого ВУЗа! \n'
+                                 'Я могу присылать тебе новости из разных групп ВК, связанных с Вышкой.\n'
+                                 'А еще у меня есть вечерняя рассылка популярных новостей \U0001F306', markup)
     else:
         markup.row('\U0001F6AB Выбрать группы для отписки')
         markup.row('\U0001F51D Главное меню')
-        bot_modules.send_message(bot, message.chat.id, 'Добро пожаловать. Снова.', markup)
+        bot_modules.send_message(bot, message.chat.id, 'Добро пожаловать. Снова.\U000026A1', markup)
 
 
 @bot.message_handler(commands=['stop'])
@@ -77,12 +77,11 @@ def send_goodbye(message):
     if check_user:
         db.execute("UPDATE UsersGroups SET upget = 0, fetget = 0 WHERE uid = ?", (message.chat.id,))
         database.commit()
-        bot_modules.send_message(bot, message.chat.id, 'Очень жаль, что ты решил отписаться от всего \U0001F614\n'
-                                          'Но я всегда буду рад, если ты снова решишь подписаться!\n '
-                                          'Нужно просто нажать /start \U0001F609',
-                         markup_none)
+        bot.send_message(message.chat.id, 'Очень жаль, что ты решил отписаться от всего \U0001F614\n'
+                                          'Но я всегда буду рад, если ты снова решишь подписаться!\n'
+                                          'Нужно просто нажать /start \U0001F609', markup_none)
     else:
-        bot_modules.send_message(bot, message.chat.id, 'Мне кажется или ты еще не начинал пользоваться ботом?\n'
+        bot.send_message(message.chat.id, 'Мне кажется или ты еще не начинал пользоваться ботом?\n'
                                           'Чтобы начать им пользоваться нажми /start \U0001F60E')
 
 
@@ -106,12 +105,12 @@ def news_source(message):
         markup.row('Отписаться от всех')
         check_if_all = bot_modules.groups_as_buttons_unsub(bot_modules.groups_list(), active_groups, markup)
         if check_if_all > 0:
-            bot_modules.send_message(bot, message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости, как только они '
-                                              'выходят, а затем нажми "Далее"', markup)
+            bot_modules.send_message(bot, message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости, '
+                                                           'как только они выходят, а затем нажми "Далее"', markup)
         else:
-            bot_modules.send_message(bot, message.chat.id,
-                             'Ты не подписан ни на одну группу для получения новостей, как только они выходят', False)
-            bot_modules.press_next(message, bot_modules.groups_list())
+            bot_modules.send_message(bot, message.chat.id, 'Ты не подписан ни на одну группу для получения новостей, '
+                                                           'как только они выходят', False)
+            bot_modules.press_next(message, bot, bot_modules.groups_list())
 
     if message.text == '\U00002705 Выбрать группы для подписки':
         db.execute("UPDATE Users SET bcond = 2 WHERE id = ?", (message.chat.id,))
@@ -130,12 +129,12 @@ def news_source(message):
                 bot_modules.send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы:', False)
                 for i in active_groups:
                     bot_modules.send_message(bot, message.chat.id, i[1], False)
-            bot_modules.send_message(bot, message.chat.id, 'Выбери группы, откуда ты хочешь получать новости, как только они выходят'
-                                              ', а затем нажми "Далее"', markup)
+            bot_modules.send_message(bot, message.chat.id, 'Выбери группы, откуда ты хочешь получать новости, '
+                                                           'как только они выходят, а затем нажми "Далее"', markup)
         else:
             bot_modules.send_message(bot, message.chat.id, 'Ты подписан на все группы для получения новостей, '
-                                              'как только они выходят', False)
-            bot_modules.press_next(message, bot_modules.groups_list())
+                                                           'как только они выходят', False)
+            bot_modules.press_next(message, bot, bot_modules.groups_list())
 
     for j in bot_modules.groups_list():
         if message.text == str(j[1]):
@@ -152,9 +151,9 @@ def news_source(message):
                 active_groups = db.fetchall()
                 check_if_all = bot_modules.groups_as_buttons_unsub(bot_modules.groups_list(), active_groups, markup)
                 if check_if_all == 0:
-                    bot_modules.send_message(bot, message.chat.id,
-                                     'Ты не подписан ни на одну группу для получения новостей, как только они выходят', False)
-                    bot_modules.press_next(message, bot_modules.groups_list())
+                    bot_modules.send_message(bot, message.chat.id, 'Ты не подписан ни на одну группу для получения '
+                                                                   'новостей, как только они выходят', False)
+                    bot_modules.press_next(message, bot, bot_modules.groups_list())
                 else:
                     bot_modules.send_message(bot, message.chat.id, 'Выбери группы или нажми "Далее"', markup)
             if bot_condition[0][0] == 2:
@@ -167,8 +166,8 @@ def news_source(message):
                 check_if_all = bot_modules.groups_as_buttons_sub(bot_modules.groups_list(), active_groups, markup)
                 if check_if_all == 0:
                     bot_modules.send_message(bot, message.chat.id, 'Ты подписан на все группы для получения новостей, '
-                                                      'как только они выходят', False)
-                    bot_modules.press_next(message, bot_modules.groups_list())
+                                                                   'как только они выходят', False)
+                    bot_modules.press_next(message, bot, bot_modules.groups_list())
                 else:
                     bot_modules.send_message(bot, message.chat.id, 'Выбери группы или нажми "Далее"', markup)
             if bot_condition[0][0] == 3:
@@ -181,7 +180,7 @@ def news_source(message):
                 check_if_all = bot_modules.groups_as_buttons_unsub(bot_modules.vk_groups_list(), active_groups, markup)
                 if check_if_all == 0:
                     bot_modules.send_message(bot, message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку',
-                                     markup)
+                                             markup)
                     markup = bot_modules.press_done(message)
                     bot_modules.send_message(bot, message.chat.id, 'Настройка завершена', markup)
                 else:
@@ -197,7 +196,7 @@ def news_source(message):
                 check_if_all = bot_modules.groups_as_buttons_sub(bot_modules.vk_groups_list(), active_groups, markup)
                 if check_if_all == 0:
                     bot_modules.send_message(bot, message.chat.id, 'Ты подписан на все группы для получения новостей '
-                                                      'в \U0001F306 Вечерней Вышке', False)
+                                                                   'в \U0001F306 Вечерней Вышке', False)
                     markup = bot_modules.press_done(message)
                     bot_modules.send_message(bot, message.chat.id, 'Настройка завершена', markup)
                 else:
@@ -210,12 +209,13 @@ def news_source(message):
             db.execute("UPDATE UsersGroups SET upget = 0 WHERE uid = ?", (message.chat.id,))
             database.commit()
             bot_modules.send_message(bot, message.chat.id, 'Ты отписался от всех групп, из которых получал новости, '
-                                              'как только они выходили', False)
-            bot_modules.press_next(message, bot_modules.vk_groups_list())
+                                                           'как только они выходили', False)
+            bot_modules.press_next(message, bot, bot_modules.vk_groups_list())
         if bot_condition[0][0] == 3:
             db.execute("UPDATE UsersGroups SET fetget = 0 WHERE uid = ?", (message.chat.id,))
             database.commit()
-            bot_modules.send_message(bot, message.chat.id, 'Ты отписался от всех групп для \U0001F306 Вечерней Вышки', False)
+            bot_modules.send_message(bot, message.chat.id, 'Ты отписался от всех групп для \U0001F306 Вечерней Вышки',
+                                     False)
             markup = bot_modules.press_done(message)
             bot_modules.send_message(bot, message.chat.id, 'Настройка завершена', markup)
 
@@ -233,7 +233,7 @@ def news_source(message):
                     db.execute("INSERT INTO UsersGroups (uid, gid, upget, fetget) VALUES (?, ?, 1, 0)",
                                (message.chat.id, i[0],))
                     database.commit()
-            bot_modules.press_next(message, bot_modules.vk_groups_list())
+            bot_modules.press_next(message, bot, bot_modules.vk_groups_list())
         if bot_condition[0][0] == 4:
             db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
                        "WHERE ug.uid = ? AND ug.gid = g.id", (message.chat.id,))
@@ -249,7 +249,7 @@ def news_source(message):
             bot_modules.send_message(bot, message.chat.id, 'Настройка завершена', markup)
 
     if message.text == '\U000027A1 Далее':
-        bot_modules.press_next(message, bot_modules.groups_list())
+        bot_modules.press_next(message, bot, bot_modules.groups_list())
 
     if message.text == '\U0001F3C1 Завершить':
         markup = bot_modules.press_done(message)
@@ -278,16 +278,16 @@ def news_source(message):
         markup.row('\U0001F51D Главное меню')
         bot_modules.send_message(bot, message.chat.id, 'Выбери, что ты хочешь сделать:', markup)
 
-
     if message.text == '\U0001F51D Главное меню':
         markup = bot_modules.press_done(message)
         bot_modules.send_message(bot, message.chat.id, 'Добро пожаловать в главное меню!', markup)
 
     if message.text == '\U00002139 О проекте':
         bot_modules.send_message(bot, message.chat.id, 'Этот бот является дипломной работой студентов 4 курса ДКИ МИЭМ '
-                                          'Барсукова Павла и Садонцева Максима.\n'
-                                          'Этот бот является первым новостым ботом НИУ ВШЭ!\n'
-                                          'Плагиат и копирование данного бота преследуются по закону!', False)
+                                                       'Барсукова Павла и Садонцева Максима.\n'
+                                                       'Этот бот является первым новостым ботом НИУ ВШЭ!\n'
+                                                       'Плагиат и копирование данного бота преследуются по закону!',
+                                 False)
 
     if message.text == '\U0001F4DC Подписки':
         db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
@@ -296,14 +296,14 @@ def news_source(message):
         active_groups = db.fetchall()
         if len(active_groups) != 0:
             grp = 'Ты уже подписан на следующие группы для получения новостей, как только они выходят:\n\n'
-            # bot_modules.send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы для получения новостей, '
-            #                                           'как только они выходят:', False)
+            # bot_modules.send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы для
+            # получения новостей, как только они выходят:', False)
             for i in active_groups:
                 grp += str(i[1]) + '\n'
             bot_modules.send_message(bot, message.chat.id, grp, False)
         else:
             bot_modules.send_message(bot, message.chat.id, 'Ты не подписан на группы для получения новостей, '
-                                                      'как только они выходят', False)
+                                                           'как только они выходят', False)
 
         db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
                    "WHERE ug.uid = ? AND ug.gid = g.id AND ug.fetget = 1",
@@ -321,7 +321,8 @@ def news_source(message):
     if message.text == '\U0001F4AC Оставить пожелания':
         db.execute("UPDATE Users SET bcond = 5 WHERE id = ?", (message.chat.id,))
         database.commit()
-        bot_modules.send_message(bot, message.chat.id, 'Как ты думаешь, чего не хвататет этому боту? \U0001F914', markup_none)
+        bot.send_message(message.chat.id, 'Как ты думаешь, чего не хвататет этому боту? \n'
+                                          'Напиши и отправь отзыв, как в обычный чат \U0001F609', markup_none)
 
     else:
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
@@ -332,14 +333,17 @@ def news_source(message):
             db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
             database.commit()
             markup = bot_modules.press_done(message)
-            bot_modules.send_message(bot, message.chat.id, 'Спасибо за отзыв! Твое мнение очень важно для нас! \U0001F64F', markup)
+            bot_modules.send_message(bot, message.chat.id, 'Спасибо за отзыв! '
+                                                           'Твое мнение очень важно для нас! \U0001F64F', markup)
+
 
 def telegram_polling():
     try:
-        bot.polling(none_stop=True, timeout=60) #constantly get messages from Telegram
+        bot.polling(none_stop=True, timeout=60)  # constantly get messages from Telegram
     except:
         with open("logs.log", "a") as file:
-            file.write("\r\n\r\n" + time.strftime("%c")+"\r\n<<ERROR polling>>\r\n"+ traceback.format_exc() + "\r\n<<ERROR polling>>")
+            file.write("\r\n\r\n" + time.strftime("%c")+"\r\n<<ERROR polling>>\r\n"+ traceback.format_exc() +
+                       "\r\n<<ERROR polling>>")
         print("ERROR polling")
         print(traceback.format_exc())
         bot.stop_polling()
