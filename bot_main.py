@@ -30,7 +30,7 @@ databasem.close()
 
 markup_none = types.ReplyKeyboardRemove()
 
-# bot_modules.get_rss_post()
+bot_modules.get_rss_post()
 
 bot_modules.get_vk_post()
 
@@ -236,7 +236,7 @@ def news_source(message):
             uncreated = db.fetchall()
             db.execute("UPDATE UsersGroups SET fetget = 1 WHERE uid = ?", (message.chat.id,))
             database.commit()
-            for i in bot_modules.groups_list():
+            for i in bot_modules.vk_groups_list():
                 if i not in uncreated:
                     db.execute("INSERT INTO UsersGroups (uid, gid, upget, fetget) VALUES (?, ?, 0, 1)",
                                (message.chat.id, i[0],))
@@ -340,8 +340,8 @@ def telegram_polling():
         with open("logs.log", "a") as file:
             file.write("\r\n\r\n" + time.strftime("%c")+"\r\n<<ERROR polling>>\r\n"+ traceback.format_exc() +
                        "\r\n<<ERROR polling>>")
-        print("ERROR polling")
-        print(traceback.format_exc())
+        # print("ERROR polling")
+        # print(traceback.format_exc())
         bot.stop_polling()
         time.sleep(100)
         telegram_polling()

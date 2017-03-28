@@ -54,7 +54,7 @@ nextb = (config['COMMANDS']['NEXT'])
 
 def send_message(usr, msg, param):
     try:
-        print(type(param))
+        # print(type(param))
         # if param and (type(param) is bool):
         #     if param2 == 'Markdown':
         #         #print(param)
@@ -89,10 +89,10 @@ def send_message(usr, msg, param):
                     "%c") + "\r\n<<ERROR sending message>>\r\n" + "\r\nUser: " + usr +
                            "\r\nUndelivered message: " + msg +
                            "\r\n" + traceback.format_exc() + "\r\n<<ERROR sending message>>")
-        else:
-            print('User blocked the Bot. User: ' + usr)
-            print('Undelivered message: ' + msg)
-            print(traceback.format_exc().splitlines()[-1].split('"')[4].split(':')[1].split(',')[0])
+        # else:
+        #     print('User blocked the Bot. User: ' + usr)
+        #     print('Undelivered message: ' + msg)
+        #     print(traceback.format_exc().splitlines()[-1].split('"')[4].split(':')[1].split(',')[0])
         # if traceback.format_exc().splitlines()[-1].split('"')[4].split(':')[1].split(',')[0] == '403':
         #     database = sqlite3.connect(dbpath)
         #     db = database.cursor()
@@ -113,8 +113,8 @@ def get_rss_post():
             sub_users = db.fetchall()
             rss = feedparser.parse(i[2])
             entr = rss['entries']
-            print("Parsing RSS:")
-            print(entr)
+            # print("Parsing RSS:")
+            # print(entr)
             if rss['feed']:
                 for g in entr:
                     t = g['published'].split(' ')
@@ -128,12 +128,12 @@ def get_rss_post():
                     if last_post[0][0]:
                         if int(utime) > int(last_post[0][0]):
                             link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
-                            print(link)
+                            # print(link)
                             for u in sub_users:
                                 send_message(u[0], link, False)
                     else:
                         link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
-                        print(link)
+                        # print(link)
                         for u in sub_users:
                             send_message(u[0], link, False)
             else:
@@ -141,14 +141,14 @@ def get_rss_post():
                     file.write("\r\n\r\n" + time.strftime(
                         "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
                                "\r\n" + str(rss) + "\r\n<<ERROR RSS parse>>")
-                print("ERROR RSS parse")
-                print(rss)
+                # print("ERROR RSS parse")
+                # print(rss)
         except:
             with open("logs.log", "a") as file:
                 file.write("\r\n\r\n" + time.strftime(
                     "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
                            "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
-            print("ERROR RSS parse")
+            # print("ERROR RSS parse")
     try:
         db.execute("DELETE FROM RSS")
         for i in rss_groups_list():
@@ -172,7 +172,7 @@ def get_rss_post():
             file.write("\r\n\r\n" + time.strftime(
                 "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
                        "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
-        print("ERROR RSS table update")
+        # print("ERROR RSS table update")
     database.close()
     t = threading.Timer(1800, get_rss_post, [bot])
     t.start()
@@ -208,7 +208,7 @@ def get_vk_post():
                    "WHERE u.id = ug.uid AND ug.upget = 1 AND ug.gid = ?", (str(i[0]),))
         sub_users = db.fetchall()
         if last_post[0][0]:
-            print('Fetching posts from group ' + i[0])
+            # print('Fetching posts from group ' + i[0])
             try:
                 posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
                 for p in posts['items']:
@@ -232,17 +232,17 @@ def get_vk_post():
                                                (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
                                                 p['likes']['count'],
                                                 p['reposts']['count']))
-                print('Fetching successful')
+                # print('Fetching successful')
             except Exception as e:
                 with open("logs.log", "a") as file:
                     file.write("\r\n\r\n" + time.strftime(
                         "%c") + "\r\n<<ERROR fetching post>>\r\n" +
                                "\r\nGroup: " + i[0] +
                                "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
-                print(e)
-                print('Unsuccessful fetch for group '+i[0])
+                # print(e)
+                # print('Unsuccessful fetch for group '+i[0])
         else:
-            print('Fetching posts from group ' + i[0])
+            # print('Fetching posts from group ' + i[0])
             try:
                 posts = vk_api.wall.get(owner_id='-' + i[0], count=6, filter='owner')
                 for p in posts['items']:
@@ -259,15 +259,15 @@ def get_vk_post():
                                            "VALUES (?, ?, ?, ' ', ?, ?)",
                                            (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
                                             p['likes']['count'], p['reposts']['count']))
-                print('Fetching successful')
+                # print('Fetching successful')
             except Exception as e:
                 with open("logs.log", "a") as file:
                     file.write("\r\n\r\n" + time.strftime(
                         "%c") + "\r\n<<ERROR fetching post>>\r\n" +
                                "\r\nGroup: " + i[0] +
                                "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
-                print(e)
-                print('Unsuccessful fetch for group ' + i[0])
+                # print(e)
+                # print('Unsuccessful fetch for group ' + i[0])
 
     # db.execute("DELETE FROM Posts")
 
@@ -318,8 +318,8 @@ def evening_hse():
                         "%c") + "\r\n<<ERROR fetching post>>\r\n" +
                                "\r\nGroup: " + i[0] +
                                "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
-                print(e)
-                print('Unsuccessful fetch for group ' + i[0])
+                # print(e)
+                # print('Unsuccessful fetch for group ' + i[0])
                 
             db.execute("SELECT COUNT(id) FROM Posts WHERE gid = ?", (i[0],))
             entr_numb = db.fetchall()
@@ -541,11 +541,11 @@ def rss_groups_list():
 def user_name(usr_id):
     database = sqlite3.connect(dbpath)
     db = database.cursor()
-    print(id)
+    # print(id)
     db.execute("SELECT username, first_name FROM Users WHERE id = ?", (usr_id,))
     user = db.fetchall()
     db.close()
-    print(user)
+    # print(user)
     if user[0][1]:
         name = user[0][1]
     elif user[0][0]:
