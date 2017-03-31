@@ -174,7 +174,7 @@ def get_rss_post():
                        "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
         # print("ERROR RSS table update")
     database.close()
-    t = threading.Timer(1800, get_rss_post, [bot])
+    t = threading.Timer(1800, get_rss_post)
     t.start()
 
 
