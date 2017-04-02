@@ -1,14 +1,14 @@
+import configparser
 import datetime
+import feedparser
+import re
 import sqlite3
+import telebot
 import threading
 import time
-import feedparser
 import traceback
-import telebot
-import re
-from telebot import types
-import configparser
 import vk
+from telebot import types
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -21,7 +21,7 @@ api_ver = config['VK.API']['ver']
 timeout = int(config['VK.API']['timeout'])
 vk_api = vk.API(vk.Session(), v=api_ver, timeout=timeout)
 
-dbpath=config['DEFAULT']['DB']
+dbpath = config['DEFAULT']['DB']
 
 start_h = int(config['EVENING']['start_h'])
 start_m = int(config['EVENING']['start_m'])
@@ -31,6 +31,301 @@ end_m = int(config['EVENING']['end_m'])
 
 config.read('locale_ru.ini')
 nextb = (config['COMMANDS']['NEXT'])
+
+markup_none = types.ReplyKeyboardRemove()
+
+# botCondition 0 - простой, 1 - отказ для подписки,
+# 2 - выбор для подписки, 3 - отказ для вечерней вышки, 4 - выбор для вечерней вышки
+
+
+def send_welcome(message):
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
+    markup = types.ReplyKeyboardMarkup()
+    markup.row('\U00002705 Выбрать группы для подписки')
+    db.execute("SELECT id FROM Users WHERE id = ?", (message.chat.id,))
+    check_user = db.fetchall()
+
+    if not check_user:
+        db.execute("INSERT INTO Users (id, reg_date, bcond, username, first_name, last_name) VALUES "
+                   "(?, datetime('now', 'localtime'), 0, ?, ?, ?)",
+                   (message.chat.id, message.chat.username, message.chat.first_name, message.chat.last_name,))
+        database.commit()
+        database.close()
+        # print(bot.get_chat(message.chat.id))
+        send_message(message.chat.id, 'Привет, ' + user_name(message.chat.id) +
+                     '! Я бот, который поможет тебе следить за всеми новостями твоего любимого ВУЗа! \n'
+                     'Я могу присылать тебе новости из разных групп ВК, связанных с Вышкой.\n'
+                     'А еще у меня есть вечерняя рассылка популярных новостей \U0001F306', markup)
+    else:
+        markup.row('\U0001F6AB Выбрать группы для отписки')
+        markup.row('\U0001F51D Главное меню')
+        send_message(message.chat.id, 'Добро пожаловать. Снова.\U000026A1', markup)
+
+
+def send_goodbye(message):
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+        db.execute("SELECT id FROM Users WHERE id = ?", (message.chat.id,))
+        check_user = db.fetchall()
+
+        if check_user:
+            db.execute("UPDATE UsersGroups SET upget = 0, fetget = 0 WHERE uid = ?", (message.chat.id,))
+            database.commit()
+            send_message(message.chat.id, 'Очень жаль, что ты решил отписаться от всего \U0001F614\n'
+                                          'Но я всегда буду рад, если ты снова решишь подписаться!\n'
+                                          'Нужно просто нажать /start \U0001F609', markup_none)
+        else:
+            send_message(message.chat.id, 'Мне кажется или ты еще не начинал пользоваться ботом?\n'
+                                          'Чтобы начать им пользоваться нажми /start \U0001F60E', markup_none)
+
+
+def main_menu(message):
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
+
+    if message.text == '\U0001F6AB Выбрать группы для отписки':
+        db.execute("UPDATE Users SET bcond = 1 WHERE id = ?", (message.chat.id,))
+        database.commit()
+
+        db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                   "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
+                   (message.chat.id,))
+        active_groups = db.fetchall()
+
+        markup = types.ReplyKeyboardMarkup()
+        markup.row('\U000027A1 Далее')
+        markup.row('Отписаться от всех')
+        check_if_all = groups_as_buttons_unsub(groups_list(), active_groups, markup)
+        if check_if_all > 0:
+            send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости, '
+                                          'как только они выходят, а затем нажми "Далее"', markup)
+        else:
+            send_message(message.chat.id, 'Ты не подписан ни на одну группу для получения новостей, '
+                                          'как только они выходят', False)
+            press_next(message, groups_list())
+
+    if message.text == '\U00002705 Выбрать группы для подписки':
+        db.execute("UPDATE Users SET bcond = 2 WHERE id = ?", (message.chat.id,))
+        database.commit()
+
+        db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                   "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
+                   (message.chat.id,))
+        active_groups = db.fetchall()
+        markup = types.ReplyKeyboardMarkup()
+        markup.row('\U000027A1 Далее')
+        markup.row('Выбрать все')
+        check_if_all = groups_as_buttons_sub(groups_list(), active_groups, markup)
+        if check_if_all > 0:
+            if len(active_groups) != 0:
+                send_message(message.chat.id, 'Ты уже подписан на следующие группы:', False)
+                for i in active_groups:
+                    send_message(message.chat.id, i[1], False)
+            send_message(message.chat.id, 'Выбери группы, откуда ты хочешь получать новости, '
+                                          'как только они выходят, а затем нажми "Далее"', markup)
+        else:
+            send_message(message.chat.id, 'Ты подписан на все группы для получения новостей, '
+                                          'как только они выходят', False)
+            press_next(message, groups_list())
+
+    for j in groups_list():
+        if message.text == str(j[1]):
+            db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
+            bot_condition = db.fetchall()
+            group_selection(message, str(j[0]), bot_condition)
+            markup = types.ReplyKeyboardMarkup()
+            if bot_condition[0][0] == 1:
+                markup.row('\U000027A1 Далее')
+                markup.row('Отписаться от всех')
+                db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                           "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
+                           (message.chat.id,))
+                active_groups = db.fetchall()
+                check_if_all = groups_as_buttons_unsub(groups_list(), active_groups, markup)
+                if check_if_all == 0:
+                    send_message(message.chat.id, 'Ты не подписан ни на одну группу для получения '
+                                                  'новостей, как только они выходят', False)
+                    press_next(message, groups_list())
+                else:
+                    send_message(message.chat.id, 'Выбери группы или нажми "Далее"', markup)
+            if bot_condition[0][0] == 2:
+                markup.row('\U000027A1 Далее')
+                markup.row('Выбрать все')
+                db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                           "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
+                           (message.chat.id,))
+                active_groups = db.fetchall()
+                check_if_all = groups_as_buttons_sub(groups_list(), active_groups, markup)
+                if check_if_all == 0:
+                    send_message(message.chat.id, 'Ты подписан на все группы для получения новостей, '
+                                                  'как только они выходят', False)
+                    press_next(message, groups_list())
+                else:
+                    send_message(message.chat.id, 'Выбери группы или нажми "Далее"', markup)
+            if bot_condition[0][0] == 3:
+                markup.row('\U0001F3C1 Завершить')
+                markup.row('Отписаться от всех')
+                db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                           "WHERE ug.uid = ? AND ug.gid = g.id AND ug.fetget = 1",
+                           (message.chat.id,))
+                active_groups = db.fetchall()
+                check_if_all = groups_as_buttons_unsub(vk_groups_list(), active_groups, markup)
+                if check_if_all == 0:
+                    send_message(message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку',
+                                             markup)
+                    markup = press_done(message)
+                    send_message(message.chat.id, 'Настройка завершена', markup)
+                else:
+                    send_message(message.chat.id, 'Выбери группы или нажми "Завершить"', markup)
+            if bot_condition[0][0] == 4:
+
+                markup.row('\U0001F3C1 Завершить')
+                markup.row('Выбрать все')
+                db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                           "WHERE ug.uid = ? AND ug.gid = g.id AND ug.fetget = 1",
+                           (message.chat.id,))
+                active_groups = db.fetchall()
+                check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
+                if check_if_all == 0:
+                    send_message(message.chat.id, 'Ты подписан на все группы для получения новостей '
+                                                  'в \U0001F306 Вечерней Вышке', False)
+                    markup = press_done(message)
+                    send_message(message.chat.id, 'Настройка завершена', markup)
+                else:
+                    send_message(message.chat.id, 'Выбери группы или нажми "Завершить"', markup)
+
+    if message.text == 'Отписаться от всех':
+        db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
+        bot_condition = db.fetchall()
+        if bot_condition[0][0] == 1:
+            db.execute("UPDATE UsersGroups SET upget = 0 WHERE uid = ?", (message.chat.id,))
+            database.commit()
+            send_message(message.chat.id, 'Ты отписался от всех групп, из которых получал новости, '
+                                          'как только они выходили', False)
+            press_next(message, vk_groups_list())
+        if bot_condition[0][0] == 3:
+            db.execute("UPDATE UsersGroups SET fetget = 0 WHERE uid = ?", (message.chat.id,))
+            database.commit()
+            send_message(message.chat.id, 'Ты отписался от всех групп для \U0001F306 Вечерней Вышки', False)
+            markup = press_done(message)
+            send_message(message.chat.id, 'Настройка завершена', markup)
+
+    if message.text == 'Выбрать все':
+        db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
+        bot_condition = db.fetchall()
+        if bot_condition[0][0] == 2:
+            db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                       "WHERE ug.uid = ? AND ug.gid = g.id", (message.chat.id,))
+            uncreated = db.fetchall()
+            db.execute("UPDATE UsersGroups SET upget = 1 WHERE uid = ?", (message.chat.id,))
+            database.commit()
+            for i in groups_list():
+                if i not in uncreated:
+                    db.execute("INSERT INTO UsersGroups (uid, gid, upget, fetget) VALUES (?, ?, 1, 0)",
+                               (message.chat.id, i[0],))
+                    database.commit()
+            press_next(message, vk_groups_list())
+        if bot_condition[0][0] == 4:
+            db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                       "WHERE ug.uid = ? AND ug.gid = g.id", (message.chat.id,))
+            uncreated = db.fetchall()
+            db.execute("UPDATE UsersGroups SET fetget = 1 WHERE uid = ?", (message.chat.id,))
+            database.commit()
+            for i in vk_groups_list():
+                if i not in uncreated:
+                    db.execute("INSERT INTO UsersGroups (uid, gid, upget, fetget) VALUES (?, ?, 0, 1)",
+                               (message.chat.id, i[0],))
+                    database.commit()
+            markup = press_done(message)
+            send_message(message.chat.id, 'Настройка завершена', markup)
+
+    if message.text == '\U000027A1 Далее':
+        press_next(message, groups_list())
+
+    if message.text == '\U0001F3C1 Завершить':
+        markup = press_done(message)
+        send_message(message.chat.id, 'Настройка завершена', markup)
+
+    # if message.text == '5 последних постов':
+    #     vk_arr = five_last_posts(message)
+    #     if vk_arr:
+    #         for _i in vk_arr:
+    #             send_message(bot, message.chat.id, _i, False)
+    #     else:
+    #         send_message(bot, message.chat.id, 'Ты не выбрал группы', False)
+    #
+    # if message.text == '5 последних постов из RSS':
+    #     rss_arr = five_last_rss(message)
+    #     if rss_arr:
+    #         for _i in rss_arr:
+    #             send_message(bot, message.chat.id, _i)
+    #     else:
+    #         send_message(bot, message.chat.id, 'Ты не выбрал RSS', False)
+
+    if message.text == '\U0001f527 Настройки':
+        markup = types.ReplyKeyboardMarkup()
+        markup.row('\U00002705 Выбрать группы для подписки')
+        markup.row('\U0001F6AB Выбрать группы для отписки')
+        markup.row('\U0001F51D Главное меню')
+        send_message(message.chat.id, 'Выбери, что ты хочешь сделать:', markup)
+
+    if message.text == '\U0001F51D Главное меню':
+        markup = press_done(message)
+        send_message(message.chat.id, 'Добро пожаловать в главное меню!', markup)
+
+    if message.text == '\U00002139 О проекте':
+        send_message(message.chat.id, 'Этот бот является дипломной работой студентов 4 курса ДКИ МИЭМ '
+                                      'Барсукова Павла и Садонцева Максима.\n'
+                                      'Этот бот является первым новостным ботом НИУ ВШЭ!\n'
+                                      'Плагиат и копирование данного бота преследуются по закону!', False)
+
+    if message.text == '\U0001F4DC Подписки':
+        db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                   "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
+                   (message.chat.id,))
+        active_groups = db.fetchall()
+        if len(active_groups) != 0:
+            grp = 'Ты уже подписан на следующие группы для получения новостей, как только они выходят:\n\n'
+            # send_message(bot, message.chat.id, 'Ты уже подписан на следующие группы для
+            # получения новостей, как только они выходят:', False)
+            for i in active_groups:
+                grp += str(i[1]) + '\n'
+            send_message(message.chat.id, grp, False)
+        else:
+            send_message(message.chat.id, 'Ты не подписан на группы для получения новостей, '
+                                          'как только они выходят', False)
+
+        db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+                   "WHERE ug.uid = ? AND ug.gid = g.id AND ug.fetget = 1",
+                   (message.chat.id,))
+        active_groups = db.fetchall()
+        if len(active_groups) != 0:
+            grp = 'Список групп для \U0001F306 Вечерней Вышки:\n\n'
+            # send_message(bot, message.chat.id, 'Список групп для \U0001F306 Вечерней Вышки:', False)
+            for i in active_groups:
+                grp += str(i[1]) + '\n'
+            send_message(message.chat.id, grp, False)
+        else:
+            send_message(message.chat.id, '\U0001F306 Вечерняя Вышка не настроена', False)
+
+    if message.text == '\U0001F4AC Оставить пожелания':
+        db.execute("UPDATE Users SET bcond = 5 WHERE id = ?", (message.chat.id,))
+        database.commit()
+        send_message(message.chat.id, 'Как ты думаешь, чего не хвататет этому боту? \n'
+                                      'Напиши и отправь отзыв, как в обычный чат \U0001F609', markup_none)
+
+    else:
+        db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
+        bot_condition = db.fetchall()
+        if bot_condition[0][0] == 5:
+            db.execute("INSERT INTO Reviews (uid, rev_text, rev_date) VALUES (?, ?, datetime('now', 'localtime'))",
+                       (message.chat.id, message.text))
+            db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
+            database.commit()
+            markup = press_done(message)
+            send_message(message.chat.id, 'Спасибо за отзыв! '
+                                          'Твое мнение очень важно для нас! \U0001F64F', markup)
 
 
 # def send_message(bot, usr, msg, param):
@@ -81,7 +376,6 @@ def send_message(usr, msg, param):
         if type(param) is types.ReplyKeyboardRemove:
             bot.send_message(usr, msg, reply_markup=param, parse_mode='Markdown')
 
-
     except telebot.apihelper.ApiException:
         if traceback.format_exc().splitlines()[-1].split('"')[4].split(':')[1].split(',')[0] != '403':
             with open("logs.log", "a") as file:
@@ -127,12 +421,14 @@ def get_rss_post():
                     utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
                     if last_post[0][0]:
                         if int(utime) > int(last_post[0][0]):
-                            link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
+                            link = '*' + str(i[1]) + '*\n\n' + str(g['title']) + \
+                                   '\n\n[Читать далее](' + str(g['links'][0]['href'] + ')')
                             # print(link)
                             for u in sub_users:
                                 send_message(u[0], link, False)
                     else:
-                        link = str(i[1]) + '\n' + str(g['title']) + '\n' + str(g['links'][0]['href'])
+                        link = '*' + str(i[1]) + '*\n\n' + str(g['title']) + '\n\n[Читать далее](' + \
+                               str(g['links'][0]['href'] + ')')
                         # print(link)
                         for u in sub_users:
                             send_message(u[0], link, False)
@@ -215,7 +511,7 @@ def get_vk_post():
                     if type(p) != int:
                         if 'id' in p:
                             if p['date'] > int(last_post[0][0]):
-                                link = '*' + str(i[1]) + '*\n\n' + str(p['text'].splitlines()[0].split('.')[0]) + \
+                                link = '*' + str(i[1]) + '*\n\n' + str(p['text'].splitlines()[0].split('. ')[0]) + \
                                        '\n\n[Читать далее](https://vk.com/wall-' + str(i[0]) + '_' + str(p['id']) + ')'
                                 for u in sub_users:
                                     link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
@@ -311,7 +607,8 @@ def evening_hse():
                         if 'id' in p:
                             if p['date'] > (int(time.time()) - 93600):
                                 db.execute("UPDATE Posts SET p_likes = ?, p_reposts = ? WHERE id = ?",
-                                           (p['likes']['count'], p['reposts']['count'], str(i[0]) + '_' + str(p['id']),))
+                                           (p['likes']['count'], p['reposts']['count'], str(i[0]) + '_'
+                                            + str(p['id']),))
             except Exception as e:
                 with open("logs.log", "a") as file:
                     file.write("\r\n\r\n" + time.strftime(
@@ -357,8 +654,8 @@ def evening_hse():
                 link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                 send_message(u[0], link, True)
             else:
-                send_message(u[0], '\U0001F306 Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей '
-                                        '\U0001F614', False)
+                send_message(u[0], '\U0001F306 Вечерняя Вышка:\n\nК сожалению, сегодня не было новостей \U0001F614',
+                             False)
 
         db.close()
     t = threading.Timer(60, evening_hse)
@@ -402,7 +699,7 @@ def press_next(message, groups):
         check_if_all = groups_as_buttons_unsub(vk_groups_list(), active_groups, markup)
         if check_if_all > 0:
             send_message(message.chat.id, 'Выбери группы, откуда ты НЕ хочешь получать новости в '
-                                               '\U0001F306 Вечерней Вышке, а затем нажми "Завершить"', markup)
+                                          '\U0001F306 Вечерней Вышке, а затем нажми "Завершить"', markup)
         else:
             send_message(message.chat.id, 'Ты НЕ подписан на \U0001F306 Вечернюю Вышку', False)
             markup = press_done(message)
@@ -421,9 +718,9 @@ def press_next(message, groups):
         check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
         if check_if_all > 0:
             send_message(message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
-                                               'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
-                                               'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки'
-                                               ', а затем нажми "\U0001F3C1 Завершить"', markup)
+                                          'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
+                                          'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки, '
+                                          'а затем нажми "\U0001F3C1 Завершить"', markup)
             if len(active_groups) != 0:
                 send_message(message.chat.id, 'Ты уже подписан на следующие группы:', False)
                 for i in active_groups:
