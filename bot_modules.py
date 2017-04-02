@@ -276,9 +276,10 @@ def main_menu(message):
 
     if message.text == '\U00002139 О проекте':
         send_message(message.chat.id, 'Этот бот является дипломной работой студентов 4 курса ДКИ МИЭМ '
-                                      'Барсукова Павла и Садонцева Максима.\n'
+                                      '[Барсукова Павла](http://t.me/Ballahuginn) и '
+                                      '[Садонцева Максима](http://t.me/MAKS05).\n'
                                       'Этот бот является первым новостным ботом НИУ ВШЭ!\n'
-                                      'Плагиат и копирование данного бота преследуются по закону!', False)
+                                      'Плагиат и копирование данного бота преследуются по закону!', True)
 
     if message.text == '\U0001F4DC Подписки':
         db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
