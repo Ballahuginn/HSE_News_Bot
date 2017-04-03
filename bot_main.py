@@ -45,6 +45,11 @@ def main_menu(message):
     bot_modules.main_menu(message)
 
 
+@bot.message_handler(func=lambda message: True, content_types=['location'])
+def loc(message):
+    bot_modules.location(message)
+
+
 def telegram_polling():
     try:
         bot.polling(none_stop=True, timeout=60)  # constantly get messages from Telegram

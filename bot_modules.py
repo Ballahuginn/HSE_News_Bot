@@ -8,6 +8,7 @@ import threading
 import time
 import traceback
 import vk
+from math import radians, cos, sin, asin, sqrt
 from telebot import types
 
 config = configparser.ConfigParser()
@@ -512,18 +513,26 @@ def get_vk_post():
                     if type(p) != int:
                         if 'id' in p:
                             if p['date'] > int(last_post[0][0]):
-                                link = '*' + str(i[1]) + '*\n\n' + str(p['text'].splitlines()[0].split('. ')[0]) + \
-                                       '\n\n[Читать далее](https://vk.com/wall-' + str(i[0]) + '_' + str(p['id']) + ')'
-                                for u in sub_users:
-                                    link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
-                                    send_message(u[0], link, False)
                                 if p['text']:
+                                    link = '*' + str(i[1]) + '*\n\n' + str(p['text'].splitlines()[0].split('. ')[0]) + \
+                                           '\n\n[Читать далее](https://vk.com/wall-' + str(i[0]) + '_' + str(
+                                        p['id']) + ')'
+                                    for u in sub_users:
+                                        link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
+                                        send_message(u[0], link, False)
+
                                     db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
                                                "VALUES (?, ?, ?, ?, ?, ?)",
                                                (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
                                                 p['text'].splitlines()[0].split('.')[0], p['likes']['count'],
                                                 p['reposts']['count']))
                                 else:
+                                    link = '*' + str(i[1]) + '*\n\n[Читать далее](https://vk.com/wall-' + \
+                                           str(i[0]) + '_' + str(p['id']) + ')'
+                                    for u in sub_users:
+                                        link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
+                                        send_message(u[0], link, False)
+
                                     db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
                                                "VALUES (?, ?, ?, ' ', ?, ?)",
                                                (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
@@ -851,6 +860,37 @@ def user_name(usr_id):
     else:
         name = 'Друг'
     return name
+
+
+def location(message):
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
+
+    db.execute("SELECT * FROM Buildings")
+    buildings = db.fetchall()
+
+    clstadr = 1000000
+    for _i in range(0, len(buildings)):
+        dist = distance(message.location.longitude, message.location.latitude, buildings[_i][2], buildings[_i][3])
+        if clstadr > dist:
+            clstadr = dist
+            adrid = buildings[_i][0]
+
+    db.execute("SELECT * FROM Buildings WHERE id = ?", (adrid,))
+    clstbld = db.fetchall()
+
+    send_message(message.chat.id, 'Ближайшее здание Вышки располагается по адресу:\n' + clstbld[0][1], False)
+    bot.send_location(message.chat.id, clstbld[0][3], clstbld[0][2])
+
+
+def distance(lon1, lat1, lon2, lat2):
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    c = 2 * asin(sqrt(a))
+    km = 6371 * c
+    return km
 
 
 # def five_last_posts(msg):
