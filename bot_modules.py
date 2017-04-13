@@ -29,6 +29,8 @@ start_m = int(config['EVENING']['start_m'])
 end_h = int(config['EVENING']['end_h'])
 end_m = int(config['EVENING']['end_m'])
 
+vk_timer = int(config['VK']['timer'])
+rss_timer = int(config['RSS']['timer'])
 
 config.read('locale_ru.ini')
 nextb = (config['COMMANDS']['NEXT'])
@@ -410,7 +412,7 @@ def get_rss_post():
             rss = feedparser.parse(i[2])
             entr = rss['entries']
             # print("Parsing RSS:")
-            # print(entr)
+            # print(rss)
             if rss['feed']:
                 for g in entr:
                     t = g['published'].split(' ')
@@ -593,7 +595,7 @@ def get_vk_post():
 
     database.commit()
     database.close()
-    t = threading.Timer(60, get_vk_post)
+    t = threading.Timer(rss_timer, get_vk_post)
     t.start()
 
 
@@ -668,7 +670,7 @@ def evening_hse():
                              False)
 
         db.close()
-    t = threading.Timer(60, evening_hse)
+    t = threading.Timer(vk_timer, evening_hse)
     t.start()
 
 
