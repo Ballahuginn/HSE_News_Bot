@@ -28,6 +28,8 @@ start_m = int(config['EVENING']['start_m'])
 end_h = int(config['EVENING']['end_h'])
 end_m = int(config['EVENING']['end_m'])
 
+vk_timer = int(config['VK']['timer'])
+rss_timer = int(config['RSS']['timer'])
 
 config.read('locale_ru.ini')
 nextb = (config['COMMANDS']['NEXT'])
@@ -230,7 +232,7 @@ def main_menu(message):
             db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
                        "WHERE ug.uid = ? AND ug.gid = g.id", (message.chat.id,))
             uncreated = db.fetchall()
-            db.execute("UPDATE UsersGroups SET fetget = 1 WHERE uid = ?", (message.chat.id,))
+            db.execute("UPDATE UsersGroups SET fetget = 1 WHERE uid = ? AND gid NOT LIKE 'rss%'", (message.chat.id,))
             database.commit()
             for i in vk_groups_list():
                 if i not in uncreated:
@@ -409,7 +411,7 @@ def get_rss_post():
             rss = feedparser.parse(i[2])
             entr = rss['entries']
             # print("Parsing RSS:")
-            # print(entr)
+            # print(rss)
             if rss['feed']:
                 for g in entr:
                     t = g['published'].split(' ')
@@ -592,7 +594,7 @@ def get_vk_post():
 
     database.commit()
     database.close()
-    t = threading.Timer(60, get_vk_post)
+    t = threading.Timer(rss_timer, get_vk_post)
     t.start()
 
 
@@ -646,7 +648,7 @@ def evening_hse():
             usr_grps = db.fetchall()
             for g in usr_grps:
                 db.execute("SELECT id, p_text, (p_likes + p_reposts*10) as pop FROM Posts WHERE gid = ? AND p_date > ? "
-                           "ORDER BY pop DESC ", (g[0], (int(time.time()) - 86400),))
+                           "ORDER BY pop DESC ", (g[0], (int(time.time()) - 93600),))
                 g_posts = db.fetchall()
                 for gp in g_posts:
                     popular_post.append(gp)
@@ -669,7 +671,7 @@ def evening_hse():
                              False)
 
         db.close()
-    t = threading.Timer(60, evening_hse)
+    t = threading.Timer(vk_timer, evening_hse)
     t.start()
 
 
