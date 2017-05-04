@@ -6,22 +6,22 @@ import traceback
 dbpath = bot_modules.dbpath
 bot = bot_modules.bot
 
-nextb = bot_modules.nextb
+# nextb = bot_modules.nextb
 
-databasem = sqlite3.connect(dbpath)
-dbm = databasem.cursor()
-dbm.execute("SELECT id FROM Users")
-users = dbm.fetchall()
+database = sqlite3.connect(dbpath)
+db = database.cursor()
+db.execute("SELECT id FROM Users")
+users = db.fetchall()
 for i in users:
     try:
         u = bot.get_chat(i[0]).username
         f = bot.get_chat(i[0]).first_name
         l = bot.get_chat(i[0]).last_name
-        dbm.execute("UPDATE Users SET username = ?, first_name = ?, last_name = ? WHERE id = ?", (u, f, l, i[0],))
+        db.execute("UPDATE Users SET username = ?, first_name = ?, last_name = ? WHERE id = ?", (u, f, l, i[0],))
     except Exception as e:
         print(e)
-databasem.commit()
-databasem.close()
+database.commit()
+database.close()
 
 bot_modules.get_rss_post()
 
@@ -41,13 +41,18 @@ def bye(message):
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
-def main_menu(message):
+def menu(message):
     bot_modules.main_menu(message)
 
 
 @bot.message_handler(func=lambda message: True, content_types=['location'])
 def loc(message):
     bot_modules.location(message)
+
+
+@bot.message_handler(func=lambda message: True, content_types=['sticker'])
+def admin(message):
+    bot_modules.administrator(message)
 
 
 def telegram_polling():

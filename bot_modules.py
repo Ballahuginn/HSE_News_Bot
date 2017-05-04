@@ -24,6 +24,11 @@ vk_api = vk.API(vk.Session(), v=api_ver, timeout=timeout)
 
 dbpath = config['DEFAULT']['DB']
 
+admin = config['ADMIN']['id'].split(', ')
+broadcast = config['STICKER']['broadcast']
+new_group = config['STICKER']['new_group']
+cancel = config['STICKER']['cancel']
+
 start_h = int(config['EVENING']['start_h'])
 start_m = int(config['EVENING']['start_m'])
 end_h = int(config['EVENING']['end_h'])
@@ -32,14 +37,15 @@ end_m = int(config['EVENING']['end_m'])
 vk_timer = int(config['VK']['timer'])
 rss_timer = int(config['RSS']['timer'])
 
-config.read('locale_ru.ini')
-nextb = (config['COMMANDS']['NEXT'])
+# config.read('locale_ru.ini')
+# nextb = (config['COMMANDS']['NEXT'])
 
 markup_none = types.ReplyKeyboardRemove()
 
 # botCondition 0 - простой, 1 - отказ для подписки,
 # 2 - выбор для подписки, 3 - отказ для вечерней вышки, 4 - выбор для вечерней вышки, 5 - отзыв,
-# 12 - основные группы, 34 - вечерняя вышка, 1234 - новый пользователь
+# 12 - основные группы, 34 - вечерняя вышка, 1234 - новый пользователь,
+# 666 - броадкаст, 777 - новая группа
 
 
 def send_welcome(message):
@@ -200,8 +206,8 @@ def main_menu(message):
             check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
             if check_if_all > 0:
                 send_message(message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
-                                              'Вечернаяя Вышка - это 5 самых популярных материалов за день. '
-                                              'Она будет прихожить в 9 вечера.\nВыбери группы для Вечерней Вышки, '
+                                              'Вечерняя Вышка - это рассылка до 5 самых популярных материалов за день. '
+                                              'Она будет приходить в 9 вечера.\nВыбери группы для Вечерней Вышки, '
                                               'а затем нажми "\U0001F3C1 Завершить"', markup)
                 if len(active_groups) != 0:
                     grp = 'Ты уже подписан на следующие группы:\n\n'
@@ -456,6 +462,39 @@ def main_menu(message):
             markup = press_done(message)
             send_message(message.chat.id, 'Спасибо за отзыв! '
                                           'Твое мнение очень важно для нас! \U0001F64F', markup)
+
+        if str(message.chat.id) in admin and bot_condition[0][0] == 666:
+            db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
+            database.commit()
+            db.execute("SELECT id FROM Users")
+            users = db.fetchall()
+            usr_cnt = 0
+            for i in users:
+                usr_cnt += 1
+                if usr_cnt > 30:
+                    time.sleep(1)
+                send_message(i[0], message.text, False)
+
+        if str(message.chat.id) in admin and bot_condition[0][0] == 777:
+            db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
+            database.commit()
+
+            try:
+                print(message.text.split('/')[3])
+                group = vk_api.groups.getById(group_id=message.text.split('/')[3])
+                print(group[0]['name'])
+                db.execute("INSERT INTO Groups (id, name, g_link) VALUES (?, ?, ?)",
+                           (group[0]['id'], group[0]['name'], message.text))
+                database.commit()
+                send_message(message.chat.id, 'Группа "' + group[0]['name'] + '" добавлена в БД.', False)
+
+            except:
+                send_message(message.chat.id, 'Что-то пошло не так. Группа не была добавлена.', False)
+                with open("logs.log", "a") as file:
+                    file.write("\r\n\r\n" + time.strftime(
+                        "%c") + "\r\n<<ERROR adding group>>\r\n" +
+                               "\r\nGroup: " + message.text +
+                               "\r\n" + traceback.format_exc() + "\r\n<<ERROR adding group>>")
 
 
 def send_message(usr, msg, param):
@@ -891,6 +930,31 @@ def user_name(usr_id):
     else:
         name = 'Друг'
     return name
+
+
+def administrator(message):
+    print(message.sticker)
+    if str(message.chat.id) in admin:
+        if message.sticker.file_id == broadcast:
+            database = sqlite3.connect(dbpath)
+            db = database.cursor()
+            db.execute("UPDATE Users SET bcond = 666 WHERE id = ?", (message.chat.id,))
+            database.commit()
+            database.close()
+
+        if message.sticker.file_id == new_group:
+            database = sqlite3.connect(dbpath)
+            db = database.cursor()
+            db.execute("UPDATE Users SET bcond = 777 WHERE id = ?", (message.chat.id,))
+            database.commit()
+            database.close()
+
+        if message.sticker.file_id == cancel:
+            database = sqlite3.connect(dbpath)
+            db = database.cursor()
+            db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
+            database.commit()
+            database.close()
 
 
 def location(message):
