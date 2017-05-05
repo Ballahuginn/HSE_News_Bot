@@ -473,6 +473,7 @@ def main_menu(message):
                 usr_cnt += 1
                 if usr_cnt > 30:
                     time.sleep(1)
+                    usr_cnt = 0
                 send_message(i[0], message.text, False)
 
         if str(message.chat.id) in admin and bot_condition[0][0] == 777:
@@ -559,6 +560,7 @@ def get_rss_post():
                             usr_cnt += 1
                             if usr_cnt > 30:
                                 time.sleep(1)
+                                usr_cnt = 0
                             send_message(u[0], link, False)
             else:
                 with open("logs.log", "a") as file:
@@ -629,6 +631,7 @@ def get_vk_post():
                                         usr_cnt += 1
                                         if usr_cnt > 30:
                                             time.sleep(1)
+                                            usr_cnt = 0
                                         link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                                         send_message(u[0], link, False)
 
@@ -645,6 +648,7 @@ def get_vk_post():
                                         usr_cnt += 1
                                         if usr_cnt > 30:
                                             time.sleep(1)
+                                            usr_cnt = 0
                                         link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                                         send_message(u[0], link, False)
 
@@ -758,6 +762,7 @@ def evening_hse():
             usr_cnt += 1
             if usr_cnt > 30:
                 time.sleep(1)
+                usr_cnt = 0
             if pp:
                 if len(pp) >= 5:
                     for j in range(5):
