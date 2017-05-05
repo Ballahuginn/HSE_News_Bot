@@ -155,7 +155,7 @@ def main_menu(message):
             markup.row('Отписаться от всех')
             check_if_all = groups_as_buttons_unsub(vk_groups_list(), active_groups, markup)
             if check_if_all > 0:
-                send_message(message.chat.id, 'Выбери группы, откуда ты не хочешь получать новости, '
+                send_message(message.chat.id, 'Выбери группы, откуда ты не хочешь получать новости '
                                               'в \U0001F306 Вечерней Вышке, а затем нажми "Завершить"', markup)
             else:
                 send_message(message.chat.id, 'Ты не подписан на \U0001F306 Вечернюю Вышку', False)
@@ -480,9 +480,9 @@ def main_menu(message):
             database.commit()
 
             try:
-                print(message.text.split('/')[3])
+                # print(message.text.split('/')[3])
                 group = vk_api.groups.getById(group_id=message.text.split('/')[3])
-                print(group[0]['name'])
+                # print(group[0]['name'])
                 db.execute("INSERT INTO Groups (id, name, g_link) VALUES (?, ?, ?)",
                            (group[0]['id'], group[0]['name'], message.text))
                 database.commit()
@@ -547,13 +547,18 @@ def get_rss_post():
                             link = '*' + str(i[1]) + '*\n\n' + str(g['title']) + \
                                    '\n\n[Читать далее](' + str(g['links'][0]['href'] + ')')
                             # print(link)
+
                             for u in sub_users:
                                 send_message(u[0], link, False)
                     else:
                         link = '*' + str(i[1]) + '*\n\n' + str(g['title']) + '\n\n[Читать далее](' + \
                                str(g['links'][0]['href'] + ')')
                         # print(link)
+                        usr_cnt = 0
                         for u in sub_users:
+                            usr_cnt += 1
+                            if usr_cnt > 30:
+                                time.sleep(1)
                             send_message(u[0], link, False)
             else:
                 with open("logs.log", "a") as file:
@@ -619,7 +624,11 @@ def get_vk_post():
                                     link = '*' + str(i[1]) + '*\n\n' + str(p['text'].splitlines()[0].split('. ')[0]) + \
                                            '\n\n[Читать далее](https://vk.com/wall-' + str(i[0]) + '_' + str(
                                         p['id']) + ')'
+                                    usr_cnt = 0
                                     for u in sub_users:
+                                        usr_cnt += 1
+                                        if usr_cnt > 30:
+                                            time.sleep(1)
                                         link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                                         send_message(u[0], link, False)
 
@@ -631,7 +640,11 @@ def get_vk_post():
                                 else:
                                     link = '*' + str(i[1]) + '*\n\n[Читать далее](https://vk.com/wall-' + \
                                            str(i[0]) + '_' + str(p['id']) + ')'
+                                    usr_cnt = 0
                                     for u in sub_users:
+                                        usr_cnt += 1
+                                        if usr_cnt > 30:
+                                            time.sleep(1)
                                         link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                                         send_message(u[0], link, False)
 
@@ -726,6 +739,7 @@ def evening_hse():
 
         popular_post = []
         # print(sub_users)
+        usr_cnt = 0
         for u in sub_users:
             # print(u[0])
             link = user_name(u[0])
@@ -741,6 +755,9 @@ def evening_hse():
             pp = sorted(popular_post, key=lambda tup: tup[2], reverse=True)
             popular_post = []
 
+            usr_cnt += 1
+            if usr_cnt > 30:
+                time.sleep(1)
             if pp:
                 if len(pp) >= 5:
                     for j in range(5):
@@ -933,7 +950,7 @@ def user_name(usr_id):
 
 
 def administrator(message):
-    print(message.sticker)
+    # print(message.sticker)
     if str(message.chat.id) in admin:
         if message.sticker.file_id == broadcast:
             database = sqlite3.connect(dbpath)
