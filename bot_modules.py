@@ -28,6 +28,7 @@ admin = config['ADMIN']['id'].split(', ')
 broadcast = config['STICKER']['broadcast']
 new_group = config['STICKER']['new_group']
 cancel = config['STICKER']['cancel']
+number_of_users = config['STICKER']['number_of_users']
 
 start_h = int(config['EVENING']['start_h'])
 start_m = int(config['EVENING']['start_m'])
@@ -40,7 +41,8 @@ rss_timer = int(config['RSS']['timer'])
 # config.read('locale_ru.ini')
 # nextb = (config['COMMANDS']['NEXT'])
 
-markup_none = types.ReplyKeyboardRemove()
+markup_none = types.ReplyKeyboardMarkup()
+markup_none.row('\U0001F51D Назад в главное меню')
 
 # botCondition 0 - простой, 1 - отказ для подписки,
 # 2 - выбор для подписки, 3 - отказ для вечерней вышки, 4 - выбор для вечерней вышки, 5 - отзыв,
@@ -380,7 +382,7 @@ def main_menu(message):
         markup = types.ReplyKeyboardMarkup()
         markup.row('\U0001F4F1 Основные группы')
         markup.row('\U0001F306 Вечерняя Вышка')
-        markup.row('\U0001F51D Главное меню')
+        markup.row('\U0001F51D Назад в главное меню')
         send_message(message.chat.id, 'Выбери, что ты хочешь настроить:', markup)
 
     if message.text == '\U0001F4F1 Основные группы':
@@ -405,14 +407,14 @@ def main_menu(message):
         markup.row('\U0001f527 Настройки')
         send_message(message.chat.id, 'Выбери, что ты хочешь сделать:', markup)
 
-    if message.text == '\U0001F51D Главное меню':
+    if message.text == '\U0001F51D Назад в главное меню':
         markup = press_done(message)
         send_message(message.chat.id, 'Добро пожаловать в главное меню!', markup)
 
     if message.text == '\U00002139 О проекте':
         send_message(message.chat.id, 'Этот бот является дипломной работой студентов 4 курса ДКИ МИЭМ '
-                                      '[Барсукова Павла](http://t.me/Ballahuginn) и '
-                                      '[Садонцева Максима](http://t.me/MAKS05).\n'
+                                      '<a href="http://t.me/Ballahuginn">Барсукова Павла</a> и '
+                                      '<a href="http://t.me/MAKS05">Садонцева Максима</a>.\n'
                                       'Этот бот является первым новостным ботом НИУ ВШЭ!\n'
                                       'Плагиат и копирование данного бота преследуются по закону!', True)
 
@@ -455,13 +457,19 @@ def main_menu(message):
         bot_condition = db.fetchall()
 
         if bot_condition[0][0] == 5:
-            db.execute("INSERT INTO Reviews (uid, rev_text, rev_date) VALUES (?, ?, datetime('now', 'localtime'))",
-                       (message.chat.id, message.text))
-            db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
-            database.commit()
-            markup = press_done(message)
-            send_message(message.chat.id, 'Спасибо за отзыв! '
-                                          'Твое мнение очень важно для нас! \U0001F64F', markup)
+            if message.text is not '\U0001F51D Назад в главное меню':
+                db.execute("INSERT INTO Reviews (uid, rev_text, rev_date) VALUES (?, ?, datetime('now', 'localtime'))",
+                           (message.chat.id, message.text))
+                db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
+                database.commit()
+                markup = press_done(message)
+                send_message(message.chat.id, 'Спасибо за отзыв! '
+                                              'Твое мнение очень важно для нас! \U0001F64F', markup)
+            else:
+                db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
+                database.commit()
+                markup = press_done(message)
+                send_message(message.chat.id, 'Добро пожаловать в главное меню!', markup)
 
         if str(message.chat.id) in admin and bot_condition[0][0] == 666:
             db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
@@ -502,13 +510,13 @@ def send_message(usr, msg, param):
     try:
         if type(param) is bool:
             if param:
-                bot.send_message(usr, msg, disable_web_page_preview=True, parse_mode='Markdown')
+                bot.send_message(usr, msg, disable_web_page_preview=True, parse_mode='HTML')
             else:
-                bot.send_message(usr, msg, parse_mode='Markdown')
+                bot.send_message(usr, msg, parse_mode='HTML')
         if type(param) is types.ReplyKeyboardMarkup:
-            bot.send_message(usr, msg, reply_markup=param, parse_mode='Markdown')
+            bot.send_message(usr, msg, reply_markup=param, parse_mode='HTML')
         if type(param) is types.ReplyKeyboardRemove:
-            bot.send_message(usr, msg, reply_markup=param, parse_mode='Markdown')
+            bot.send_message(usr, msg, reply_markup=param, parse_mode='HTML')
 
     except telebot.apihelper.ApiException:
         if traceback.format_exc().splitlines()[-1].split('"')[4].split(':')[1].split(',')[0] != '403':
@@ -545,15 +553,15 @@ def get_rss_post():
                     utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
                     if last_post[0][0]:
                         if int(utime) > int(last_post[0][0]):
-                            link = '*' + str(i[1]) + '*\n\n' + str(g['title']) + \
-                                   '\n\n[Читать далее](' + str(g['links'][0]['href'] + ')')
+                            link = '<b>' + str(i[1]) + '</b>\n\n' + str(g['title']) + \
+                                   '\n\n<a href="' + str(g['links'][0]['href'] + '">Читать далее</a>')
                             # print(link)
 
                             for u in sub_users:
                                 send_message(u[0], link, False)
                     else:
-                        link = '*' + str(i[1]) + '*\n\n' + str(g['title']) + '\n\n[Читать далее](' + \
-                               str(g['links'][0]['href'] + ')')
+                        link = '<b>' + str(i[1]) + '</b>\n\n' + str(g['title']) + '\n\n<a href="' + \
+                               str(g['links'][0]['href'] + '">Читать далее</a>')
                         # print(link)
                         usr_cnt = 0
                         for u in sub_users:
@@ -623,9 +631,9 @@ def get_vk_post():
                         if 'id' in p:
                             if p['date'] > int(last_post[0][0]):
                                 if p['text']:
-                                    link = '*' + str(i[1]) + '*\n\n' + str(p['text'].splitlines()[0].split('. ')[0]) + \
-                                           '\n\n[Читать далее](https://vk.com/wall-' + str(i[0]) + '_' + str(
-                                        p['id']) + ')'
+                                    link = '<b>' + str(i[1]) + '</b>\n\n' + str(p['text'].splitlines()[0].split('. ')[0]) + \
+                                           '\n\n<a href="https://vk.com/wall-' + str(i[0]) + '_' + str(p['id']) \
+                                           + '">Читать далее</a>'
                                     usr_cnt = 0
                                     for u in sub_users:
                                         usr_cnt += 1
@@ -641,8 +649,8 @@ def get_vk_post():
                                                 p['text'].splitlines()[0].split('.')[0], p['likes']['count'],
                                                 p['reposts']['count']))
                                 else:
-                                    link = '*' + str(i[1]) + '*\n\n[Читать далее](https://vk.com/wall-' + \
-                                           str(i[0]) + '_' + str(p['id']) + ')'
+                                    link = '<b>' + str(i[1]) + '</b>\n\n<a href="https://vk.com/wall-' + str(i[0]) + \
+                                           '_' + str(p['id']) + '">Читать далее</a>'
                                     usr_cnt = 0
                                     for u in sub_users:
                                         usr_cnt += 1
@@ -655,8 +663,7 @@ def get_vk_post():
                                     db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
                                                "VALUES (?, ?, ?, ' ', ?, ?)",
                                                (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
-                                                p['likes']['count'],
-                                                p['reposts']['count']))
+                                                p['likes']['count'], p['reposts']['count']))
                 # print('Fetching successful')
             except Exception as e:
                 with open("logs.log", "a") as file:
@@ -766,11 +773,14 @@ def evening_hse():
             if pp:
                 if len(pp) >= 5:
                     for j in range(5):
-                        link += pp[j][1] + '\n[Читать далее](https://vk.com/wall-' + str(pp[j][0]) + ')\n\n'
+                        link += pp[j][1] + '\n<a href="https://vk.com/wall-' + str(pp[j][0]) + \
+                                '">Читать далее</a>\n\n'
                 else:
                     for j in range(len(pp)):
-                        link += pp[j][1] + '\n[Читать далее](https://vk.com/wall-' + str(pp[j][0]) + ')\n\n'
-                link += 'Спасибо, что читаете нас \U0001F60A'
+                        link += pp[j][1] + '\n<a href="https://vk.com/wall-' + str(pp[j][0]) + \
+                                '">Читать далее</a>\n\n'
+                link += 'Спасибо, что читаете нас \U0001F60A\n\nЕсли вам нравится этот бот, поделитесь им с друзьми:' \
+                        '\nhttp://t.me/hse_news_bot'
 
                 link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                 send_message(u[0], link, True)
@@ -945,6 +955,7 @@ def user_name(usr_id):
     user = db.fetchall()
     database.close()
     # print(user)
+    print(user[0])
     if user[0][1]:
         name = user[0][1]
     elif user[0][0]:
@@ -976,6 +987,16 @@ def administrator(message):
             db = database.cursor()
             db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
             database.commit()
+            database.close()
+            markup = press_done(message)
+            send_message(message.chat.id, 'Отмена произведена', markup)
+
+        if message.sticker.file_id == number_of_users:
+            database = sqlite3.connect(dbpath)
+            db = database.cursor()
+            db.execute("SELECT  COUNT(*) FROM Users")
+            nmb_of_usr = db.fetchall()
+            send_message(message.chat.id, 'Количество пользователей: ' + str(nmb_of_usr[0][0]), False)
             database.close()
 
 
