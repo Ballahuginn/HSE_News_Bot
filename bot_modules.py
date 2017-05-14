@@ -10,6 +10,7 @@ import traceback
 import vk
 from math import radians, cos, sin, asin, sqrt
 from telebot import types
+import categorizator
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -452,6 +453,72 @@ def main_menu(message):
         send_message(message.chat.id, 'Как ты думаешь, чего не хвататет этому боту? \n'
                                       'Напиши и отправь отзыв, как в обычный чат \U0001F609', markup_none)
 
+    if str(message.chat.id) in admin:
+        if message.text == 'Образование':
+            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
+            lrng = db.fetchall()
+            for l in lrng:
+                if l[1] == 0 and l[2] == str(message.chat.id):
+                    db.execute("UPDATE ToCat SET Cat = 1 WHERE Post = ?", (l[0],))
+                    database.commit()
+                    break
+            learning(message)
+
+        if message.text == 'Мероприятия':
+            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
+            lrng = db.fetchall()
+            for l in lrng:
+                if l[1] == 0 and l[2] == str(message.chat.id):
+                    db.execute("UPDATE ToCat SET Cat = 2 WHERE Post = ?", (l[0],))
+                    database.commit()
+                    break
+            learning(message)
+        if message.text == 'Предпринимательство':
+            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
+            lrng = db.fetchall()
+            for l in lrng:
+                if l[1] == 0 and l[2] == str(message.chat.id):
+                    db.execute("UPDATE ToCat SET Cat = 3 WHERE Post = ?", (l[0],))
+                    database.commit()
+                    break
+            learning(message)
+        if message.text == 'Политика':
+            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
+            lrng = db.fetchall()
+            for l in lrng:
+                if l[1] == 0 and l[2] == str(message.chat.id):
+                    db.execute("UPDATE ToCat SET Cat = 4 WHERE Post = ?", (l[0],))
+                    database.commit()
+                    break
+            learning(message)
+        if message.text == 'Наука':
+            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
+            lrng = db.fetchall()
+            for l in lrng:
+                if l[1] == 0 and l[2] == str(message.chat.id):
+                    db.execute("UPDATE ToCat SET Cat = 5 WHERE Post = ?", (l[0],))
+                    database.commit()
+                    break
+            learning(message)
+        if message.text == 'Культура':
+            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
+            lrng = db.fetchall()
+            for l in lrng:
+                if l[1] == 0 and l[2] == str(message.chat.id):
+                    db.execute("UPDATE ToCat SET Cat = 6 WHERE Post = ?", (l[0],))
+                    database.commit()
+                    break
+            learning(message)
+        if message.text == 'Спорт':
+            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
+            lrng = db.fetchall()
+            for l in lrng:
+                if l[1] == 0 and l[2] == str(message.chat.id):
+                    db.execute("UPDATE ToCat SET Cat = 7 WHERE Post = ?", (l[0],))
+                    database.commit()
+                    break
+            learning(message)
+
     else:
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
@@ -526,6 +593,41 @@ def send_message(usr, msg, param):
                            "\r\nUndelivered message: " + msg +
                            "\r\n" + traceback.format_exc() + "\r\n<<ERROR sending message>>")
 
+def learning(message):
+    if str(message.chat.id) in admin:
+        database = sqlite3.connect(dbpath)
+        dbl = database.cursor()
+        dbl.execute("SELECT Post, Cat, SentTo FROM ToCat")
+
+        #dbc = database.cursor()
+        #dbc.execute("SELECT name FROM Categories")
+
+        lrng = dbl.fetchall()
+        #cats = dbc.fetchall()
+        send_message(message.chat.id, 'Поучимся немножко', markup_none)
+        for l in lrng:
+            if l[1] == 0:
+                markup = types.ReplyKeyboardMarkup()
+                #markup.row('Образование') #1
+                #markup.row('Мероприятия') #2
+                #markup.row('Предпринимательство')  # 3
+                #markup.row('Политика') #4
+                #markup.row('Наука') #5
+                #markup.row('Культура') #6
+                #markup.row('Спорт') #7
+                markup.row('Образование','Мероприятия')
+                markup.row('Предпринимательство', 'Политика')
+                markup.row('Наука', 'Культура')
+                markup.row('Спорт', '\U0001F51D Главное меню')
+                bot.send_message(message.chat.id, l[0], reply_markup=markup)
+                dbl.execute("UPDATE ToCat SET SentTo = ? WHERE Post = ? and Cat = ?",
+                           (message.chat.id, l[0], l[1]))
+                database.commit()
+                #send_message(message.chat.id, l[0], markup)
+                break
+    else:
+        send_message(message.chat.id, 'Просим прощения, вам это функция в данные момент недоступна \U0001F623', markup_none)
+        main_menu(message)
 
 def get_rss_post():
     database = sqlite3.connect(dbpath)
@@ -631,23 +733,40 @@ def get_vk_post():
                         if 'id' in p:
                             if p['date'] > int(last_post[0][0]):
                                 if p['text']:
-                                    link = '<b>' + str(i[1]) + '</b>\n\n' + str(p['text'].splitlines()[0].split('. ')[0]) + \
-                                           '\n\n<a href="https://vk.com/wall-' + str(i[0]) + '_' + str(p['id']) \
-                                           + '">Читать далее</a>'
+                                    db.execute("SELECT id, name FROM Categories")
+                                    categories = db.fetchall()
+                                    print(categories)
+                                    category = categorizator.categorization(p['text'], categories[0])
+                                    cat_name = category
+                                    for c in categories:
+                                        if c[0] == category:
+                                            cat_name = c[1]
                                     usr_cnt = 0
                                     for u in sub_users:
                                         usr_cnt += 1
                                         if usr_cnt > 30:
                                             time.sleep(1)
                                             usr_cnt = 0
+                                        if str(u[0]) in admin:
+                                            link = '<b>' + str(i[1]) + '</b>\n\n' + str(
+                                                p['text'].splitlines()[0].split('. ')[0]) + \
+                                                   '\n\nКатегория: ' + cat_name + '\n\n<a href="https://vk.com/wall-' + str(
+                                                i[0]) + '_' + str(p['id']) \
+                                                   + '">Читать далее</a>'
+                                        else:
+                                            link = '<b>' + str(i[1]) + '</b>\n\n' + str(
+                                                p['text'].splitlines()[0].split('. ')[0]) + \
+                                                   '\n\n<a href="https://vk.com/wall-' + str(
+                                                i[0]) + '_' + str(p['id']) \
+                                                   + '">Читать далее</a>'
                                         link = (re.sub(r'\[.*?\|(.*?)\]', r'\1', link))
                                         send_message(u[0], link, False)
 
-                                    db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts) "
-                                               "VALUES (?, ?, ?, ?, ?, ?)",
+                                    db.execute("INSERT INTO Posts (id, gid, p_date, p_text, p_likes, p_reposts, cat) "
+                                               "VALUES (?, ?, ?, ?, ?, ?, ?)",
                                                (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
                                                 p['text'].splitlines()[0].split('.')[0], p['likes']['count'],
-                                                p['reposts']['count']))
+                                                p['reposts']['count'], category))
                                 else:
                                     link = '<b>' + str(i[1]) + '</b>\n\n<a href="https://vk.com/wall-' + str(i[0]) + \
                                            '_' + str(p['id']) + '">Читать далее</a>'

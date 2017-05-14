@@ -39,6 +39,9 @@ def welcome(message):
 def bye(message):
     bot_modules.send_goodbye(message)
 
+@bot.message_handler(commands=['learn'])
+def learn(message):
+    bot_modules.learning(message)
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def menu(message):
