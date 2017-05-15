@@ -207,10 +207,8 @@ def main_menu(message):
             markup.row('Выбрать все')
             check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
             if check_if_all > 0:
-                send_message(message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
-                                              'Вечерняя Вышка - это рассылка до 5 самых популярных материалов за день. '
-                                              'Она будет приходить в 9 вечера.\nВыбери группы для Вечерней Вышки, '
-                                              'а затем нажми "\U0001F3C1 Завершить"', markup)
+                send_message(message.chat.id, 'Выбери группы для Вечерней Вышки, а затем нажми "\U0001F3C1 Завершить"',
+                             markup)
                 if len(active_groups) != 0:
                     grp = 'Ты уже подписан на следующие группы:\n\n'
                     for i in active_groups:
@@ -405,7 +403,9 @@ def main_menu(message):
         markup.row('\U00002705 Выбрать группы для подписки')
         markup.row('\U0001F6AB Выбрать группы для отписки')
         markup.row('\U0001f527 Настройки')
-        send_message(message.chat.id, 'Выбери, что ты хочешь сделать:', markup)
+        send_message(message.chat.id, '\U0001F306 Вечерняя Вышка - это рассылка до 5 самых популярных материалов '
+                                      'за день.\nОна будет приходить ежедневно в 9 вечера \U0001F558'
+                                      '\n\nВыбери, что ты хочешь сделать:', markup)
 
     if message.text == '\U0001F51D Назад в главное меню':
         markup = press_done(message)
@@ -649,7 +649,8 @@ def get_vk_post():
                                                 p['text'].splitlines()[0].split('.')[0], p['likes']['count'],
                                                 p['reposts']['count']))
                                 else:
-                                    link = '<b>' + str(i[1]) + '</b>\n\n<a href="https://vk.com/wall-' + str(i[0]) + \
+                                    link = '<b>' + str(i[1]) + '</b>\n\n<i>Новость не содержит текст</i>\n\n' \
+                                                               '<a href="https://vk.com/wall-' + str(i[0]) + \
                                            '_' + str(p['id']) + '">Читать далее</a>'
                                     usr_cnt = 0
                                     for u in sub_users:
@@ -762,6 +763,11 @@ def evening_hse():
                            "ORDER BY pop DESC ", (g[0], (int(time.time()) - 93600),))
                 g_posts = db.fetchall()
                 for gp in g_posts:
+                    # print(gp)
+                    if gp[1] == '':
+                        gp = list(gp)
+                        gp[1] = '<i>Новость не содержит текст</i>'
+                        gp = tuple(gp)
                     popular_post.append(gp)
             pp = sorted(popular_post, key=lambda tup: tup[2], reverse=True)
             popular_post = []
@@ -955,7 +961,7 @@ def user_name(usr_id):
     user = db.fetchall()
     database.close()
     # print(user)
-    print(user[0])
+    # print(user[0])
     if user[0][1]:
         name = user[0][1]
     elif user[0][0]:
