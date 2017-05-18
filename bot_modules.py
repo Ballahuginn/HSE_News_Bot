@@ -94,6 +94,8 @@ def send_welcome(message):
         markup = press_done(message)
         send_message(message.chat.id, 'Добро пожаловать. Снова.\U000026A1', markup)
 
+    database.close()
+
 
 def send_goodbye(message):
     database = sqlite3.connect(dbpath)
@@ -104,7 +106,6 @@ def send_goodbye(message):
     if check_user:
         db.execute("UPDATE UsersGroups SET upget = 0, fetget = 0 WHERE uid = ?", (message.chat.id,))
         database.commit()
-        database.close()
         send_message(message.chat.id, 'Очень жаль, что ты решил отписаться от всего \U0001F614\n'
                                       'Но я всегда буду рад, если ты снова решишь подписаться!\n'
                                       'Нужно просто нажать /start \U0001F609', markup_none)
@@ -112,12 +113,14 @@ def send_goodbye(message):
         send_message(message.chat.id, 'Мне кажется или ты еще не начинал пользоваться ботом?\n'
                                       'Чтобы начать им пользоваться нажми /start \U0001F60E', markup_none)
 
+    database.close()
+
 
 def main_menu(message):
-    database = sqlite3.connect(dbpath)
-    db = database.cursor()
-
     if message.text == '\U0001F6AB Выбрать группы для отписки':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -164,7 +167,12 @@ def main_menu(message):
                 markup = press_done(message)
                 send_message(message.chat.id, 'Настройка завершена', markup)
 
+        database.close()
+
     if message.text == '\U00002705 Выбрать группы для подписки':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -219,8 +227,13 @@ def main_menu(message):
                 markup = press_done(message)
                 send_message(message.chat.id, 'Настройка завершена', markup)
 
+        database.close()
+
     for j in groups_list():
         if message.text == str(j[1]):
+            database = sqlite3.connect(dbpath)
+            db = database.cursor()
+
             db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
             bot_condition = db.fetchall()
             group_selection(message, str(j[0]), bot_condition)
@@ -305,7 +318,12 @@ def main_menu(message):
                 else:
                     send_message(message.chat.id, 'Выбери группы или нажми "Далее"', markup)
 
+            database.close()
+
     if message.text == 'Отписаться от всех':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -324,7 +342,12 @@ def main_menu(message):
             markup = press_done(message)
             send_message(message.chat.id, 'Настройка завершена', markup)
 
+        database.close()
+
     if message.text == 'Выбрать все':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -369,6 +392,8 @@ def main_menu(message):
                     database.commit()
             press_next(message)
 
+        database.close()
+
     if message.text == '\U000027A1 Далее':
         press_next(message)
 
@@ -386,6 +411,7 @@ def main_menu(message):
     if message.text == '\U0001F4F1 Основные группы':
         database = sqlite3.connect(dbpath)
         db = database.cursor()
+
         db.execute("UPDATE Users SET bcond = 12 WHERE id = ?", (message.chat.id,))
         database.commit()
         markup = types.ReplyKeyboardMarkup()
@@ -394,9 +420,12 @@ def main_menu(message):
         markup.row('\U0001f527 Настройки')
         send_message(message.chat.id, 'Выбери, что ты хочешь сделать:', markup)
 
+        database.close()
+
     if message.text == '\U0001F306 Вечерняя Вышка':
         database = sqlite3.connect(dbpath)
         db = database.cursor()
+
         db.execute("UPDATE Users SET bcond = 34 WHERE id = ?", (message.chat.id,))
         database.commit()
         markup = types.ReplyKeyboardMarkup()
@@ -406,6 +435,8 @@ def main_menu(message):
         send_message(message.chat.id, '\U0001F306 Вечерняя Вышка - это рассылка до 5 самых популярных материалов '
                                       'за день.\nОна будет приходить ежедневно в 9 вечера \U0001F558'
                                       '\n\nВыбери, что ты хочешь сделать:', markup)
+
+        database.close()
 
     if message.text == '\U0001F51D Назад в главное меню':
         markup = press_done(message)
@@ -419,6 +450,9 @@ def main_menu(message):
                                       'Плагиат и копирование данного бота преследуются по закону!', True)
 
     if message.text == '\U0001F4DC Подписки':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
                    "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
                    (message.chat.id,))
@@ -446,13 +480,23 @@ def main_menu(message):
         else:
             send_message(message.chat.id, '\U0001F306 Вечерняя Вышка не настроена', False)
 
+        database.close()
+
     if message.text == '\U0001F4AC Оставить пожелания':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("UPDATE Users SET bcond = 5 WHERE id = ?", (message.chat.id,))
         database.commit()
         send_message(message.chat.id, 'Как ты думаешь, чего не хвататет этому боту? \n'
                                       'Напиши и отправь отзыв, как в обычный чат \U0001F609', markup_none)
 
+        database.close()
+
     else:
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -505,6 +549,8 @@ def main_menu(message):
                                "\r\nGroup: " + message.text +
                                "\r\n" + traceback.format_exc() + "\r\n<<ERROR adding group>>")
 
+        database.close()
+
 
 def send_message(usr, msg, param):
     try:
@@ -530,6 +576,7 @@ def send_message(usr, msg, param):
 def get_rss_post():
     database = sqlite3.connect(dbpath)
     db = database.cursor()
+
     for i in rss_groups_list():
         try:
             db.execute("SELECT MAX(rss_date) FROM RSS WHERE rss_id = ?", (str(i[0]),))
@@ -607,6 +654,7 @@ def get_rss_post():
                 "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
                        "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
         # print("ERROR RSS table update")
+
     database.close()
     t = threading.Timer(rss_timer, get_rss_post)
     t.start()
@@ -615,6 +663,7 @@ def get_rss_post():
 def get_vk_post():
     database = sqlite3.connect(dbpath)
     db = database.cursor()
+
     for i in vk_groups_list():
         db.execute("SELECT MAX(p_date) FROM Posts WHERE gid = ?", (str(i[0]),))
         last_post = db.fetchall()
@@ -820,6 +869,7 @@ def groups_as_buttons_unsub(groups, active_groups, markup):
 def press_next(message):
     database = sqlite3.connect(dbpath)
     db = database.cursor()
+
     db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
     bot_condition = db.fetchall()
 
@@ -848,10 +898,13 @@ def press_next(message):
             markup = press_done(message)
             send_message(message.chat.id, 'Настройка завершена', markup)
 
+    database.close()
+
 
 def press_done(message):
     database = sqlite3.connect(dbpath)
     db = database.cursor()
+
     db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
     database.commit()
     markup = types.ReplyKeyboardMarkup()
@@ -861,6 +914,7 @@ def press_done(message):
     # markup2.row('\U0001F527 Настройки')
     markup.row('\U00002139 О проекте')
     markup.row('\U0001F4AC Оставить пожелания')
+
     database.close()
 
     return markup
@@ -869,6 +923,7 @@ def press_done(message):
 def group_selection(msg, grp_id, bot_condition):
     database = sqlite3.connect(dbpath)
     db = database.cursor()
+
     db.execute("SELECT * FROM UsersGroups WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
     check_group = db.fetchall()
     # print(bot_condition[0][0])
@@ -929,8 +984,10 @@ def group_selection(msg, grp_id, bot_condition):
 def groups_list():
     database = sqlite3.connect(dbpath)
     db = database.cursor()
+
     db.execute("SELECT * FROM Groups")
     groups = db.fetchall()
+
     database.close()
     return groups
 
@@ -938,8 +995,10 @@ def groups_list():
 def vk_groups_list():
     database = sqlite3.connect(dbpath)
     db = database.cursor()
+
     db.execute("SELECT * FROM Groups WHERE id NOT LIKE 'rss%'")
     groups = db.fetchall()
+
     database.close()
     return groups
 
@@ -947,8 +1006,10 @@ def vk_groups_list():
 def rss_groups_list():
     database = sqlite3.connect(dbpath)
     db = database.cursor()
+
     db.execute("SELECT * FROM Groups WHERE id LIKE 'rss%'")
     groups = db.fetchall()
+
     database.close()
     return groups
 
@@ -959,6 +1020,7 @@ def user_name(usr_id):
     # print(id)
     db.execute("SELECT username, first_name FROM Users WHERE id = ?", (usr_id,))
     user = db.fetchall()
+
     database.close()
     # print(user)
     # print(user[0])
@@ -1034,4 +1096,5 @@ def location(message):
 
     send_message(message.chat.id, 'Ближайшее здание Вышки располагается по адресу:\n' + clstbld[0][1], False)
     bot.send_location(message.chat.id, clstbld[0][3], clstbld[0][2])
+
     database.close()
