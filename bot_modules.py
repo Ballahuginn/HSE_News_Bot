@@ -41,7 +41,7 @@ rss_timer = int(config['RSS']['timer'])
 # config.read('locale_ru.ini')
 # nextb = (config['COMMANDS']['NEXT'])
 
-markup_none = types.ReplyKeyboardMarkup()
+markup_none = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup_none.row('\U0001F51D Назад в главное меню')
 
 # botCondition 0 - простой, 1 - отказ для подписки,
@@ -73,7 +73,7 @@ def send_welcome(message):
                    "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
                    (message.chat.id,))
         active_groups = db.fetchall()
-        markup = types.ReplyKeyboardMarkup()
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('\U000027A1 Далее')
         markup.row('Выбрать все')
         check_if_all = groups_as_buttons_sub(groups_list(), active_groups, markup)
@@ -133,7 +133,7 @@ def main_menu(message):
                        (message.chat.id,))
             active_groups = db.fetchall()
 
-            markup = types.ReplyKeyboardMarkup()
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             markup.row('\U0001F3C1 Завершить')
             markup.row('Отписаться от всех')
             check_if_all = groups_as_buttons_unsub(groups_list(), active_groups, markup)
@@ -155,7 +155,7 @@ def main_menu(message):
                        (message.chat.id,))
             active_groups = db.fetchall()
 
-            markup = types.ReplyKeyboardMarkup()
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             markup.row('\U0001F3C1 Завершить')
             markup.row('Отписаться от всех')
             check_if_all = groups_as_buttons_unsub(vk_groups_list(), active_groups, markup)
@@ -184,7 +184,7 @@ def main_menu(message):
                        "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
                        (message.chat.id,))
             active_groups = db.fetchall()
-            markup = types.ReplyKeyboardMarkup()
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             markup.row('\U0001F3C1 Завершить')
             markup.row('Выбрать все')
             check_if_all = groups_as_buttons_sub(groups_list(), active_groups, markup)
@@ -210,7 +210,7 @@ def main_menu(message):
                        "WHERE ug.uid = ? AND ug.gid = g.id AND ug.fetget = 1 AND ug.gid",
                        (message.chat.id,))
             active_groups = db.fetchall()
-            markup = types.ReplyKeyboardMarkup()
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             markup.row('\U0001F3C1 Завершить')
             markup.row('Выбрать все')
             check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
@@ -237,7 +237,7 @@ def main_menu(message):
             db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
             bot_condition = db.fetchall()
             group_selection(message, str(j[0]), bot_condition)
-            markup = types.ReplyKeyboardMarkup()
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 
             if bot_condition[0][0] == 1:
                 markup.row('\U0001F3C1 Завершить')
@@ -402,7 +402,7 @@ def main_menu(message):
         send_message(message.chat.id, 'Настройка завершена', markup)
 
     if message.text == '\U0001f527 Настройки':
-        markup = types.ReplyKeyboardMarkup()
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('\U0001F4F1 Основные группы')
         markup.row('\U0001F306 Вечерняя Вышка')
         markup.row('\U0001F51D Назад в главное меню')
@@ -414,7 +414,7 @@ def main_menu(message):
 
         db.execute("UPDATE Users SET bcond = 12 WHERE id = ?", (message.chat.id,))
         database.commit()
-        markup = types.ReplyKeyboardMarkup()
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('\U00002705 Выбрать группы для подписки')
         markup.row('\U0001F6AB Выбрать группы для отписки')
         markup.row('\U0001f527 Настройки')
@@ -428,7 +428,7 @@ def main_menu(message):
 
         db.execute("UPDATE Users SET bcond = 34 WHERE id = ?", (message.chat.id,))
         database.commit()
-        markup = types.ReplyKeyboardMarkup()
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('\U00002705 Выбрать группы для подписки')
         markup.row('\U0001F6AB Выбрать группы для отписки')
         markup.row('\U0001f527 Настройки')
@@ -880,7 +880,7 @@ def press_next(message):
                    "WHERE ug.uid = ? AND ug.gid = g.id AND ug.fetget = 1",
                    (message.chat.id,))
         active_groups = db.fetchall()
-        markup = types.ReplyKeyboardMarkup()
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row('\U0001F3C1 Завершить')
         markup.row('Выбрать все')
         check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
@@ -907,7 +907,7 @@ def press_done(message):
 
     db.execute("UPDATE Users SET bcond = 0 WHERE id = ?", (message.chat.id,))
     database.commit()
-    markup = types.ReplyKeyboardMarkup()
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     # markup.row('5 последних постов')
     # markup.row('5 последних постов из RSS')
     markup.row('\U0001F4DC Подписки', '\U0001F527 Настройки')
