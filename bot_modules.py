@@ -14,13 +14,14 @@ from telebot import types
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-Month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'June': '06',
-         'July': '07', 'Aug': '08', 'Sept': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
+Month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+         'Jul': '07', 'Aug': '08', 'Sept': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
 
 bot = telebot.TeleBot(config['TELEGRAM.API']['TOKEN'])
 api_ver = config['VK.API']['ver']
 timeout = int(config['VK.API']['timeout'])
-vk_api = vk.API(vk.Session(), v=api_ver, timeout=timeout)
+token = config['VK.API']['token']
+vk_api = vk.API(vk.Session(access_token=token), v=api_ver, timeout=timeout)
 
 dbpath = config['DEFAULT']['DB']
 
