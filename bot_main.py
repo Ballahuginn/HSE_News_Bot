@@ -59,9 +59,9 @@ def telegram_polling():
     try:
         bot.polling(none_stop=True, timeout=60)  # constantly get messages from Telegram
     except:
-        with open("logs.log", "a") as file:
-            file.write("\r\n\r\n" + time.strftime("%c")+"\r\n<<ERROR polling>>\r\n" + traceback.format_exc() +
-                       "\r\n<<ERROR polling>>")
+        with open('logs.log', 'a') as file:
+            file.write('\r\n\r\n' + time.strftime('%c') + '\r\n<<ERROR polling>>\r\n' + traceback.format_exc() +
+                       '\r\n<<ERROR polling>>')
         bot.stop_polling()
         time.sleep(100)
         telegram_polling()

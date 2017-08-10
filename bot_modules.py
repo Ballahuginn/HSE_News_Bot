@@ -65,10 +65,11 @@ def send_welcome(message):
         database.commit()
         # print(bot.get_chat(message.chat.id))
 
-        send_message(message.chat.id, 'Привет, ' + user_name(message.chat.id) +
-                     '!\nЯ бот, который поможет тебе следить за всеми новостями твоего любимого ВУЗа! \n'
-                     'Я могу присылать тебе новости из разных групп ВК, связанных с Вышкой.\n'
-                     'А еще у меня есть вечерняя рассылка популярных новостей \U0001F306', False)
+        send_message(message.chat.id, 'Привет, {}!\nЯ бот, '
+                                      'который поможет тебе следить за всеми новостями твоего любимого ВУЗа! \n'
+                                      'Я могу присылать тебе новости из разных групп ВК, связанных с Вышкой.\n'
+                                      'А еще у меня есть вечерняя рассылка популярных новостей '
+                                      '\U0001F306'.format(user_name(message.chat.id)), False)
 
         db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
                    "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
@@ -462,7 +463,7 @@ def main_menu(message):
         if len(active_groups) != 0:
             grp = 'Ты уже подписан на следующие группы для получения новостей, как только они выходят:\n\n'
             for i in active_groups:
-                grp += str(i[1]) + '\n'
+                grp += '{}\n'.format(i[1])
             send_message(message.chat.id, grp, False)
         else:
             send_message(message.chat.id, 'Ты не подписан на группы для получения новостей, '
@@ -476,7 +477,7 @@ def main_menu(message):
         if len(active_groups) != 0:
             grp = 'Список групп для \U0001F306 Вечерней Вышки:\n\n'
             for i in active_groups:
-                grp += str(i[1]) + '\n'
+                grp += '{}\n'.format(i[1])
             send_message(message.chat.id, grp, False)
         else:
             send_message(message.chat.id, '\U0001F306 Вечерняя Вышка не настроена', False)
@@ -540,15 +541,13 @@ def main_menu(message):
                 db.execute("INSERT INTO Groups (id, name, g_link) VALUES (?, ?, ?)",
                            (group[0]['id'], group[0]['name'], message.text))
                 database.commit()
-                send_message(message.chat.id, 'Группа "' + group[0]['name'] + '" добавлена в БД.', False)
+                send_message(message.chat.id, 'Группа "{0}" добавлена в БД.'.format(group[0]['name']), False)
 
             except:
                 send_message(message.chat.id, 'Что-то пошло не так. Группа не была добавлена.', False)
-                with open("logs.log", "a") as file:
-                    file.write("\r\n\r\n" + time.strftime(
-                        "%c") + "\r\n<<ERROR adding group>>\r\n" +
-                               "\r\nGroup: " + message.text +
-                               "\r\n" + traceback.format_exc() + "\r\n<<ERROR adding group>>")
+                with open('logs.log', 'a') as file:
+                    file.write('\r\n\r\n' + time.strftime('%c') + '\r\n<<ERROR adding group>>\r\n\r\nGroup: ' +
+                               message.text + '\r\n' + traceback.format_exc() + '\r\n<<ERROR adding group>>')
 
         database.close()
 
@@ -567,11 +566,10 @@ def send_message(usr, msg, param):
 
     except telebot.apihelper.ApiException:
         if traceback.format_exc().splitlines()[-1].split('"')[4].split(':')[1].split(',')[0] != '403':
-            with open("logs.log", "a") as file:
-                file.write("\r\n\r\n" + time.strftime(
-                    "%c") + "\r\n<<ERROR sending message>>\r\n" + "\r\nUser: " + usr +
-                           "\r\nUndelivered message: " + msg +
-                           "\r\n" + traceback.format_exc() + "\r\n<<ERROR sending message>>")
+            with open('logs.log', 'a') as file:
+                file.write('\r\n\r\n' + time.strftime('%c') + '\r\n<<ERROR sending message>>\r\n\r\nUser: ' + usr +
+                           '\r\nUndelivered message: ' + msg + '\r\n' + traceback.format_exc() +
+                           '\r\n<<ERROR sending message>>')
 
 
 def get_rss_post():
@@ -598,18 +596,23 @@ def get_rss_post():
                     for t in t[4].split(':'):
                         rssdate.append(t)
                     rssdate = '/'.join(rssdate)
-                    utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
+                    utime = datetime.datetime.strptime(rssdate, '%d/%m/%Y/%H/%M/%S').strftime('%s')
                     if last_post[0][0]:
                         if int(utime) > int(last_post[0][0]):
-                            link = '<b>' + str(i[1]) + '</b>\n\n' + str(g['title']) + \
-                                   '\n\n<a href="' + str(g['links'][0]['href'] + '">Читать далее</a>')
+                            link = '<b>{0}</b>\n\n{1}\n\n<a href="{2}">Читать далее</a>'.format(i[1], g['title'],
+                                                                                                g['links'][0]['href'])
                             # print(link)
 
+                            usr_cnt = 0
                             for u in sub_users:
+                                usr_cnt += 1
+                                if usr_cnt > 30:
+                                    time.sleep(1)
+                                    usr_cnt = 0
                                 send_message(u[0], link, False)
                     else:
-                        link = '<b>' + str(i[1]) + '</b>\n\n' + str(g['title']) + '\n\n<a href="' + \
-                               str(g['links'][0]['href'] + '">Читать далее</a>')
+                        link = '<b>{0}</b>\n\n{1}\n\n<a href="{2}">Читать далее</a>'.format(i[1], g['title'],
+                                                                                                g['links'][0]['href'])
                         # print(link)
                         usr_cnt = 0
                         for u in sub_users:
@@ -619,17 +622,15 @@ def get_rss_post():
                                 usr_cnt = 0
                             send_message(u[0], link, False)
             else:
-                with open("logs.log", "a") as file:
-                    file.write("\r\n\r\n" + time.strftime(
-                        "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
-                               "\r\n" + str(rss) + "\r\n<<ERROR RSS parse>>")
+                with open('logs.log', 'a') as file:
+                    file.write('\r\n\r\n' + time.strftime('%c') + '\r\n<<ERROR RSS parse>>\r\n\r\n' + str(rss) +
+                               '\r\n<<ERROR RSS parse>>')
                 # print("ERROR RSS parse")
                 # print(rss)
         except:
-            with open("logs.log", "a") as file:
-                file.write("\r\n\r\n" + time.strftime(
-                    "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
-                           "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
+            with open('logs.log', 'a') as file:
+                file.write('\r\n\r\n' + time.strftime('%c') + '\r\n<<ERROR RSS parse>>\r\n\r\n' +
+                           traceback.format_exc() + '\r\n<<ERROR RSS parse>>')
             # print("ERROR RSS parse")
     try:
         db.execute("DELETE FROM RSS")
@@ -645,15 +646,14 @@ def get_rss_post():
                     for t in t[4].split(':'):
                         rssdate.append(t)
                     rssdate = '/'.join(rssdate)
-                    utime = datetime.datetime.strptime(rssdate, "%d/%m/%Y/%H/%M/%S").strftime("%s")
+                    utime = datetime.datetime.strptime(rssdate, '%d/%m/%Y/%H/%M/%S').strftime('%s')
                     db.execute("INSERT INTO RSS (rss_id, rss_date, rss_link, rss_title) VALUES (?, ?, ?, ?)",
                                (str(i[0]), str(utime), str(g['links'][0]['href']), g['title']))
         database.commit()
     except:
-        with open("logs.log", "a") as file:
-            file.write("\r\n\r\n" + time.strftime(
-                "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
-                       "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
+        with open('logs.log', 'a') as file:
+            file.write('\r\n\r\n' + time.strftime('%c') + '\r\n<<ERROR RSS parse>>\r\n\r\n' + traceback.format_exc()
+                       + '\r\n<<ERROR RSS parse>>')
         # print("ERROR RSS table update")
 
     database.close()
@@ -681,9 +681,9 @@ def get_vk_post():
                         if 'id' in p:
                             if p['date'] > int(last_post[0][0]):
                                 if p['text']:
-                                    link = '<b>' + str(i[1]) + '</b>\n\n' + str(p['text'].splitlines()[0].split('. ')[0]) + \
-                                           '\n\n<a href="https://vk.com/wall-' + str(i[0]) + '_' + str(p['id']) \
-                                           + '">Читать далее</a>'
+                                    link = '<b>{0}</b>\n\n{1}\n\n<a href="https://vk.com/wall-{2}_{3}">Читать далее' \
+                                           '</a>'.format(i[1], p['text'].splitlines()[0].split('. ')[0], i[0], p['id'])
+
                                     usr_cnt = 0
                                     for u in sub_users:
                                         usr_cnt += 1
@@ -699,9 +699,10 @@ def get_vk_post():
                                                 p['text'].splitlines()[0].split('.')[0], p['likes']['count'],
                                                 p['reposts']['count']))
                                 else:
-                                    link = '<b>' + str(i[1]) + '</b>\n\n<i>Новость не содержит текст</i>\n\n' \
-                                                               '<a href="https://vk.com/wall-' + str(i[0]) + \
-                                           '_' + str(p['id']) + '">Читать далее</a>'
+                                    link = '<b>{0}</b>\n\n<i>Новость не содержит текст</i>\n\n' \
+                                           '<a href="https://vk.com/wall-{1}_{2}">Читать далее' \
+                                           '</a>'.format(i[1], i[0], p['id'])
+
                                     usr_cnt = 0
                                     for u in sub_users:
                                         usr_cnt += 1
@@ -717,11 +718,9 @@ def get_vk_post():
                                                 p['likes']['count'], p['reposts']['count']))
                 # print('Fetching successful')
             except Exception as e:
-                with open("logs.log", "a") as file:
-                    file.write("\r\n\r\n" + time.strftime(
-                        "%c") + "\r\n<<ERROR fetching post>>\r\n" +
-                               "\r\nGroup: " + i[0] +
-                               "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
+                with open('logs.log', 'a') as file:
+                    file.write('\r\n\r\n' + time.strftime('%c') + '\r\n<<ERROR fetching post>>\r\n\r\nGroup: ' + i[0] +
+                               '\r\n' + traceback.format_exc() + '\r\n<<ERROR fetching post>>')
                 # print(e)
                 # print('Unsuccessful fetch for group '+i[0])
         else:
@@ -744,11 +743,10 @@ def get_vk_post():
                                             p['likes']['count'], p['reposts']['count']))
                 # print('Fetching successful')
             except Exception as e:
-                with open("logs.log", "a") as file:
-                    file.write("\r\n\r\n" + time.strftime(
-                        "%c") + "\r\n<<ERROR fetching post>>\r\n" +
-                               "\r\nGroup: " + i[0] +
-                               "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
+                with open('logs.log', 'a') as file:
+                    file.write('\r\n\r\n' + time.strftime('%c') + '\r\n<<ERROR fetching post>>\r\n\r\nGroup: ' + i[0] +
+                               '\r\n' + traceback.format_exc() + '\r\n<<ERROR fetching post>>')
+
                 # print(e)
                 # print('Unsuccessful fetch for group ' + i[0])
 
@@ -782,11 +780,10 @@ def evening_hse():
                                             + str(p['id']),))
                                 database.commit()
             except Exception as e:
-                with open("logs.log", "a") as file:
-                    file.write("\r\n\r\n" + time.strftime(
-                        "%c") + "\r\n<<ERROR fetching post>>\r\n" +
-                               "\r\nGroup: " + i[0] +
-                               "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
+                with open('logs.log', 'a') as file:
+                    file.write('\r\n\r\n' + time.strftime('%c') + '\r\n<<ERROR fetching post>>\r\n\r\nGroup: ' + i[0] +
+                               '\r\n' + traceback.format_exc() + '\r\n<<ERROR fetching post>>')
+
                 # print(e)
                 # print('Unsuccessful fetch for group ' + i[0])
                 
@@ -804,8 +801,8 @@ def evening_hse():
         usr_cnt = 0
         for u in sub_users:
             # print(u[0])
-            link = user_name(u[0])
-            link += ',\n\n\U0001F306 Вечерняя Вышка специально для вас: \n\n'
+            # link = user_name(u[0])
+            link = '{},\n\n\U0001F306 Вечерняя Вышка специально для вас: \n\n'.format(user_name(u[0]))
             db.execute("SELECT gid FROM UsersGroups WHERE fetget = 1 AND uid = ?", (u[0],))
             usr_grps = db.fetchall()
             for g in usr_grps:
@@ -829,12 +826,10 @@ def evening_hse():
             if pp:
                 if len(pp) >= 5:
                     for j in range(5):
-                        link += pp[j][1] + '\n<a href="https://vk.com/wall-' + str(pp[j][0]) + \
-                                '">Читать далее</a>\n\n'
+                        link += '{0}\n<a href="https://vk.com/wall-{1}">Читать далее</a>\n\n'.format(pp[j][1], pp[j][0])
                 else:
                     for j in range(len(pp)):
-                        link += pp[j][1] + '\n<a href="https://vk.com/wall-' + str(pp[j][0]) + \
-                                '">Читать далее</a>\n\n'
+                        link += '{0}\n<a href="https://vk.com/wall-{1}">Читать далее</a>\n\n'.format(pp[j][1], pp[j][0])
                 link += 'Спасибо, что читаете нас \U0001F60A\n\nЕсли вам нравится этот бот, поделитесь им с друзьми:' \
                         '\nhttp://t.me/hse_news_bot'
 
@@ -934,49 +929,49 @@ def group_selection(msg, grp_id, bot_condition):
         if check_group:
             if check_group[0][2] == 1:
                 db.execute("UPDATE UsersGroups SET upget = 0 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '"', False)
+                send_message(msg.chat.id, 'Ты отписался от группы "{0.text}"'.format(msg), False)
             else:
-                send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"', False)
+                send_message(msg.chat.id, 'Ты не подписан на группу "{0.text}"'.format(msg), False)
         else:
-            send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"', False)
+            send_message(msg.chat.id, 'Ты не подписан на группу "{0.text}"'.format(msg), False)
 
     if bot_condition[0][0] == 2 or bot_condition[0][0] == 1234:
         # print(check_group)
         if not check_group:
             # print(msg.chat.id)
             db.execute("INSERT INTO UsersGroups (uid, gid, upget) VALUES (?, ?, 1)", (msg.chat.id, grp_id,))
-            send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"', False)
+            send_message(msg.chat.id, 'Ты подписался на группу "{0.text}"'.format(msg), False)
         else:
             if check_group[0][2] == 0:
                 db.execute("UPDATE UsersGroups SET upget = 1 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"', False)
+                send_message(msg.chat.id, 'Ты подписался на группу "{0.text}"'.format(msg), False)
             else:
-                send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана', False)
+                send_message(msg.chat.id, 'Группа "{0.text}" уже была выбрана'.format(msg), False)
 
     if bot_condition[0][0] == 3:
         # print(check_group)
         if check_group:
             if check_group[0][3] == 1:
                 db.execute("UPDATE UsersGroups SET fetget = 0 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                send_message(msg.chat.id, 'Ты отписался от группы "' + msg.text + '"', False)
+                send_message(msg.chat.id, 'Ты отписался от группы "{0.text}"'.format(msg), False)
             else:
-                send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"', False)
+                send_message(msg.chat.id, 'Ты не подписан на группу "{0.text}"'.format(msg), False)
         else:
-            send_message(msg.chat.id, 'Ты не подписан на группу "' + msg.text + '"', False)
+            send_message(msg.chat.id, 'Ты не подписан на группу "{0.text}"'.format(msg), False)
 
     if bot_condition[0][0] == 4:
         # print(check_group)
         if not check_group:
             # print(msg.chat.id)
             db.execute("INSERT INTO UsersGroups (uid, gid, fetget) VALUES (?, ?, 1)", (msg.chat.id, grp_id,))
-            send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"', False)
+            send_message(msg.chat.id, 'Ты подписался на группу "{0.text}"'.format(msg), False)
         else:
             # print(check_group[0][3])
             if check_group[0][3] == 0:
                 db.execute("UPDATE UsersGroups SET fetget = 1 WHERE gid = ? AND uid =?", (grp_id, msg.chat.id,))
-                send_message(msg.chat.id, 'Ты подписался на группу "' + msg.text + '"', False)
+                send_message(msg.chat.id, 'Ты подписался на группу "{0.text}"'.format(msg), False)
             else:
-                send_message(msg.chat.id, 'Группа "' + msg.text + '" уже была выбрана', False)
+                send_message(msg.chat.id, 'Группа "{0.text}" уже была выбрана'.format(msg), False)
 
     database.commit()
     database.close()
