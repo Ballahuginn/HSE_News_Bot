@@ -3,19 +3,28 @@ from sklearn.datasets import load_files
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
+import re
+
+def translator(text):
+    translator = Translator(to_lang="en", from_lang="ru")
+    sentcs = text.split(".")
+    translated = ""
+    for s in sentcs:
+        sen = translator.translate(s[:500])
+        sen = re.sub(r'&quot;', '"', sen)
+        translated += sen
+        translated += ". "
+    return translated
 
 def categorization(text, categories):
-    translator = Translator(to_lang="en",from_lang="ru")
-    translation = translator.translate(text[:500])
-    print(translation)
 
-    categories = [
-        'talk.politics.misc',
-        'talk.religion.misc',
-        'talk.politics.test',
-        'sci.electronics',
-    ]
-
+    #categories = [
+    #    'talk.politics.misc',
+    #    'talk.religion.misc',
+    #    'talk.politics.test',
+    #    'sci.electronics',
+    #]
+    translation = translator(text)
 
     train_set = load_files("train_set", description=None, categories=categories, load_content=True, decode_error='ignore', random_state=42, encoding='cp1251')
 

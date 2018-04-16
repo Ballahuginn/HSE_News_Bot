@@ -45,6 +45,7 @@ rss_timer = int(config['RSS']['timer'])
 markup_none = types.ReplyKeyboardMarkup()
 markup_none.row('\U0001F51D Назад в главное меню')
 
+
 # botCondition 0 - простой, 1 - отказ для подписки,
 # 2 - выбор для подписки, 3 - отказ для вечерней вышки, 4 - выбор для вечерней вышки, 5 - отзыв,
 # 12 - основные группы, 34 - вечерняя вышка, 1234 - новый пользователь,
@@ -95,6 +96,8 @@ def send_welcome(message):
         markup = press_done(message)
         send_message(message.chat.id, 'Добро пожаловать. Снова.\U000026A1', markup)
 
+    database.close()
+
 
 def send_goodbye(message):
     database = sqlite3.connect(dbpath)
@@ -113,12 +116,15 @@ def send_goodbye(message):
         send_message(message.chat.id, 'Мне кажется или ты еще не начинал пользоваться ботом?\n'
                                       'Чтобы начать им пользоваться нажми /start \U0001F60E', markup_none)
 
+    database.close()
+
 
 def main_menu(message):
-    database = sqlite3.connect(dbpath)
-    db = database.cursor()
-
+    #print(message.text)
     if message.text == '\U0001F6AB Выбрать группы для отписки':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -165,7 +171,12 @@ def main_menu(message):
                 markup = press_done(message)
                 send_message(message.chat.id, 'Настройка завершена', markup)
 
+        database.close()
+
     if message.text == '\U00002705 Выбрать группы для подписки':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -208,10 +219,8 @@ def main_menu(message):
             markup.row('Выбрать все')
             check_if_all = groups_as_buttons_sub(vk_groups_list(), active_groups, markup)
             if check_if_all > 0:
-                send_message(message.chat.id, 'Ты хочешь подписаться на \U0001F306 Вечернюю Вышку? \n\n'
-                                              'Вечерняя Вышка - это рассылка до 5 самых популярных материалов за день. '
-                                              'Она будет приходить в 9 вечера.\nВыбери группы для Вечерней Вышки, '
-                                              'а затем нажми "\U0001F3C1 Завершить"', markup)
+                send_message(message.chat.id, 'Выбери группы для Вечерней Вышки, а затем нажми "\U0001F3C1 Завершить"',
+                             markup)
                 if len(active_groups) != 0:
                     grp = 'Ты уже подписан на следующие группы:\n\n'
                     for i in active_groups:
@@ -222,8 +231,13 @@ def main_menu(message):
                 markup = press_done(message)
                 send_message(message.chat.id, 'Настройка завершена', markup)
 
+        database.close()
+
     for j in groups_list():
         if message.text == str(j[1]):
+            database = sqlite3.connect(dbpath)
+            db = database.cursor()
+
             db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
             bot_condition = db.fetchall()
             group_selection(message, str(j[0]), bot_condition)
@@ -308,7 +322,12 @@ def main_menu(message):
                 else:
                     send_message(message.chat.id, 'Выбери группы или нажми "Далее"', markup)
 
+            database.close()
+
     if message.text == 'Отписаться от всех':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -327,7 +346,12 @@ def main_menu(message):
             markup = press_done(message)
             send_message(message.chat.id, 'Настройка завершена', markup)
 
+        database.close()
+
     if message.text == 'Выбрать все':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -372,6 +396,8 @@ def main_menu(message):
                     database.commit()
             press_next(message)
 
+        database.close()
+
     if message.text == '\U000027A1 Далее':
         press_next(message)
 
@@ -389,6 +415,7 @@ def main_menu(message):
     if message.text == '\U0001F4F1 Основные группы':
         database = sqlite3.connect(dbpath)
         db = database.cursor()
+
         db.execute("UPDATE Users SET bcond = 12 WHERE id = ?", (message.chat.id,))
         database.commit()
         markup = types.ReplyKeyboardMarkup()
@@ -397,16 +424,23 @@ def main_menu(message):
         markup.row('\U0001f527 Настройки')
         send_message(message.chat.id, 'Выбери, что ты хочешь сделать:', markup)
 
+        database.close()
+
     if message.text == '\U0001F306 Вечерняя Вышка':
         database = sqlite3.connect(dbpath)
         db = database.cursor()
+
         db.execute("UPDATE Users SET bcond = 34 WHERE id = ?", (message.chat.id,))
         database.commit()
         markup = types.ReplyKeyboardMarkup()
         markup.row('\U00002705 Выбрать группы для подписки')
         markup.row('\U0001F6AB Выбрать группы для отписки')
         markup.row('\U0001f527 Настройки')
-        send_message(message.chat.id, 'Выбери, что ты хочешь сделать:', markup)
+        send_message(message.chat.id, '\U0001F306 Вечерняя Вышка - это рассылка до 5 самых популярных материалов '
+                                      'за день.\nОна будет приходить ежедневно в 9 вечера \U0001F558'
+                                      '\n\nВыбери, что ты хочешь сделать:', markup)
+
+        database.close()
 
     if message.text == '\U0001F51D Назад в главное меню':
         markup = press_done(message)
@@ -419,7 +453,10 @@ def main_menu(message):
                                       'Этот бот является первым новостным ботом НИУ ВШЭ!\n'
                                       'Плагиат и копирование данного бота преследуются по закону!', True)
 
-    if message.text == '\U0001F4DC Подписки':
+    if message.text == '\U0001F4DC Подписки' or message.text == '📜 Подписки':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
                    "WHERE ug.uid = ? AND ug.gid = g.id AND ug.upget = 1",
                    (message.chat.id,))
@@ -447,79 +484,36 @@ def main_menu(message):
         else:
             send_message(message.chat.id, '\U0001F306 Вечерняя Вышка не настроена', False)
 
+        database.close()
+
     if message.text == '\U0001F4AC Оставить пожелания':
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("UPDATE Users SET bcond = 5 WHERE id = ?", (message.chat.id,))
         database.commit()
         send_message(message.chat.id, 'Как ты думаешь, чего не хвататет этому боту? \n'
                                       'Напиши и отправь отзыв, как в обычный чат \U0001F609', markup_none)
+        return
 
-    if str(message.chat.id) in admin:
-        if message.text == 'Образование':
-            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
-            lrng = db.fetchall()
-            for l in lrng:
-                if l[1] == 0 and l[2] == str(message.chat.id):
-                    db.execute("UPDATE ToCat SET Cat = 1 WHERE Post = ?", (l[0],))
-                    database.commit()
-                    break
-            learning(message)
-
-        if message.text == 'Мероприятия':
-            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
-            lrng = db.fetchall()
-            for l in lrng:
-                if l[1] == 0 and l[2] == str(message.chat.id):
-                    db.execute("UPDATE ToCat SET Cat = 2 WHERE Post = ?", (l[0],))
-                    database.commit()
-                    break
-            learning(message)
-        if message.text == 'Предпринимательство':
-            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
-            lrng = db.fetchall()
-            for l in lrng:
-                if l[1] == 0 and l[2] == str(message.chat.id):
-                    db.execute("UPDATE ToCat SET Cat = 3 WHERE Post = ?", (l[0],))
-                    database.commit()
-                    break
-            learning(message)
-        if message.text == 'Политика':
-            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
-            lrng = db.fetchall()
-            for l in lrng:
-                if l[1] == 0 and l[2] == str(message.chat.id):
-                    db.execute("UPDATE ToCat SET Cat = 4 WHERE Post = ?", (l[0],))
-                    database.commit()
-                    break
-            learning(message)
-        if message.text == 'Наука':
-            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
-            lrng = db.fetchall()
-            for l in lrng:
-                if l[1] == 0 and l[2] == str(message.chat.id):
-                    db.execute("UPDATE ToCat SET Cat = 5 WHERE Post = ?", (l[0],))
-                    database.commit()
-                    break
-            learning(message)
-        if message.text == 'Культура':
-            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
-            lrng = db.fetchall()
-            for l in lrng:
-                if l[1] == 0 and l[2] == str(message.chat.id):
-                    db.execute("UPDATE ToCat SET Cat = 6 WHERE Post = ?", (l[0],))
-                    database.commit()
-                    break
-            learning(message)
-        if message.text == 'Спорт':
-            db.execute("SELECT Post, Cat, SentTo FROM ToCat")
-            lrng = db.fetchall()
-            for l in lrng:
-                if l[1] == 0 and l[2] == str(message.chat.id):
-                    db.execute("UPDATE ToCat SET Cat = 7 WHERE Post = ?", (l[0],))
-                    database.commit()
-                    break
-            learning(message)
+    if 1 == 1 and str(message.chat.id) in admin: #checking for learning responses
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+        db.execute("SELECT id, title FROM Categories ORDER BY id")
+        categories = db.fetchall()
+        for anlz in categories:
+            if message.text == anlz[1]:
+                db.execute("SELECT Cat, SentTo, id FROM ToCat WHERE SentTo = ? AND Cat = 0 ORDER BY id LIMIT 1", (message.chat.id,))
+                lrng = db.fetchall()
+                db.execute("UPDATE ToCat SET Cat = ? WHERE id = ?", (anlz[0], lrng[0][2],))
+                database.commit()
+                db.close()
+                learning(message)
 
     else:
+        database = sqlite3.connect(dbpath)
+        db = database.cursor()
+
         db.execute("SELECT bcond FROM Users WHERE id = ?", (message.chat.id,))
         bot_condition = db.fetchall()
 
@@ -572,6 +566,8 @@ def main_menu(message):
                                "\r\nGroup: " + message.text +
                                "\r\n" + traceback.format_exc() + "\r\n<<ERROR adding group>>")
 
+        database.close()
+
 
 def send_message(usr, msg, param):
     try:
@@ -593,45 +589,48 @@ def send_message(usr, msg, param):
                            "\r\nUndelivered message: " + msg +
                            "\r\n" + traceback.format_exc() + "\r\n<<ERROR sending message>>")
 
+
 def learning(message):
     if str(message.chat.id) in admin:
         database = sqlite3.connect(dbpath)
         dbl = database.cursor()
-        dbl.execute("SELECT Post, Cat, SentTo FROM ToCat")
+        dbl.execute("SELECT Post, SentTo, id FROM ToCat WHERE Cat = 0 "
+                    "AND (SentTo IS NULL OR SentTo = ?) ORDER BY id LIMIT 1", (message.chat.id,))
 
-        #dbc = database.cursor()
-        #dbc.execute("SELECT name FROM Categories")
+        # dbc = database.cursor()
+        # dbc.execute("SELECT name FROM Categories")
 
         lrng = dbl.fetchall()
-        #cats = dbc.fetchall()
         send_message(message.chat.id, 'Поучимся немножко', markup_none)
-        for l in lrng:
-            if l[1] == 0:
-                markup = types.ReplyKeyboardMarkup()
-                #markup.row('Образование') #1
-                #markup.row('Мероприятия') #2
-                #markup.row('Предпринимательство')  # 3
-                #markup.row('Политика') #4
-                #markup.row('Наука') #5
-                #markup.row('Культура') #6
-                #markup.row('Спорт') #7
-                markup.row('Образование','Мероприятия')
-                markup.row('Предпринимательство', 'Политика')
-                markup.row('Наука', 'Культура')
-                markup.row('Спорт', '\U0001F51D Главное меню')
-                bot.send_message(message.chat.id, l[0], reply_markup=markup)
-                dbl.execute("UPDATE ToCat SET SentTo = ? WHERE Post = ? and Cat = ?",
-                           (message.chat.id, l[0], l[1]))
-                database.commit()
-                #send_message(message.chat.id, l[0], markup)
-                break
+        markup = types.ReplyKeyboardMarkup()
+        dbl.execute("SELECT id, title FROM Categories ORDER BY id")
+        ctgs = dbl.fetchall()
+        #for anlz in categories:
+        markup.row(ctgs[1][1], ctgs[2][1])
+        markup.row(ctgs[3][1], ctgs[4][1])
+        markup.row(ctgs[5][1], ctgs[6][1])
+        markup.row(ctgs[7][1], ctgs[8][1])
+        markup.row(ctgs[0][1], '\U0001F51D Назад в главное меню')
+        # markup.row('Образование','Мероприятия')
+        # markup.row('Предпринимательство', 'Политика')
+        # markup.row('Наука', 'Культура')
+        # markup.row('Спорт', '\U0001F51D Главное меню')
+        send_message(message.chat.id, lrng[0][0], markup)
+        dbl.execute("UPDATE ToCat SET SentTo = ? WHERE id = ?",
+                    (message.chat.id, lrng[0][2]))
+        database.commit()
+        dbl.close()
+        # send_message(message.chat.id, l[0], markup)
     else:
-        send_message(message.chat.id, 'Просим прощения, вам это функция в данные момент недоступна \U0001F623', markup_none)
+        send_message(message.chat.id, 'Просим прощения, вам эта функция в данный момент недоступна \U0001F623',
+                     markup_none)
         main_menu(message)
+
 
 def get_rss_post():
     database = sqlite3.connect(dbpath)
     db = database.cursor()
+
     for i in rss_groups_list():
         try:
             db.execute("SELECT MAX(rss_date) FROM RSS WHERE rss_id = ?", (str(i[0]),))
@@ -677,14 +676,14 @@ def get_rss_post():
                     file.write("\r\n\r\n" + time.strftime(
                         "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
                                "\r\n" + str(rss) + "\r\n<<ERROR RSS parse>>")
-                # print("ERROR RSS parse")
-                # print(rss)
+                    # print("ERROR RSS parse")
+                    # print(rss)
         except:
             with open("logs.log", "a") as file:
                 file.write("\r\n\r\n" + time.strftime(
                     "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
                            "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
-            # print("ERROR RSS parse")
+                # print("ERROR RSS parse")
     try:
         db.execute("DELETE FROM RSS")
         for i in rss_groups_list():
@@ -708,7 +707,7 @@ def get_rss_post():
             file.write("\r\n\r\n" + time.strftime(
                 "%c") + "\r\n<<ERROR RSS parse>>\r\n" +
                        "\r\n" + traceback.format_exc() + "\r\n<<ERROR RSS parse>>")
-        # print("ERROR RSS table update")
+            # print("ERROR RSS table update")
     database.close()
     t = threading.Timer(rss_timer, get_rss_post)
     t.start()
@@ -733,11 +732,11 @@ def get_vk_post():
                         if 'id' in p:
                             if p['date'] > int(last_post[0][0]):
                                 if p['text']:
-                                    db.execute("SELECT id, name FROM Categories")
+                                    db.execute("SELECT id, title FROM Categories")
                                     categories = db.fetchall()
-                                    print(categories)
-                                    category = categorizator.categorization(p['text'], categories[0])
-                                    cat_name = category
+                                    text = re.sub(r'\[.*?\|(.*?)\]', r'\1', p['text'])
+                                    category = categorizator.categorization(text, categories[0])
+                                    cat_name = 'Образование'
                                     for c in categories:
                                         if c[0] == category:
                                             cat_name = c[1]
@@ -768,7 +767,8 @@ def get_vk_post():
                                                 p['text'].splitlines()[0].split('.')[0], p['likes']['count'],
                                                 p['reposts']['count'], category))
                                 else:
-                                    link = '<b>' + str(i[1]) + '</b>\n\n<a href="https://vk.com/wall-' + str(i[0]) + \
+                                    link = '<b>' + str(i[1]) + '</b>\n\n<i>Новость не содержит текст</i>\n\n' \
+                                                               '<a href="https://vk.com/wall-' + str(i[0]) + \
                                            '_' + str(p['id']) + '">Читать далее</a>'
                                     usr_cnt = 0
                                     for u in sub_users:
@@ -783,15 +783,15 @@ def get_vk_post():
                                                "VALUES (?, ?, ?, ' ', ?, ?)",
                                                (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
                                                 p['likes']['count'], p['reposts']['count']))
-                # print('Fetching successful')
+                                    # print('Fetching successful')
             except Exception as e:
                 with open("logs.log", "a") as file:
                     file.write("\r\n\r\n" + time.strftime(
                         "%c") + "\r\n<<ERROR fetching post>>\r\n" +
                                "\r\nGroup: " + i[0] +
                                "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
-                # print(e)
-                # print('Unsuccessful fetch for group '+i[0])
+                    # print(e)
+                    # print('Unsuccessful fetch for group '+i[0])
         else:
             # print('Fetching posts from group ' + i[0])
             try:
@@ -810,15 +810,15 @@ def get_vk_post():
                                            "VALUES (?, ?, ?, ' ', ?, ?)",
                                            (str(i[0]) + '_' + str(p['id']), str(i[0]), str(p['date']),
                                             p['likes']['count'], p['reposts']['count']))
-                # print('Fetching successful')
+                                # print('Fetching successful')
             except Exception as e:
                 with open("logs.log", "a") as file:
                     file.write("\r\n\r\n" + time.strftime(
                         "%c") + "\r\n<<ERROR fetching post>>\r\n" +
                                "\r\nGroup: " + i[0] +
                                "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
-                # print(e)
-                # print('Unsuccessful fetch for group ' + i[0])
+                    # print(e)
+                    # print('Unsuccessful fetch for group ' + i[0])
 
     database.commit()
     database.close()
@@ -827,7 +827,6 @@ def get_vk_post():
 
 
 def evening_hse():
-
     # print(datetime.time(15, 10))
     # print(datetime.datetime.now().time())
     if datetime.time(start_h, start_m) <= datetime.datetime.now().time() <= datetime.time(end_h, end_m):
@@ -855,9 +854,9 @@ def evening_hse():
                         "%c") + "\r\n<<ERROR fetching post>>\r\n" +
                                "\r\nGroup: " + i[0] +
                                "\r\n" + traceback.format_exc() + "\r\n<<ERROR fetching post>>")
-                # print(e)
-                # print('Unsuccessful fetch for group ' + i[0])
-                
+                    # print(e)
+                    # print('Unsuccessful fetch for group ' + i[0])
+
             db.execute("SELECT COUNT(id) FROM Posts WHERE gid = ?", (i[0],))
             entr_numb = db.fetchall()
             if entr_numb[0][0] > 6:
@@ -877,10 +876,15 @@ def evening_hse():
             db.execute("SELECT gid FROM UsersGroups WHERE fetget = 1 AND uid = ?", (u[0],))
             usr_grps = db.fetchall()
             for g in usr_grps:
-                db.execute("SELECT id, p_text, (p_likes + p_reposts*10) as pop FROM Posts WHERE gid = ? AND p_date > ? "
+                db.execute("SELECT id, p_text, (p_likes + p_reposts*10) AS pop FROM Posts WHERE gid = ? AND p_date > ? "
                            "ORDER BY pop DESC ", (g[0], (int(time.time()) - 93600),))
                 g_posts = db.fetchall()
                 for gp in g_posts:
+                    # print(gp)
+                    if gp[1] == '':
+                        gp = list(gp)
+                        gp[1] = '<i>Новость не содержит текст</i>'
+                        gp = tuple(gp)
                     popular_post.append(gp)
             pp = sorted(popular_post, key=lambda tup: tup[2], reverse=True)
             popular_post = []
@@ -939,7 +943,7 @@ def press_next(message):
     if bot_condition[0][0] == 1234:
         db.execute("UPDATE Users SET bcond = 4 WHERE id = ?", (message.chat.id,))
         database.commit()
-        db.execute("SELECT g.id, g.name, g.g_link FROM Groups as g, UsersGroups as ug "
+        db.execute("SELECT g.id, g.name, g.g_link FROM Groups AS g, UsersGroups AS ug "
                    "WHERE ug.uid = ? AND ug.gid = g.id AND ug.fetget = 1",
                    (message.chat.id,))
         active_groups = db.fetchall()
@@ -960,6 +964,8 @@ def press_next(message):
             send_message(message.chat.id, 'Ты уже подписан на все группы для \U0001F306 Вечерней Вышки', False)
             markup = press_done(message)
             send_message(message.chat.id, 'Настройка завершена', markup)
+
+    database.close()
 
 
 def press_done(message):
@@ -1085,7 +1091,7 @@ def user_name(usr_id):
 
 
 def administrator(message):
-    # print(message.sticker)
+    #print(message.sticker)
     if str(message.chat.id) in admin:
         if message.sticker.file_id == broadcast:
             database = sqlite3.connect(dbpath)
@@ -1148,3 +1154,40 @@ def location(message):
     send_message(message.chat.id, 'Ближайшее здание Вышки располагается по адресу:\n' + clstbld[0][1], False)
     bot.send_location(message.chat.id, clstbld[0][3], clstbld[0][2])
     database.close()
+
+
+def fetch_all_vk_posts():
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
+    db.execute("SELECT id, name, g_link FROM Groups")
+    groups = db.fetchall()
+    for g in groups:
+        posts = vk_api.wall.get(owner_id='-' + g[0], count=100, filter='owner', offset = 1900)
+        for p in posts['items']:
+            if type(p) != int:
+                if 'id' in p:
+                    if p['text']:
+                        text = re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '',
+                                      re.sub(r'\[.*?\|(.*?)\]', r'\1', p['text']), flags=re.MULTILINE)
+                        print('____________________________________________________________________________________')
+                        print(text)
+                        print(type(p['text']))
+                        print(categorizator.translator(text))
+                        db.execute("INSERT INTO ToCat (Post) VALUES "
+                                   "(?)",
+                                   [text])
+
+                        database.commit()
+    db.close()
+
+
+def text_to_folders():
+    database = sqlite3.connect(dbpath)
+    db = database.cursor()
+    db.execute("SELECT ts.id, ts.Post, c.path FROM ToCat as ts LEFT JOIN Categories as c ON c.id = ts.Cat")
+    ftch = db.fetchall()
+    for p in ftch:
+        path = 'train_set/'+str(p[2])+'/'+str(p[0])
+        with open(path, 'w') as f:
+            #file = fi '\n' + p[1]
+            f.write(p[1])
