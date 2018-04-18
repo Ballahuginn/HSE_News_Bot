@@ -67,7 +67,7 @@ def send_welcome(message):
         # print(bot.get_chat(message.chat.id))
 
         send_message(message.chat.id, 'Привет, ' + user_name(message.chat.id) +
-                     '!\nЯ бот, который поможет тебе следить за всеми новостями твоего любимого ВУЗа! \n'
+                     '!\nЯ бот, который поможет тебе следить за всеми новостями твоего любимого вуза! \n'
                      'Я могу присылать тебе новости из разных групп ВК, связанных с Вышкой.\n'
                      'А еще у меня есть вечерняя рассылка популярных новостей \U0001F306', False)
 
@@ -447,7 +447,7 @@ def main_menu(message):
         send_message(message.chat.id, 'Добро пожаловать в главное меню!', markup)
 
     if message.text == '\U00002139 О проекте':
-        send_message(message.chat.id, 'Этот бот является дипломной работой студентов 4 курса ДКИ МИЭМ '
+        send_message(message.chat.id, 'Этот бот является дипломной работой бывших тов 4 курса ДКИ МИЭМ '
                                       '<a href="http://t.me/Ballahuginn">Барсукова Павла</a> и '
                                       '<a href="http://t.me/MAKS05">Садонцева Максима</a>.\n'
                                       'Этот бот является первым новостным ботом НИУ ВШЭ!\n'
@@ -1191,3 +1191,13 @@ def text_to_folders():
         with open(path, 'w') as f:
             #file = fi '\n' + p[1]
             f.write(p[1])
+
+def news_fetcher():
+    config.read('config.ini')
+    if config['MODULES']['rss'] != 'false':
+        get_rss_post()
+    if config['MODULES']['vk'] != 'false':
+        print ('check')
+        get_vk_post()
+    if config['MODULES']['evening'] != 'false':
+        evening_hse()

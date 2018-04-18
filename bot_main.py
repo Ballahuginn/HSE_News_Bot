@@ -23,10 +23,10 @@ for i in users:
 database.commit()
 database.close()
 
+
+bot_modules.news_fetcher()
 #bot_modules.get_rss_post()
-
 #bot_modules.get_vk_post()
-
 #bot_modules.evening_hse()
 
 
@@ -44,6 +44,12 @@ def learn(message):
     bot_modules.learning(message)
     #bot_modules.fetch_all_vk_posts()
     #bot_modules.text_to_folders()
+
+@bot.message_handler(commands=['settings'])
+def settings(message):
+    if str(message.chat.id) in bot_modules.admin:
+        bot_modules.news_fetcher()
+        bot_modules.send_message(message.chat.id, 'Проверяю настройки', False)
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def menu(message):
